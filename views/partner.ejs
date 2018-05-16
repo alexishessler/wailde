@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
   <!-- personnal stylesheet -->
   <link href="https://fonts.googleapis.com/css?family=Poppins|Quicksand|Raleway" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
   <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 
@@ -153,27 +154,148 @@
   </div>
   <!-- END NAV BAR -->
 
-
-
-
-
-
-
-
-
-
-                  *******************************
-
-
-                         YOUR CONTENT HERE
-
-                         -
-
-                         WELCOME TO PARTNER
-
-
-                  *******************************
-
+<div class="form-partner">
+<div class="container">
+  <div class="row partner-header">
+    <h1>Bienvenue sur l'espace partenaires</h1>
+    <h2>Vous souhaitez proposer une offre de voyage ?</h2>
+  </div>
+  <div class="row">
+    <form class="form-color">
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Prénom</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" placeholder="Prénom">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Nom</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" placeholder="Nom">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Raison sociale</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" placeholder="Prénom">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Titre du voyage</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" placeholder="Titre du voyage">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlTextarea1">Description du voyage</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Thématique du voyage</label>
+        <select class="form-control" id="exampleFormControlSelect1">
+          <option>Aventure</option>
+          <option>Bien-être</option>
+          <option>Découverte</option>
+        </select>
+      </div>
+      <fieldset class="form-group">
+         <div class="row">
+           <legend class="col-form-label col-sm-2 pt-0">Difficulté</legend>
+           <div class="col-sm-10">
+             <div class="form-check">
+               <input class="form-check-input" type="radio" name="gridRadiosDifficulte" id="gridRadios1" value="difficulte1" checked>
+               <label class="form-check-label" for="gridRadios1">
+                 <span class="icons-partner"><i class="fas fa-fire"></i></span> Ballade du dimanche
+               </label>
+             </div>
+             <div class="form-check">
+               <input class="form-check-input" type="radio" name="gridRadiosDifficulte" id="gridRadios2" value="difficulte2">
+               <label class="form-check-label" for="gridRadios2">
+                 <span class="icons-partner"><i class="fas fa-fire"></i><i class="fas fa-fire"></i></span> Humble baroudeur
+               </label>
+             </div>
+             <div class="form-check">
+               <input class="form-check-input" type="radio" name="gridRadiosDifficulte" id="gridRadios3" value="difficulte3">
+               <label class="form-check-label" for="gridRadios3">
+                 <span class="icons-partner"><i class="fas fa-fire"></i><i class="fas fa-fire"></i><i class="fas fa-fire"></i></span> Montagnard aguerri
+               </label>
+             </div>
+           </div>
+         </div>
+       </fieldset>
+       <fieldset class="form-group">
+          <div class="row">
+            <legend class="col-form-label col-sm-2 pt-0">Nombre de personnes</legend>
+            <div class="col-sm-10">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="gridRadiosNb" id="gridRadios3" value="nb1" checked>
+                <label class="form-check-label" for="gridRadios1">
+                  <span class="icons-partner"><i class="fas fa-female"></i></span> 1 à 10 personne(s)
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="gridRadiosNb" id="gridRadios4" value="nb2">
+                <label class="form-check-label" for="gridRadios2">
+                  <span class="icons-partner"><i class="fas fa-female"></i><i class="fas fa-male"></i></span> 11 à 30 personnes
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="gridRadiosNb" id="gridRadios5" value="nb3">
+                <label class="form-check-label" for="gridRadios3">
+                  <span class="icons-partner"><i class="fas fa-female"></i><i class="fas fa-male"></i><i class="fas fa-female"></i></span> +30 personnes
+                </label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+       <fieldset class="form-group">
+          <div class="row">
+            <legend class="col-form-label col-sm-2 pt-0">Budget à prévoir</legend>
+            <div class="col-sm-10">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="gridRadiosBudget" id="gridRadios6" value="budget1" checked>
+                <label class="form-check-label" for="gridRadios1">
+                  <span class="icons-partner"><i class="fas fa-coins"></i></span> 1 à 500€ / jour / personne
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="gridRadiosBudget" id="gridRadios7" value="budget2">
+                <label class="form-check-label" for="gridRadios2">
+                  <span class="icons-partner"><i class="fas fa-coins"></i><i class="fas fa-coins"></i></span> 500 à 1000€ / jour / personne
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="gridRadiosBudget" id="gridRadios8" value="budget3">
+                <label class="form-check-label" for="gridRadios3">
+                  <span class="icons-partner"><i class="fas fa-coins"></i><i class="fas fa-coins"></i><i class="fas fa-coins"></i></span>  +1000€ / jour / personne
+                </label>
+              </div>
+            </div>
+          </div>
+        </fieldset>
+       <div class="form-group row">
+          <p>Sélectionner une photo globale d'illustration</p>
+          <div class="custom-file">
+           <input type="file" class="custom-file-input" id="validatedCustomFile" required>
+           <label class="custom-file-label" for="validatedCustomFile">Choix du fichier</label>
+         </div>
+       </div>
+       <div class="form-group row">
+          <p>Sélectionner une photo de l'hébergement</p>
+          <div class="custom-file">
+           <input type="file" class="custom-file-input" id="validatedCustomFile" required>
+           <label class="custom-file-label" for="validatedCustomFile">Choix du fichier</label>
+         </div>
+       </div>
+      <div class="form-group row">
+        <div class="col-sm-10">
+          <button type="submit" class="btn btn-success">Poster</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+</div>
 
 
 

@@ -70,7 +70,10 @@ router.post('/signup', function(req, res, next) {
 // HERE ARE THE SIGN-IN & SIGN-UP ROUTES
 
 
-
+/* GET partner form. */
+router.get('/confirmation', function(req, res, next) {
+  res.render('confirmation');
+});
 
 
 

@@ -1,28 +1,26 @@
 /* GENERAL */
 body {
   background-color: #F6F6F6;
-  color: #B53436;
+  color: #1D1F21;
 }
 a {
   color: #00B7FF;
 }
-
 h1 {
   font-style: "Poppins";
 }
 h2 {
   font-style: "Quicksand";
 }
+.bold {
+  font-weight: bold;
+}
 /* GENERAL */
-
 
 
 /* NAVBAR */
 .bg-light {
     background-color: #9DCB77!important;
-}
-.bold {
-  font-weight: bold;
 }
 .navbar-light .navbar-nav .nav-link {
     color: black;
@@ -39,3 +37,42 @@ h2 {
   margin-bottom: 5px;
 }
 /* NAVBAR */
+
+
+/* CONFIRMATION */
+.confirmation {
+  background-image: url('/images/assets/others/confirmation.jpg');
+  background-size: cover;
+  background-position: center center center;
+  height: 100vh;
+}
+.felicitation-msg {
+  color: #9DCB77;
+  text-shadow: 1px 1px 1px black;
+}
+.text-confirmation {
+  color: #FFFFFF;
+  text-shadow: 1px 1px 1px black;
+}
+/* CONFIRMATION */
+
+
+/* PARTNER */
+.form-partner{
+  background-image: url('/images/assets/others/partner.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+.partner-header {
+  padding-top: 20px;
+  margin-bottom: 20px;
+}
+.form-color {
+  color: #FFFFFF;
+  text-shadow: 1px 1px 1px black;
+}
+.icons-partner {
+  color: #9DCB77;
+}
+/* PARTNER */

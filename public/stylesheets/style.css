@@ -1,8 +1,41 @@
+/* GENERAL */
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-color: #F6F6F6;
+  color: #B53436;
 }
-
 a {
   color: #00B7FF;
 }
+
+h1 {
+  font-style: "Poppins";
+}
+h2 {
+  font-style: "Quicksand";
+}
+/* GENERAL */
+
+
+
+/* NAVBAR */
+.bg-light {
+    background-color: #9DCB77!important;
+}
+.bold {
+  font-weight: bold;
+}
+.navbar-light .navbar-nav .nav-link {
+    color: black;
+}
+.navbar-light .navbar-nav .nav-link:hover {
+    color: #FFFFFF;
+}
+.nav-btn {
+  margin-right: 5px;
+  margin-bottom: 2px;
+  margin-top: 2px;
+}
+.form-sign {
+  margin-bottom: 5px;
+}
+/* NAVBAR */

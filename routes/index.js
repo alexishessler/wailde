@@ -1,9 +1,77 @@
+// HERE ARE THE MODULES WE USE
 var express = require('express');
 var router = express.Router();
+var session = require("express-session");
+var path = require('path');
+var crypto = require('crypto');
+var mongoose = require('mongoose');
+var multer = require('multer');
+var GridFsStorage = require('multer-gridfs-storage');
+var Grid = require('gridfs-stream');
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
+// il faut ajouter stripe (voir credentials sur Slack)
+// HERE ARE THE MODULES WE USE
+
+
+// HERE IS THE CONNECTION TO OUR MLAB DATABASE
+var options = { server: { socketOptions: {connectTimeoutMS: 5000 } }};
+mongoose.connect('mongodb://capsule:azerty@ds139459.mlab.com:39459/waildeproject',
+    options,
+    function(err) {
+     console.log(err);
+    }
+);
+// HERE IS THE CONNECTION TO OUR MLAB DATABASE
+
+
+// HERE ARE THE NAVBAR LINKS
+/* GET squeleton page. */
+router.get('/', function(req, res, next) {
+  res.render('squeleton');
+});
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+router.get('/home', function(req, res, next) {
+  res.render('home');
 });
+
+/* GET search page with ALL CARDS */
+router.get('/search-trip', function(req, res, next) {
+  res.render('search-trip');
+});
+
+/* GET trip page with ONE CARD (selected trip) */
+router.get('/trip', function(req, res, next) {
+  res.render('trip');
+});
+
+/* GET experience page. */
+router.get('/experience', function(req, res, next) {
+  res.render('experience');
+});
+
+/* GET partner form. */
+router.get('/partner', function(req, res, next) {
+  res.render('partner');
+});
+// HERE ARE THE NAVBAR LINKS
+
+
+
+// HERE ARE THE SIGN-IN & SIGN-UP ROUTES
+router.post('/signin', function(req, res, next) {
+  res.render('search-trip');
+});
+
+router.post('/signup', function(req, res, next) {
+  res.render('search-trip');
+});
+// HERE ARE THE SIGN-IN & SIGN-UP ROUTES
+
+
+
+
+
 
 module.exports = router;

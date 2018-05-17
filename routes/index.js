@@ -10,6 +10,8 @@ var GridFsStorage = require('multer-gridfs-storage');
 var Grid = require('gridfs-stream');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+var stripe = require("stripe")("sk_test_95zmCFtr3vHOffkw0DEfXiiI");
+
 // il faut ajouter stripe (voir credentials sur Slack)
 // HERE ARE THE MODULES WE USE
 
@@ -75,6 +77,23 @@ router.get('/confirmation', function(req, res, next) {
   res.render('confirmation');
 });
 
+
+
+
+
+router.post('/trip', function(req, res, next) {
+  var stripe = require("stripe")("sk_test_95zmCFtr3vHOffkw0DEfXiiI");
+  const token = req.body.stripeToken;
+  const charge = stripe.charges.create({
+  amount: 999,
+  currency: 'eur',
+  description: 'Example charge',
+  source: token,
+  });
+
+
+  res.render('trip');
+});
 
 
 module.exports = router;

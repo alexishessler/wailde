@@ -92,7 +92,7 @@ router.post('/trip', function(req, res, next) {
   });
 
 
-  res.render('trip');
+  res.render('confirmation');
 });
 
 

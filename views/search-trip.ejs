@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
   <!-- personnal stylesheet -->
   <link href="https://fonts.googleapis.com/css?family=Poppins|Quicksand|Raleway" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
   <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 
@@ -154,16 +155,13 @@
   <!-- END NAV BAR -->
 
   <div class="container-fluid">
-    <h2 class="text-left">Trouvez votre futur voyage Team Building</h2>
-
-    <br></br>
+    <h3 class="text-left mt-3 mb-3">Trouvez votre futur voyage Team Building</h3>
 
     <div class="row d-flex align-items-center">
       <select class="col-lg-3 custom-select m-2">
         <option selected>Nombre de participants</option>
         <option value="1">De 1 à 10 participants</option>
-        <option value="2">De 11 à 20 participants</option>
-        <option value="3">De 21 à 30 participants</option>
+        <option value="2">De 11 à 30 participants</option>
         <option value="4">Plus de 30 participants</option>
       </select>
 
@@ -171,8 +169,7 @@
         <option selected>Votre Budget</option>
         <option value="1">De 1 à 500€/participant</option>
         <option value="2">De 500 à 1000€/participant</option>
-        <option value="3">De 1000 à 1500€/participant</option>
-        <option value="4">Plus de 1500€/participant</option>
+        <option value="4">Plus de 1000€/participant</option>
       </select>
 
       <select class="col-lg-3 custom-select m-2">
@@ -184,219 +181,311 @@
 
       <button type="button" class="col-lg-1 btn btn-lg btn-primary m-2 p-1" disabled>Recherche</button>
       <button type="button" class="col-lg-1 btn btn-secondary btn-lg m-2 p-1" disabled>Reset</button>
-
     </div>
 
-    <br></br>
-
-    <hr></hr>
-
-    <br></br>
+    <hr class="my-5" style="border: 2px solid #9dcb77;"></hr>
 
     <div class="row">
 
-      <div class="col-lg-4 card" style="width: 18rem;">
+      <div class="col-12 col-md-6 col-lg-4 d-none d-sm-block card" style="width: 18rem;">
         <img class="card-img-top" src="/images/chevreuse1.jpg" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">Les sentiers de la Vallée de Chevreuse</h5>
+          <h6>Sports - Aventures</h6>
           <p class="card-text">Venez découvrir les sentiers secrets de la vallée de Chevreuse à travers un parcours Trail à effectuer en équipe avec vos collaborateurs. Une expérience enrichissante dans un environnement unique à proximité direct de Paris !</p>
-          <div class="europrice">
-            <img src="/images/euro.png" alt="">
+          <div class="row justify-content-between">
+            <div class="europrice">
+              <h6 class="pl-3">Budget : <i class="fas fa-coins"></i></h6>
+            </div>
+            <div class="difficulty">
+              <h6 class="pr-3">Difficulté : <i class="fas fa-fire"></i></h6>
+            </div>
           </div>
-          <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          </div>
         </div>
       </div>
 
-      <div class="col-lg-4 card" style="width: 18rem;">
+      <div class="col-12 col-md-6 col-lg-4 d-none d-sm-block card" style="width: 18rem;">
         <img class="card-img-top" src="/images/basque.jpg" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">Dompter la vague basque</h5>
+          <h6>Sports - Aventures</h6>
           <p class="card-text">Faites découvrir le surf à vos collaborateurs dans le « spot » le plus réputé de France : la côte basque. Un weekend riche en expériences et en sport à partager en équipe et ainsi consolider la cohésion au sein de votre entreprise !</p>
-          <div class="europrice">
-            <img src="/images/euro.png" alt="">
+          <div class="row justify-content-between">
+            <div class="europrice">
+              <h6 class="pl-3">Budget : <i class="fas fa-coins"></i></h6>
+            </div>
+            <div class="difficulty">
+              <h6 class="pr-3">Difficulté : <i class="fas fa-fire"></i><i class="fas fa-fire"></i></h6>
+            </div>
           </div>
-          <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          </div>
         </div>
       </div>
 
-      <div class="col-lg-4 card" style="width: 18rem;">
+      <div class="col-12 col-md-6 col-lg-4 d-none d-sm-block card" style="width: 18rem;">
         <img class="card-img-top" src="/images/landes.jpg" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">Le bootcamp des Landes</h5>
+          <h6>Sports - Aventures</h6>
           <p class="card-text">Offrez l’expérience d’un Bootcamp inoubliable à vos collaborateurs. Au programme : des activités physiques en équipe et connexion à la nature sauvage de ce territoire unique en France. Une expérience intense et enrichissante !</p>
-          <div class="europrice">
-            <img src="/images/euro.png" alt="">
-            <img src="/images/euro.png" alt="">
+          <div class="row justify-content-between">
+            <div class="europrice">
+              <h6 class="pl-3">Budget : <i class="fas fa-coins"></i><i class="fas fa-coins"></i></h6>
+            </div>
+            <div class="difficulty">
+              <h6 class="pr-3">Difficulté : <i class="fas fa-fire"></i><i class="fas fa-fire"></i></h6>
+            </div>
           </div>
-          <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          </div>
         </div>
       </div>
 
-      <div class="col-lg-4 card" style="width: 18rem;">
+      <div class="col-12 col-md-6 col-lg-4 d-none d-sm-block card" style="width: 18rem;">
         <img class="card-img-top" src="/images/scotland.jpg" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">En équipe en Ecosse</h5>
+          <h6>Sports - Aventures</h6>
           <p class="card-text">Prenez le temps de découvrir les fameux Highlands écossais, une aventure à partager en groupe pour tester et renforcer la cohésion au sein de votre équipe. Une randonnée unique qui vaut le détour !</p>
-          <div class="europrice">
-            <img src="/images/euro.png" alt="">
-            <img src="/images/euro.png" alt="">
-            <img src="/images/euro.png" alt="">
+          <div class="row justify-content-between">
+            <div class="europrice">
+              <h6 class="pl-3">Budget : <i class="fas fa-coins"></i><i class="fas fa-coins"></i><i class="fas fa-coins"></i></h6>
+            </div>
+            <div class="difficulty">
+              <h6 class="pr-3">Difficulté : <i class="fas fa-fire"></i><i class="fas fa-fire"></i></h6>
+            </div>
           </div>
-          <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          </div>
         </div>
       </div>
 
-      <div class="col-lg-4 card" style="width: 18rem;">
+      <div class="col-12 col-md-6 col-lg-4 d-none d-sm-block card" style="width: 18rem;">
         <img class="card-img-top" src="/images/alpes.jpg" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">La traversée des Alpes</h5>
+          <h6>Sports - Aventures</h6>
           <p class="card-text">Un parcours historique de légende dans les Alpes, entre la France et l’Italie, durant lequel vos collaborateurs feront face ensemble à de véritables challenges. Sensations fortes garanties !</p>
-          <div class="europrice">
-            <img src="/images/euro.png" alt="">
-            <img src="/images/euro.png" alt="">
-            <img src="/images/euro.png" alt="">
+          <div class="row justify-content-between">
+            <div class="europrice">
+              <h6 class="pl-3">Budget : <i class="fas fa-coins"></i><i class="fas fa-coins"></i><i class="fas fa-coins"></i></h6>
+            </div>
+            <div class="difficulty">
+              <h6 class="pr-3">Difficulté : <i class="fas fa-fire"></i><i class="fas fa-fire"></i><i class="fas fa-fire"></i></h6>
+            </div>
           </div>
-          <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          </div>
         </div>
       </div>
 
-    </div>
 
-    <div class="row">
-
-      <div class="col-lg-4 card" style="width: 18rem;">
+      <div class="col-12 col-md-6 col-lg-4 d-none d-sm-block card" style="width: 18rem;">
         <img class="card-img-top" src="/images/versailles.jpg" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">La Course d’orientation des rois de France</h5>
-          <p class="card-text">Dans le cadre exceptionnel es jardins du Château de Versailles, faites participer vos collaborateurs à une vaste course d’orientation en équipe. Une journée de découverte avec pour objectif la consolidation de votre culture d’entreprise !</p>
-          <div class="europrice">
-            <img src="/images/euro.png" alt="">
+          <h6>Découverte</h6>
+          <p class="card-text">Dans le cadre exceptionnel du Château de Versailles, faites participer vos collaborateurs à une vaste course d’orientation en équipe. Une journée avec pour objectif la consolidation de votre culture d’entreprise !</p>
+          <div class="row justify-content-between">
+            <div class="europrice">
+              <h6 class="pl-3">Budget : <i class="fas fa-coins"></i></h6>
+            </div>
+            <div class="difficulty">
+              <h6 class="pr-3">Difficulté : <i class="fas fa-fire"></i></h6>
+            </div>
           </div>
-          <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          </div>
         </div>
       </div>
 
-      <div class="col-lg-4 card" style="width: 18rem;">
+      <div class="col-12 col-md-6 col-lg-4 d-none d-sm-block card" style="width: 18rem;">
         <img class="card-img-top" src="/images/volcans.jpg" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">Au cœur des volcans d’Auvergne</h5>
+          <h6>Découverte</h6>
           <p class="card-text">Venez profiter en équipe d’un environnement unique en France : les volcans d’Auvergne. Un weekend riche en expériences pour découvrir les spécificités du terroir auvergnat. Faites prendre de la hauteur à vos collaborateurs !</p>
-          <div class="europrice">
-            <img src="/images/euro.png" alt="">
-            <img src="/images/euro.png" alt="">
+          <div class="row justify-content-between">
+            <div class="europrice">
+              <h6 class="pl-3">Budget : <i class="fas fa-coins"></i><i class="fas fa-coins"></i></h6>
+            </div>
+            <div class="difficulty">
+              <h6 class="pr-3">Difficulté : <i class="fas fa-fire"></i><i class="fas fa-fire"></i></h6>
+            </div>
           </div>
-          <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          </div>
         </div>
       </div>
 
-      <div class="col-lg-4 card" style="width: 18rem;">
+      <div class="col-12 col-md-6 col-lg-4 d-none d-sm-block card" style="width: 18rem;">
         <img class="card-img-top" src="/images/ardeche.jpg" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">Les Trésors de l’Ardèche</h5>
+          <h6>Découverte</h6>
           <p class="card-text">Faites découvrir à vos collaborateurs l'Ardèche et ses paysages à couper le souffle ainsi que son riche terroir. Un weekend pour apprendre à mieux se connaitre et ainsi améliorer la productivité globale de votre équipe !</p>
-          <div class="europrice">
-            <img src="/images/euro.png" alt="">
-            <img src="/images/euro.png" alt="">
+          <div class="row justify-content-between">
+            <div class="europrice">
+              <h6 class="pl-3">Budget : <i class="fas fa-coins"></i><i class="fas fa-coins"></i></h6>
+            </div>
+            <div class="difficulty">
+              <h6 class="pr-3">Difficulté : <i class="fas fa-fire"></i><i class="fas fa-fire"></i></h6>
+            </div>
           </div>
-          <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          </div>
         </div>
       </div>
 
-      <div class="col-lg-4 card" style="width: 18rem;">
+      <div class="col-12 col-md-6 col-lg-4 d-none d-sm-block card" style="width: 18rem;">
         <img class="card-img-top" src="/images/italy.jpg" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">La Quête italienne</h5>
-          <p class="card-text">Offrez à vos collaborateurs une expérience unique à travers une chasse au trésor entre Bergame et Venise. Une quête à effectuer en équipe durant un voyage inoubliable dans le nord de l’Italie. Epanouissement et découvertes seront au rendez-vous !</p>
-          <div class="europrice">
-            <img src="/images/euro.png" alt="">
-            <img src="/images/euro.png" alt="">
-            <img src="/images/euro.png" alt="">
+          <h6>Découverte</h6>
+          <p class="card-text">Offrez à vos collaborateurs une expérience unique à travers une chasse au trésor entre Bergame et Venise à effectuer en équipe durant un voyage inoubliable dans le nord de l’Italie. Epanouissement et découvertes seront au rendez-vous !</p>
+          <div class="row justify-content-between">
+            <div class="europrice">
+              <h6 class="pl-3">Budget : <i class="fas fa-coins"></i><i class="fas fa-coins"></i><i class="fas fa-coins"></i></h6>
+            </div>
+            <div class="difficulty">
+              <h6 class="pr-3">Difficulté : <i class="fas fa-fire"></i><i class="fas fa-fire"></i><i class="fas fa-fire"></i></h6>
+            </div>
           </div>
-          <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          </div>
         </div>
       </div>
 
-      <div class="col-lg-4 card" style="width: 18rem;">
+      <div class="col-12 col-md-6 col-lg-4 d-none d-sm-block card" style="width: 18rem;">
         <img class="card-img-top" src="/images/montenegro.jpg" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">Les secrets du Monténégro</h5>
-          <p class="card-text">Partez avec votre équipe à la découverte d’un magnifique pays d’Europe : le Monténégro. Des paysages magnifiques et une culture locale riche qui sauront séduire vos collaborateurs, un voyage idéal pour apprendre à mieux se connaitre !</p>
-          <div class="europrice">
-            <img src="/images/euro.png" alt="">
-            <img src="/images/euro.png" alt="">
-            <img src="/images/euro.png" alt="">
+          <h6>Découverte</h6>
+          <p class="card-text">Partez avec votre équipe à la découverte du Monténégro. Des paysages magnifiques et une culture locale riche qui sauront séduire vos collaborateurs, un voyage idéal pour apprendre à mieux se connaitre !</p>
+          <div class="row justify-content-between">
+            <div class="europrice">
+              <h6 class="pl-3">Budget : <i class="fas fa-coins"></i><i class="fas fa-coins"></i><i class="fas fa-coins"></i></h6>
+            </div>
+            <div class="difficulty">
+              <h6 class="pr-3">Difficulté : <i class="fas fa-fire"></i><i class="fas fa-fire"></i><i class="fas fa-fire"></i></h6>
+            </div>
           </div>
-          <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          </div>
         </div>
       </div>
 
-    </div>
 
-    <div class="row">
-
-      <div class="col-lg-4 card" style="width: 18rem;">
+      <div class="col-12 col-md-6 col-lg-4 d-none d-sm-block card" style="width: 18rem;">
         <img class="card-img-top" src="/images/animals.jpg" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">Connexion animale</h5>
+          <h6>Bien-être</h6>
           <p class="card-text">Partez avec vos collaborateurs à la rencontre exceptionnelle d'animaux pas comme les autres et découvrez ainsi leurs incroyables vertus thérapeutiques pour apporter un maximum de bien être à votre équipe !</p>
-          <div class="europrice">
-            <img src="/images/euro.png" alt="">
+          <div class="row justify-content-between">
+            <div class="europrice">
+              <h6 class="pl-3">Budget : <i class="fas fa-coins"></i></h6>
+            </div>
+            <div class="difficulty">
+              <h6 class="pr-3">Difficulté : <i class="fas fa-fire"></i></h6>
+            </div>
           </div>
-          <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          </div>
         </div>
       </div>
 
-      <div class="col-lg-4 card" style="width: 18rem;">
+      <div class="col-12 col-md-6 col-lg-4 d-none d-sm-block card" style="width: 18rem;">
         <img class="card-img-top" src="/images/boudhisme.jpg" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">Initiation au bouddhisme</h5>
+          <h6>Bien-être</h6>
           <p class="card-text">Faites découvrir à vos collaborateurs les bienfaits de la philosophie bouddhiste et ses vertus sur la cohésion globale de votre entreprise. Un weekend plein d’enseignement encadré par des moines bouddhistes passionnants !</p>
-          <div class="europrice">
-            <img src="/images/euro.png" alt="">
-            <img src="/images/euro.png" alt="">
+          <div class="row justify-content-between">
+            <div class="europrice">
+              <h6 class="pl-3">Budget : <i class="fas fa-coins"></i><i class="fas fa-coins"></i></h6>
+            </div>
+            <div class="difficulty">
+              <h6 class="pr-3">Difficulté : <i class="fas fa-fire"></i></h6>
+            </div>
           </div>
-          <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          </div>
         </div>
       </div>
 
-      <div class="col-lg-4 card" style="width: 18rem;">
+      <div class="col-12 col-md-6 col-lg-4 d-none d-sm-block card" style="width: 18rem;">
         <img class="card-img-top" src="/images/yoga.jpg" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">Yoga au sommet</h5>
+          <h6>Bien-être</h6>
           <p class="card-text">Offrez l’opportunité à vos collaborateurs de découvrir le yoga durant un weekend d’initiation… au sommet des Pyrénées ! Dans un refuge de montagne vous profiterez de l’air frais et des magnifiques paysages pour ressourcer leurs chakras !</p>
-          <div class="europrice">
-            <img src="/images/euro.png" alt="">
-            <img src="/images/euro.png" alt="">
+          <div class="row justify-content-between">
+            <div class="europrice">
+              <h6 class="pl-3">Budget : <i class="fas fa-coins"></i><i class="fas fa-coins"></i></h6>
+            </div>
+            <div class="difficulty">
+              <h6 class="pr-3">Difficulté : <i class="fas fa-fire"></i><i class="fas fa-fire"></i></h6>
+            </div>
           </div>
-          <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          </div>
         </div>
       </div>
 
-      <div class="col-lg-4 card" style="width: 18rem;">
+      <div class="col-12 col-md-6 col-lg-4 d-none d-sm-block card" style="width: 18rem;">
         <img class="card-img-top" src="/images/desert.jpg" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">Les bienfaits du désert</h5>
+          <h6>Bien-être</h6>
           <p class="card-text">Embarquez avec votre équipe, direction le Sahara marocain ! Au programme : de la relaxation, de la méditation et une randonnée loin de toutes les préoccupations du quotidien. De quoi ressourcer totalement vos collaborateurs !</p>
-          <div class="europrice">
-            <img src="/images/euro.png" alt="">
-            <img src="/images/euro.png" alt="">
-            <img src="/images/euro.png" alt="">
+          <div class="row justify-content-between">
+            <div class="europrice">
+              <h6 class="pl-3">Budget : <i class="fas fa-coins"></i><i class="fas fa-coins"></i><i class="fas fa-coins"></i></h6>
+            </div>
+            <div class="difficulty">
+              <h6 class="pr-3">Difficulté : <i class="fas fa-fire"></i><i class="fas fa-fire"></i></h6>
+            </div>
           </div>
-          <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          </div>
         </div>
       </div>
 
-      <div class="col-lg-4 card" style="width: 18rem;">
+      <div class="col-12 col-md-6 col-lg-4 d-none d-sm-block card" style="width: 18rem;">
         <img class="card-img-top" src="/images/norvege.jpg" alt="Card image cap">
         <div class="card-body">
-          <h5 class="card-title">Bien-Etre à la norvégienne</h5>
+          <h5 class="card-title">Bien-être à la norvégienne</h5>
+          <h6>Bien-être</h6>
           <p class="card-text">Direction la Norvège pour un voyage 100% bien-être et activité physique. Découvrez avec vos collaborateurs les fjords nordiques à travers un parcours de marche nordique agrémenté de haltes dans des lieux typiquement norvégiens !</p>
-          <div class="europrice">
-            <img src="/images/euro.png" alt="">
-            <img src="/images/euro.png" alt="">
-            <img src="/images/euro.png" alt="">
+          <div class="row justify-content-between">
+            <div class="europrice">
+              <h6 class="pl-3">Budget : <i class="fas fa-coins"></i><i class="fas fa-coins"></i><i class="fas fa-coins"></i></h6>
+            </div>
+            <div class="difficulty">
+              <h6 class="pr-3">Difficulté : <i class="fas fa-fire"></i><i class="fas fa-fire"></i><i class="fas fa-fire"></i></h6>
+            </div>
           </div>
-          <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+          </div>
         </div>
       </div>
 

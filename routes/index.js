@@ -109,8 +109,8 @@ var userSchema = mongoose.Schema({
     startdate: String,
     enddate: String,
     team: Number,
-    file: url,
-    file2: url
+    file: String,
+    file2: String
 });
 
 

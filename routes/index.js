@@ -85,7 +85,24 @@ mongoose.connect('mongodb://capsule:azerty@ds139459.mlab.com:39459/waildeproject
 
 
 // 3) Schéma Collection trips
-
+var userSchema = mongoose.Schema({
+    saltution: String
+    lastName: String,
+    firstName: String,
+    company: String,
+    triptitle: String,
+    tripdesc: String,
+    location: String,
+    theme: String,
+    difficulty: String,
+    budget: Number,
+    duration: String,
+    startdate: String,
+    enddate: String,
+    team: Number,
+    file: url,
+    file2: url
+});
 
 
 

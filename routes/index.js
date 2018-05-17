@@ -95,7 +95,7 @@ var userModel = mongoose.model('users', userSchema);
 
 // 3) Schéma Collection trips
 var userSchema = mongoose.Schema({
-    saltution: String
+    salutation: String,
     lastName: String,
     firstName: String,
     company: String,

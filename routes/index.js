@@ -45,10 +45,10 @@ mongoose.connect('mongodb://capsule:azerty@ds139459.mlab.com:39459/waildeproject
 var partnerSchema = mongoose.Schema({
     email: String,
     password: String,
-    civil: String,
+    salutation: String,
     lastname: String,
     firstname: String,
-    companyname: String
+    company: String
 });
 
 var patnerModel = mongoose.model('partners', partnerSchema);
@@ -69,10 +69,10 @@ var patnerModel = mongoose.model('partners', partnerSchema);
 var userSchema = mongoose.Schema({
     email: String,
     password: String,
-    civil: String,
+    salutation: String,
     lastname: String,
     firstname: String,
-    companyname: String
+    company: String
 });
 
 var userModel = mongoose.model('users', userSchema);

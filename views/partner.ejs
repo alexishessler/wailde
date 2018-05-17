@@ -154,158 +154,216 @@
   </div>
   <!-- END NAV BAR -->
 
-<div class="form-partner">
-<div class="container">
-  <div class="row partner-header">
-    <h1>Bienvenue sur l'espace partenaires</h1>
-    <h2>Vous souhaitez proposer une offre de voyage ?</h2>
-  </div>
-  <div class="row">
+  <div class="form-partner">
+    <div class="container">
+      <div class="row partner-header">
+        <h1>Bienvenue sur l'espace partenaires</h1>
+        <h2>Vous souhaitez proposer une offre de voyage ?</h2>
+      </div>
+      <div class="row">
 
 
 
 
-    <form class="form-color">
-
-      <div class="form-group row">
-        <label for="disabledTextInput">Disabled input</label>
-        <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
-      </div>
-
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Prénom</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" placeholder="Prénom">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Nom</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" placeholder="Nom">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Raison sociale</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" placeholder="Prénom">
-        </div>
-      </div>
-      <div class="form-group row">
-        <label class="col-sm-2 col-form-label">Titre du voyage</label>
-        <div class="col-sm-10">
-          <input type="text" class="form-control" placeholder="Titre du voyage">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="exampleFormControlTextarea1">Description du voyage</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-      </div>
-      <div class="form-group">
-        <label for="exampleFormControlSelect1">Thématique du voyage</label>
-        <select class="form-control" id="exampleFormControlSelect1">
-          <option>Aventure</option>
-          <option>Bien-être</option>
-          <option>Découverte</option>
+        <form class="form-color">
+          <fieldset disabled>
+            <div class="form-group row">
+              <label for="disabledTextInput">Email</label>
+              <input name="email" type="text" id="disabledTextInput" class="form-control" value="dynamicEmail@gmail.com">
+            </div>
+            <div class="form-group row">
+              <label for="exampleFormControlSelect1">Civilité</label>
+              <select name="salutation" class="form-control" id="exampleFormControlSelect1">
+          <option>dynamicMonsieur/Madame</option>
         </select>
-      </div>
-      <fieldset class="form-group">
-         <div class="row">
-           <legend class="col-form-label col-sm-2 pt-0">Difficulté</legend>
-           <div class="col-sm-10">
-             <div class="form-check">
-               <input class="form-check-input" type="radio" name="gridRadiosDifficulte" id="gridRadios1" value="difficulte1" checked>
-               <label class="form-check-label" for="gridRadios1">
+            </div>
+            <div class="form-group row">
+              <label for="disabledTextInput">Prénom</label>
+              <input name="firstName" type="text" id="disabledTextInput" class="form-control" value="dynamicPrenom">
+            </div>
+            <div class="form-group row">
+              <label for="disabledTextInput">Nom</label>
+              <input name="lastName" type="text" id="disabledTextInput" class="form-control" value="dynamicNom">
+            </div>
+            <div class="form-group row">
+              <label for="disabledTextInput">Entreprise</label>
+              <input name="company" type="text" id="disabledTextInput" class="form-control" value="dynamicNomEntreprise">
+            </div>
+          </fieldset>
+          <div class="form-group row">
+            <label>Titre du voyage</label>
+            <input name="triptitle" type="text" class="form-control" placeholder="Nouveau wailde trip">
+          </div>
+          <div class="form-group row">
+            <label>Pays</label>
+            <input name="location" type="text" class="form-control" placeholder="Pays du trip">
+          </div>
+          <div class="form-group row">
+            <label>Description du voyage</label>
+            <textarea name="tripdesc" type="text" class="form-control" placeholder="Décrivez votre voyage en quelques lignes" rows="5"></textarea>
+          </div>
+
+          <fieldset class="form-group row">
+            <div class="row">
+              <legend class="col-form-label col-sm-2 pt-0">Theme</legend>
+              <div class="col-sm-10">
+                <div class="form-check">
+                  <input name="theme" class="form-check-input" type="radio" id="gridRadios1" value="1" checked>
+                  <label class="form-check-label" for="gridRadios1">
+               Découverte
+             </label>
+                </div>
+                <div class="form-check">
+                  <input name="theme" class="form-check-input" type="radio" id="gridRadios2" value="2">
+                  <label class="form-check-label" for="gridRadios2">
+               Aventure
+             </label>
+                </div>
+                <div class="form-check">
+                  <input name="theme" class="form-check-input" type="radio" id="gridRadios3" value="3">
+                  <label class="form-check-label" for="gridRadios3">
+               Bien-être
+             </label>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="form-group row">
+            <div class="row">
+              <legend class="col-form-label col-sm-2 pt-0">Difficulté</legend>
+              <div class="col-sm-10">
+                <div class="form-check">
+                  <input name="difficulty" class="form-check-input" type="radio" id="gridRadios1" value="difficulte1" checked>
+                  <label class="form-check-label" for="gridRadios1">
                  <span class="icons-partner"><i class="fas fa-fire"></i></span> Ballade du dimanche
                </label>
-             </div>
-             <div class="form-check">
-               <input class="form-check-input" type="radio" name="gridRadiosDifficulte" id="gridRadios2" value="difficulte2">
-               <label class="form-check-label" for="gridRadios2">
+                </div>
+                <div class="form-check">
+                  <input name="difficulty" class="form-check-input" type="radio" id="gridRadios2" value="difficulte2">
+                  <label class="form-check-label" for="gridRadios2">
                  <span class="icons-partner"><i class="fas fa-fire"></i><i class="fas fa-fire"></i></span> Humble baroudeur
                </label>
-             </div>
-             <div class="form-check">
-               <input class="form-check-input" type="radio" name="gridRadiosDifficulte" id="gridRadios3" value="difficulte3">
-               <label class="form-check-label" for="gridRadios3">
+                </div>
+                <div class="form-check">
+                  <input name="difficulty" class="form-check-input" type="radio" id="gridRadios3" value="difficulte3">
+                  <label class="form-check-label" for="gridRadios3">
                  <span class="icons-partner"><i class="fas fa-fire"></i><i class="fas fa-fire"></i><i class="fas fa-fire"></i></span> Montagnard aguerri
                </label>
-             </div>
-           </div>
-         </div>
-       </fieldset>
-       <fieldset class="form-group">
-          <div class="row">
-            <legend class="col-form-label col-sm-2 pt-0">Nombre de personnes</legend>
-            <div class="col-sm-10">
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="gridRadiosNb" id="gridRadios3" value="nb1" checked>
-                <label class="form-check-label" for="gridRadios1">
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          <fieldset class="form-group row">
+            <div class="row">
+              <legend class="col-form-label col-sm-2 pt-0">Nombre de personnes</legend>
+              <div class="col-sm-10">
+                <div class="form-check">
+                  <input name="team" class="form-check-input" type="radio" id="gridRadios3" value="1" checked>
+                  <label class="form-check-label" for="gridRadios1">
                   <span class="icons-partner"><i class="fas fa-female"></i></span> 1 à 10 personne(s)
                 </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="gridRadiosNb" id="gridRadios4" value="nb2">
-                <label class="form-check-label" for="gridRadios2">
+                </div>
+                <div class="form-check">
+                  <input name="team" class="form-check-input" type="radio" id="gridRadios4" value="2">
+                  <label class="form-check-label" for="gridRadios2">
                   <span class="icons-partner"><i class="fas fa-female"></i><i class="fas fa-male"></i></span> 11 à 30 personnes
                 </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="gridRadiosNb" id="gridRadios5" value="nb3">
-                <label class="form-check-label" for="gridRadios3">
+                </div>
+                <div class="form-check">
+                  <input name="team" class="form-check-input" type="radio" id="gridRadios5" value="3">
+                  <label class="form-check-label" for="gridRadios3">
                   <span class="icons-partner"><i class="fas fa-female"></i><i class="fas fa-male"></i><i class="fas fa-female"></i></span> +30 personnes
                 </label>
+                </div>
               </div>
             </div>
-          </div>
-        </fieldset>
-       <fieldset class="form-group">
-          <div class="row">
-            <legend class="col-form-label col-sm-2 pt-0">Budget à prévoir</legend>
-            <div class="col-sm-10">
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="gridRadiosBudget" id="gridRadios6" value="budget1" checked>
-                <label class="form-check-label" for="gridRadios1">
+          </fieldset>
+          <fieldset class="form-group row">
+            <div class="row">
+              <legend class="col-form-label col-sm-2 pt-0">Budget à prévoir</legend>
+              <div class="col-sm-10">
+                <div class="form-check">
+                  <input name="budget" class="form-check-input" type="radio" id="gridRadios6" value="1" checked>
+                  <label class="form-check-label" for="gridRadios1">
                   <span class="icons-partner"><i class="fas fa-coins"></i></span> 1 à 500€ / jour / personne
                 </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="gridRadiosBudget" id="gridRadios7" value="budget2">
-                <label class="form-check-label" for="gridRadios2">
+                </div>
+                <div class="form-check">
+                  <input name="budget" class="form-check-input" type="radio" id="gridRadios7" value="2">
+                  <label class="form-check-label" for="gridRadios2">
                   <span class="icons-partner"><i class="fas fa-coins"></i><i class="fas fa-coins"></i></span> 500 à 1000€ / jour / personne
                 </label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="radio" name="gridRadiosBudget" id="gridRadios8" value="budget3">
-                <label class="form-check-label" for="gridRadios3">
+                </div>
+                <div class="form-check">
+                  <input name="budget" class="form-check-input" type="radio" id="gridRadios8" value="3">
+                  <label class="form-check-label" for="gridRadios3">
                   <span class="icons-partner"><i class="fas fa-coins"></i><i class="fas fa-coins"></i><i class="fas fa-coins"></i></span>  +1000€ / jour / personne
                 </label>
+                </div>
               </div>
             </div>
+          </fieldset>
+
+          <fieldset class="form-group row">
+            <div class="row">
+              <legend class="col-form-label col-sm-2 pt-0">Durée</legend>
+              <div class="col-sm-10">
+                <div class="form-check">
+                  <input name="duration" class="form-check-input" type="radio" id="gridRadios1" value="1" checked>
+                  <label class="form-check-label" for="gridRadios1">
+                   3 jours
+                 </label>
+                </div>
+                <div class="form-check">
+                  <input name="duration" class="form-check-input" type="radio" id="gridRadios2" value="2">
+                  <label class="form-check-label" for="gridRadios2">
+                   5 jours
+                 </label>
+                </div>
+                <div class="form-check">
+                  <input name="duration" class="form-check-input" type="radio" id="gridRadios3" value="3">
+                  <label class="form-check-label" for="gridRadios3">
+                   10 jours
+                 </label>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+
+          <div class="form-group row">
+            <p>Date de début</p>
+            <input name="startdate" id="date" type="date" class="form-control">
           </div>
-        </fieldset>
-       <div class="form-group row">
-          <p>Sélectionner une photo globale d'illustration</p>
-          <div class="custom-file">
-           <input type="file" class="custom-file-input" id="validatedCustomFile" required>
-           <label class="custom-file-label" for="validatedCustomFile">Choix du fichier</label>
-         </div>
-       </div>
-       <div class="form-group row">
-          <p>Sélectionner une photo de l'hébergement</p>
-          <div class="custom-file">
-           <input type="file" class="custom-file-input" id="validatedCustomFile" required>
-           <label class="custom-file-label" for="validatedCustomFile">Choix du fichier</label>
-         </div>
-       </div>
-      <div class="form-group row">
-        <div class="col-sm-10">
-          <button type="submit" class="btn btn-success">Poster</button>
-        </div>
+
+          <div class="form-group row">
+            <p>Date de fin</p>
+            <input name="enddate" id="date2" type="date" class="form-control">
+          </div>
+
+          <div class="form-group row">
+            <p>Sélectionner une photo globale d'illustration</p>
+            <div class="custom-file">
+              <input name="file" type="file" class="custom-file-input" id="validatedCustomFile" required>
+              <label class="custom-file-label" for="validatedCustomFile">Choix du fichier</label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <p>Sélectionner une photo de l'hébergement</p>
+            <div class="custom-file">
+              <input name="file" type="file" class="custom-file-input" id="validatedCustomFile" required>
+              <label class="custom-file-label" for="validatedCustomFile">Choix du fichier</label>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="col-sm-10">
+              <button type="submit" class="btn btn-success">Poster</button>
+            </div>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   </div>
-</div>
-</div>
 
 
 
@@ -321,4 +379,5 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
 
 </body>
+
 </html>

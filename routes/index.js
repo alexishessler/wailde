@@ -40,14 +40,18 @@ mongoose.connect('mongodb://capsule:azerty@ds139459.mlab.com:39459/waildeproject
 // ****************************************************************
 
 
-
-
-
-
 // 1) Schéma Collection partner
 
+var partnerSchema = mongoose.Schema({
+    email: String,
+    password: String,
+    civil: String,
+    lastname: String,
+    firstname: String,
+    companyname: String
+});
 
-
+var patnerModel = mongoose.model('partners', partnerSchema);
 
 
 
@@ -56,17 +60,22 @@ mongoose.connect('mongodb://capsule:azerty@ds139459.mlab.com:39459/waildeproject
 // ****************************************************************
 // ****************************************************************
 // ****************************************************************
-
-
-
-
-
 
 
 
 // 2) Schéma Collection user
 
 
+var userSchema = mongoose.Schema({
+    email: String,
+    password: String,
+    civil: String,
+    lastname: String,
+    firstname: String,
+    companyname: String
+});
+
+var userModel = mongoose.model('users', userSchema);
 
 
 

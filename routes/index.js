@@ -15,11 +15,21 @@ var stripe = require("stripe")("sk_test_95zmCFtr3vHOffkw0DEfXiiI");
 // il faut ajouter stripe (voir credentials sur Slack)
 // HERE ARE THE MODULES WE USE
 
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
+router.post('/trip', function(req, res, next) {
+  var stripe = require("stripe")("sk_test_95zmCFtr3vHOffkw0DEfXiiI");
+  const token = req.body.stripeToken;
+  const charge = stripe.charges.create({
+  amount: 999,
+  currency: 'eur',
+  description: 'Example charge',
+  source: token,
+  });
+
+
+  res.render('confirmation');
+});
+
+
 
 // HERE IS THE CONNECTION TO OUR MLAB DATABASE
 var options = { server: { socketOptions: {connectTimeoutMS: 5000 } }};
@@ -135,15 +145,13 @@ var tripModel = mongoose.model('trips', tripSchema);
 
 
 
-
-
-
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
-
+var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 8
+        });
+      }
 
 
 // HERE ARE THE NAVBAR LINKS
@@ -220,17 +228,6 @@ router.get('/trip', function(req, res, next) {
 });
 
 
-/* GOOGLE MAP */
-
-var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 8
-        });
-      }
-
-
 
 
 /* GET experience page. */
@@ -254,7 +251,45 @@ router.post('/signin', function(req, res, next) {
 router.post('/signup', function(req, res, next) {
   res.render('search-trip');
 });
+
+
 // HERE ARE THE SIGN-IN & SIGN-UP ROUTES
+
+router.post('/signup', function(req, res, next) {
+
+  userModel.find(
+      { email: req.body.email} ,
+      function (err, users) {
+        if(users.length == 0) {
+
+        var newUser = new userModel ({
+         name: req.body.name,
+         email: req.body.email,
+         password: req.body.password
+         salutation: req.body.salutation,
+         lastname: req.body.lastname,
+         firstname: req.body.firstname,
+         company: req.body.company
+
+        });
+        newUser.save(
+          function (error, user) {
+            req.session.user = user;
+            CityModel.find(
+                 {user_id: req.session.user._id},
+                 function (error, cityList) {
+                   res.render('index', { cityList, user : req.session.user });
+                 }
+             )
+          }
+        );
+      } else {
+        res.render('login');
+      }
+    }
+  );
+});
+
 
 
 /* GET partner form. */
@@ -263,19 +298,12 @@ router.get('/confirmation', function(req, res, next) {
 });
 
 
-router.post('/trip', function(req, res, next) {
-  var stripe = require("stripe")("sk_test_95zmCFtr3vHOffkw0DEfXiiI");
-  const token = req.body.stripeToken;
-  const charge = stripe.charges.create({
-  amount: 999,
-  currency: 'eur',
-  description: 'Example charge',
-  source: token,
-  });
 
 
-  res.render('confirmation');
-});
+
+
+
+
 
 
 module.exports = router;

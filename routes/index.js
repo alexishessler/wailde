@@ -48,6 +48,20 @@ router.get('/trip', function(req, res, next) {
   res.render('trip');
 });
 
+
+/* GOOGLE MAP */
+
+var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: -34.397, lng: 150.644},
+          zoom: 8
+        });
+      }
+
+
+
+
 /* GET experience page. */
 router.get('/experience', function(req, res, next) {
   res.render('experience');
@@ -80,6 +94,7 @@ router.get('/confirmation', function(req, res, next) {
 
 
 
+// HERE ARE THE IS THE STRIPE PAY ROUTE
 
 router.post('/trip', function(req, res, next) {
   var stripe = require("stripe")("sk_test_95zmCFtr3vHOffkw0DEfXiiI");

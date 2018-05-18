@@ -242,16 +242,6 @@ router.get('/partner', function(req, res, next) {
 
 
 // HERE ARE THE SIGN-IN & SIGN-UP ROUTES
-router.post('/signin', function(req, res, next) {
-  res.render('search-trip');
-});
-
-
-
-
-
-
-
 
 
 

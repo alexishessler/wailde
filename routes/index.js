@@ -119,7 +119,7 @@ var tripSchema = mongoose.Schema({
     duration: String,
     startdate: String,
     enddate: String,
-    team: String,
+    team: Number,
     file: String,
     file2: String
 });
@@ -175,16 +175,14 @@ router.post('/add-trip', function(req, res, next) {
     tripdesc: req.body.tripdesc,
     location: req.body.location,
     theme: req.body.theme,
-    difficulty: req.body.difficulty,
-    budget: req.body.budget,
-    duration: req.body.duration,
+    difficulty: String,
+    budget: Number,
+    duration: String,
     startdate: String,
     enddate: String,
     team: Number,
     file: String,
-    file2: String
-
-
+    file2: String,
     name: req.body.city,
     desc: body.weather[0].description,
     icon: "http://openweathermap.org/img/w/"+body.weather[0].icon+".png",
@@ -248,47 +246,52 @@ router.post('/signin', function(req, res, next) {
   res.render('search-trip');
 });
 
-router.post('/signup', function(req, res, next) {
-  res.render('search-trip');
-});
+
+
+
+
+
+
+
 
 
 // HERE ARE THE SIGN-IN & SIGN-UP ROUTES
 
+var err = []
+
+
+
 router.post('/signup', function(req, res, next) {
 
   userModel.find(
-      { email: req.body.email} ,
+      { email: req.body.email},
       function (err, users) {
         if(users.length == 0) {
-
+        console.log(users)
         var newUser = new userModel ({
-         name: req.body.name,
-         email: req.body.email,
-         password: req.body.password
-         salutation: req.body.salutation,
-         lastname: req.body.lastname,
-         firstname: req.body.firstname,
-         company: req.body.company
+          email: req.body.email,
+          password: req.body.password,
+          salutation: req.body.salutation,
+          lastname: req.body.lastname,
+          firstname: req.body.firstname,
+          company: req.body.company
 
         });
         newUser.save(
           function (error, user) {
+            console.log(users)
             req.session.user = user;
-            CityModel.find(
-                 {user_id: req.session.user._id},
-                 function (error, cityList) {
-                   res.render('index', { cityList, user : req.session.user });
+                   res.render('search-trip', { user : req.session.user });
                  }
              )
-          }
-        );
       } else {
-        res.render('login');
+        res.render('home');
       }
-    }
-  );
-});
+}
+    )
+
+    });
+
 
 
 

@@ -1,4 +1,4 @@
-// HERE ARE THE MODULES WE USE
+// HERE ARE THE MODULES WE USE DO NOT TOUCH
 var express = require('express');
 var router = express.Router();
 var session = require("express-session");
@@ -15,6 +15,11 @@ var stripe = require("stripe")("sk_test_95zmCFtr3vHOffkw0DEfXiiI");
 // il faut ajouter stripe (voir credentials sur Slack)
 // HERE ARE THE MODULES WE USE
 
+// ****************************************************************
+// ****************************************************************
+// ****************************************************************
+// ****************************************************************
+// ****************************************************************
 
 // HERE IS THE CONNECTION TO OUR MLAB DATABASE
 var options = { server: { socketOptions: {connectTimeoutMS: 5000 } }};
@@ -27,16 +32,136 @@ mongoose.connect('mongodb://capsule:azerty@ds139459.mlab.com:39459/waildeproject
 // HERE IS THE CONNECTION TO OUR MLAB DATABASE
 
 
+
+// ****************************************************************
+// ****************************************************************
+// ****************************************************************
+// ****************************************************************
+// ****************************************************************
+
+
+// 1) Schéma Collection partner
+
+var partnerSchema = mongoose.Schema({
+    email: String,
+    password: String,
+    salutation: String,
+    lastname: String,
+    firstname: String,
+    company: String
+});
+
+var patnerModel = mongoose.model('partners', partnerSchema);
+
+
+
+// ****************************************************************
+// ****************************************************************
+// ****************************************************************
+// ****************************************************************
+// ****************************************************************
+
+
+
+// 2) Schéma Collection user
+
+
+var userSchema = mongoose.Schema({
+    email: String,
+    password: String,
+    salutation: String,
+    lastname: String,
+    firstname: String,
+    company: String
+});
+
+var userModel = mongoose.model('users', userSchema);
+
+
+
+
+// ****************************************************************
+// ****************************************************************
+// ****************************************************************
+// ****************************************************************
+// ****************************************************************
+
+
+
+
+
+
+
+
+// 3) Schéma Collection trips
+var userSchema = mongoose.Schema({
+    salutation: String,
+    lastName: String,
+    firstName: String,
+    company: String,
+    triptitle: String,
+    tripdesc: String,
+    location: String,
+    theme: String,
+    difficulty: String,
+    budget: Number,
+    duration: String,
+    startdate: String,
+    enddate: String,
+    team: Number,
+    file: String,
+    file2: String
+});
+
+
+
+
+
+// ****************************************************************
+// ****************************************************************
+// ****************************************************************
+// ****************************************************************
+// ****************************************************************
+
+
+
+
+
+
+
+
+// GOOGLE MAP API
+
+
+
+
+
+
+// ****************************************************************
+// ****************************************************************
+// ****************************************************************
+// ****************************************************************
+// ****************************************************************
+
+
+
 // HERE ARE THE NAVBAR LINKS
 /* GET squeleton page. */
 router.get('/', function(req, res, next) {
   res.render('squeleton');
 });
 
+
+
+
 /* GET home page. */
 router.get('/home', function(req, res, next) {
   res.render('home');
 });
+
+
+
+
 
 /* GET search page with ALL CARDS */
 router.get('/search-trip', function(req, res, next) {
@@ -91,10 +216,6 @@ router.get('/confirmation', function(req, res, next) {
   res.render('confirmation');
 });
 
-
-
-
-// HERE ARE THE IS THE STRIPE PAY ROUTE
 
 router.post('/trip', function(req, res, next) {
   var stripe = require("stripe")("sk_test_95zmCFtr3vHOffkw0DEfXiiI");

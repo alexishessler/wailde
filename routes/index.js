@@ -104,7 +104,8 @@ var userModel = mongoose.model('users', userSchema);
 
 
 // 3) Schéma Collection trips
-var userSchema = mongoose.Schema({
+var tripSchema = mongoose.Schema({
+    email: String,
     salutation: String,
     lastName: String,
     firstName: String,
@@ -123,7 +124,7 @@ var userSchema = mongoose.Schema({
     file2: String
 });
 
-
+var tripModel = mongoose.model('trips', tripSchema);
 
 
 
@@ -158,6 +159,51 @@ var map;
 router.get('/', function(req, res, next) {
   res.render('squeleton');
 });
+
+
+
+// HERE ARE THE SIGN-IN & SIGN-UP ROUTES
+router.post('/add-trip', function(req, res, next) {
+
+
+  var newTrip = new partnerModel({
+    salutation: "dynamicEmail@gmail.com",
+    lastName: "dynamicNom",
+    firstName: "dynamicPrenom",
+    company: "dynamicNomEntreprise",
+    triptitle: req.body.triptitle,
+    tripdesc: req.body.tripdesc,
+    location: req.body.location,
+    theme: req.body.,
+    difficulty: String,
+    budget: Number,
+    duration: String,
+    startdate: String,
+    enddate: String,
+    team: Number,
+    file: String,
+    file2: String
+
+
+    name: req.body.city,
+    desc: body.weather[0].description,
+    icon: "http://openweathermap.org/img/w/"+body.weather[0].icon+".png",
+    temp_min: body.main.temp_min,
+    temp_max: body.main.temp_max,
+    lon: body.coord.lon,
+    lat: body.coord.lat,
+    user_id: req.session.user._id
+  });
+
+  var email =
+
+
+  res.render('search-trip');
+});
+
+
+
+
 
 
 

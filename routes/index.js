@@ -109,7 +109,7 @@ var tripSchema = mongoose.Schema({
     duration: String,
     startdate: String,
     enddate: String,
-    team: Number,
+    team: String,
     file: String,
     file2: String
 });
@@ -166,10 +166,10 @@ router.post('/add-trip', function(req, res, next) {
     triptitle: req.body.triptitle,
     tripdesc: req.body.tripdesc,
     location: req.body.location,
-    theme: req.body.,
-    difficulty: String,
-    budget: Number,
-    duration: String,
+    theme: req.body.theme,
+    difficulty: req.body.difficulty,
+    budget: req.body.budget,
+    duration: req.body.duration,
     startdate: String,
     enddate: String,
     team: Number,

@@ -114,7 +114,7 @@ var tripSchema = mongoose.Schema({
     file2: String
 });
 
-var partnerModel = mongoose.model('trips', tripSchema);
+var tripModel = mongoose.model('trips', tripSchema);
 
 
 
@@ -166,7 +166,7 @@ router.post('/add-trip', function(req, res, next) {
     triptitle: req.body.triptitle,
     tripdesc: req.body.tripdesc,
     location: req.body.location,
-    theme: String,
+    theme: req.body.,
     difficulty: String,
     budget: Number,
     duration: String,

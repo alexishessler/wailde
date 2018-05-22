@@ -142,7 +142,8 @@ router.get('/partner', function(req, res, next) {
 router.get('/validate-image', function(req, res, next) {
   res.render('validate-image', {
     file: '/images/' + req.session.picture,
-    file: '/images/' + picturechoice
+    file: '/images/' + picturechoice,
+    isLoggedIn: req.session.isLoggedIn
   });
 });
 
@@ -421,12 +422,12 @@ router.post('/signin', function(req, res, next) {
         )
     } else {
       req.session.isLoggedIn = false;
-      res.render('home', { isLoggedin: req.session.isLoggedIn });
+      console.log("NON CONNECTE")
+      res.redirect('home');
     }
   }
   )
-}
-);
+});
 
 
 

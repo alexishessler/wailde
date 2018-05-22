@@ -173,28 +173,13 @@
                   <input type="file" name="file" id="file" class="custom-file-input">
                   <label for="file" class="custom-file-label">Choose File</label>
                 </div>
-                <%if (files.length == 0) {%>
+
                   <input type="submit" value="Submit" class="btn btn-primary btn-block">
-                <%}%>
+
 
               </form>
               <hr>
-              <div class="col-m6">
-                <% if(files){ %>
-                  <% files.forEach(function(file) { %>
-                    <div class="card card-body mb-3">
 
-                      <img src="image/<%=file.filename%>" alt="">
-
-                      <form method="POST" action="/files/<%= file._id%>?_method=DELETE">
-                        <button class="btn btn-danger btn-block mt-4">Delete</button>
-                      </form>
-                    </div>
-                    <%}) %>
-                      <%} else { %>
-                        <p>No Files to show</p>
-                        <%} %>
-              </div>
             </div>
           </div>
 

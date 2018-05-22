@@ -40,59 +40,35 @@ mongoose.connect('mongodb://capsule:azerty@ds139459.mlab.com:39459/waildeproject
 );
 // HERE IS THE CONNECTION TO OUR MLAB DATABASE
 
-var path = require('path');
-var crypto = require('crypto');
-var mongoose = require('mongoose');
-var multer = require('multer');
-var GridFsStorage = require('multer-gridfs-storage');
-var Grid = require('gridfs-stream');
-var bodyParser = require('body-parser');
-var methodOverride = require('method-override');
+// var path = require('path');
+// var crypto = require('crypto');
+// var mongoose = require('mongoose');
+// var multer = require('multer');
+// var GridFsStorage = require('multer-gridfs-storage');
+// var Grid = require('gridfs-stream');
+// var bodyParser = require('body-parser');
+// var methodOverride = require('method-override');
 
-// MONGO URI
-var mongoURI = 'mongodb://capsule:azerty@ds139459.mlab.com:39459/waildeproject';
 
-// MONGO CONNEXION
-var conn = mongoose.createConnection(mongoURI);
 
-// INIT GridFs
-var gfs;
-
-conn.once('open', function(){
-  // Init Stream
-  gfs = Grid(conn.db, mongoose.mongo);
-  gfs.collection('uploads');
-  // all set!
-})
-
-// CREATE STORAGE ENGINE
-var storage = new GridFsStorage({
-  url: mongoURI,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return reject(err);
-        }
-        var filename = buf.toString('hex') + path.extname(file.originalname);
-        var fileInfo = {
-          filename: filename,
-          bucketName: 'uploads'
-        };
-        resolve(fileInfo);
-      });
-    });
+//
+// / SET STORAGE engine
+var storage = multer.diskStorage({
+  destination: './public/images/',
+  filename: function(req, file, cb){
+    cb(null, file.fieldname + '-' + Date.now() +
+    path.extname(file.originalname));
   }
 });
 
+// INIT UPLOAD
 var upload = multer({
   storage: storage,
-  limits:{fileSize: 3000000},
+  limits:{fileSize: 4000000},
   fileFilter: function(req, file, cb){
     checkFileType(file, cb);
   }
 }).single('file');
-
 
 // check file type
 function checkFileType(file, cb){
@@ -110,22 +86,39 @@ function checkFileType(file, cb){
   }
 };
 
-// /* GET partner form. */
-// router.get('/partner', function(req, res, next) {
-//   res.render('partner');
-// });
 
-/* GET home page. */
-router.get('/partner', function(req, res, next) {
-  gfs.files.find().toArray((err, files) => {
-      res.render('partner', {files: files});
+router.post('/upload', function(req, res, next) {
+  upload(req, res, (err) => {
+    if(err){
+        console.log("erreur 1");
+        res.redirect('/partner');
+    } else {
+      console.log(req.file);
+      // les infos du req.file sont à mettre dans la data base
+      if(req.file == undefined){
+        console.log("erreur 2");
+        res.redirect('/partner');
+      } else {
+        req.session.picture = req.file.filename
+        console.log("ca a marché!!");
+        console.log(req.session.picture);
+        res.redirect('/validate-image');
+        // pour resrender l'img, bien ajouter le img tag sur le view!!
+      }
+    }
   });
+});
+
+
+/* GET partner form. */
+router.get('/partner', function(req, res, next) {
+  res.render('partner');
 });
 
 /* GET home page. */
 router.get('/validate-image', function(req, res, next) {
-  gfs.files.find().toArray((err, files) => {
-      res.render('validate-image', {files: files});
+  res.render('validate-image', {
+    file: '/images/' + req.session.picture
   });
 });
 
@@ -162,99 +155,37 @@ router.post('/add-image', function(req, res, next) {
 
 /* GET home page. */
 router.get('/add-image', function(req, res, next) {
-  res.render('add-image');
-});
-
-router.post('/upload', function(req, res, next) {
-
-  upload(req, res, (err) => {
-    if(err){
-      console.log("Il n'y a pas d'erreur");
-      res.redirect('/partner');
-
-      console.log("Il y a une erreur");
-    } else {
-      // les infos du req.file sont à mettre dans la data base
-      if(req.file == undefined){
-        console.log("le fichier n'est pas défini!!");
-        res.redirect('/partner');
-      } else {
-        console.log(req.file.id);
-        console.log("ca a marché!!");
-        res.redirect('/validate-image');
-        // pour resrender l'img, bien ajouter le img tag sur le view!!
-      }
-    }
+  res.render('add-image', {
+    file: '/images/' + req.session.picture
   });
 });
 
-//ROUTE GET FILES/: filename
-router.get('/files/:filename', function(req, res, next) {
-  gfs.files.findOne({filename: req.params.filename}, (err, file) => {
-    // Check if file
-    if(!file || file.length === 0){
-      console.log("cest ici mon erreur 1");
-      return res.status(404).json({
-        err: 'No file exist'
-      });
-    }
-    // File Exists
-    return res.json(file);
-  });
-});
-
-// ROUTE GET IMG FILE NAME
-router.get('/image/:filename', function(req, res, next) {
-  gfs.files.findOne({filename: req.params.filename}, (err, file) => {
-    // Check if file
-    if(!file || file.length === 0){
-      console.log("cest ici mon erreur 2");
-      return res.status(404).json({
-        err: 'No file exist'
-      });
-    }
-    // check if image
-    if(file.contentType == 'image/jpeg' || file.contentType == 'image/png' || file.contentType == 'image/jpg'){
-      // read output to browser
-      var readstream = gfs.createReadStream(file.filename);
-      readstream.pipe(res);
-    } else {
-      res.status(404).json({
-        err: 'Not an image'
-      });
-    }
-  });
-});
-
-// ROUTE DESC DISPLAY ALL FILES
-router.get('/files', function(req, res, next) {
-  gfs.files.find().toArray((err, files) => {
-    // Check if files
-    if(!files || files.length === 0){
-      console.log("cest ici mon erreur 3");
-      return res.status(404).json({
-        err: 'No files exist'
-      });
-    }
-
-    // Files exist
-    return res.json(files);
-  });
-});
+// router.post('/upload', function(req, res, next) {
+//
+//   upload(req, res, (err) => {
+//     if(err){
+//       console.log("Il n'y a pas d'erreur");
+//       res.redirect('/partner');
+//
+//       console.log("Il y a une erreur");
+//     } else {
+//       // les infos du req.file sont à mettre dans la data base
+//       if(req.file == undefined){
+//         console.log("le fichier n'est pas défini!!");
+//         res.redirect('/partner');
+//       } else {
+//         console.log(req.file.id);
+//         req.session.picture = req.file.id
+//         console.log(req.session.picture);
+//         console.log("ca a marché!!");
+//         res.redirect('/validate-image');
+//         // pour resrender l'img, bien ajouter le img tag sur le view!!
+//       }
+//     }
+//   });
+// });
 
 
-// ROUTE DELECT
-router.delete('/files/:id', (req, res) => {
-  gfs.remove({_id: req.params.id, root: 'uploads'}, (err, gridStore) => {
-    if(err){
-      return res.status(404).json({err: err});
-    }
-    else {
-      console.log("il n'y a pas d'erreur!!!!")
-      res.redirect('/partner');
-    }
-  });
-});
 
 
 // ****************************************************************

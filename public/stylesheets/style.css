@@ -63,6 +63,7 @@ h2 {
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  min-height: 100vh;
 }
 .partner-header {
   padding-top: 20px;
@@ -76,3 +77,11 @@ h2 {
   color: #9DCB77;
 }
 /* PARTNER */
+
+
+.card-text {
+white-space: nowrap;
+height: 50px;
+overflow: hidden;
+text-overflow: ellipsis;
+}

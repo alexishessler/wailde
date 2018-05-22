@@ -25,7 +25,6 @@ router.post('/trip', function(req, res, next) {
   source: token,
   });
 
-
   res.render('confirmation');
 });
 
@@ -41,6 +40,221 @@ mongoose.connect('mongodb://capsule:azerty@ds139459.mlab.com:39459/waildeproject
 );
 // HERE IS THE CONNECTION TO OUR MLAB DATABASE
 
+var path = require('path');
+var crypto = require('crypto');
+var mongoose = require('mongoose');
+var multer = require('multer');
+var GridFsStorage = require('multer-gridfs-storage');
+var Grid = require('gridfs-stream');
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
+
+// MONGO URI
+var mongoURI = 'mongodb://capsule:azerty@ds139459.mlab.com:39459/waildeproject';
+
+// MONGO CONNEXION
+var conn = mongoose.createConnection(mongoURI);
+
+// INIT GridFs
+var gfs;
+
+conn.once('open', function(){
+  // Init Stream
+  gfs = Grid(conn.db, mongoose.mongo);
+  gfs.collection('uploads');
+  // all set!
+})
+
+// CREATE STORAGE ENGINE
+var storage = new GridFsStorage({
+  url: mongoURI,
+  file: (req, file) => {
+    return new Promise((resolve, reject) => {
+      crypto.randomBytes(16, (err, buf) => {
+        if (err) {
+          return reject(err);
+        }
+        var filename = buf.toString('hex') + path.extname(file.originalname);
+        var fileInfo = {
+          filename: filename,
+          bucketName: 'uploads'
+        };
+        resolve(fileInfo);
+      });
+    });
+  }
+});
+
+var upload = multer({
+  storage: storage,
+  limits:{fileSize: 3000000},
+  fileFilter: function(req, file, cb){
+    checkFileType(file, cb);
+  }
+}).single('file');
+
+
+// check file type
+function checkFileType(file, cb){
+  // Allowed ext
+  var filetypes = /jpeg|jpg|png|gif/;
+  // check ext
+  var extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  // check mime type (dans le req.file)
+  var mimetype = filetypes.test(file.mimetype);
+
+  if(mimetype && extname){
+    return cb(null, true);
+  } else {
+    cb('Error: Images Only!');
+  }
+};
+
+// /* GET partner form. */
+// router.get('/partner', function(req, res, next) {
+//   res.render('partner');
+// });
+
+/* GET home page. */
+router.get('/partner', function(req, res, next) {
+  gfs.files.find().toArray((err, files) => {
+      res.render('partner', {files: files});
+  });
+});
+
+/* GET home page. */
+router.get('/validate-image', function(req, res, next) {
+  gfs.files.find().toArray((err, files) => {
+      res.render('validate-image', {files: files});
+  });
+});
+
+// router.get('/add-image', function(req, res, next) {
+//   res.render('add-image');
+// });
+
+/* GET home page. */
+router.post('/add-image', function(req, res, next) {
+
+  var newTrip = new tripModel({
+    salutation: "dynamicEmail@gmail.com",
+    lastName: "dynamicNom",
+    firstName: "dynamicPrenom",
+    company: "dynamicNomEntreprise",
+    triptitle: req.body.triptitle,
+    tripdesc: req.body.tripdesc,
+    location: req.body.location,
+    theme: req.body.theme,
+    difficulty: req.body.difficulty,
+    budget: req.body.budget,
+    duration: req.body.duration,
+    startdate: req.body.startdate,
+    enddate: req.body.enddate,
+    team: req.body.team
+  });
+  newTrip.save(
+    function(error, trip) {
+      console.log(trip);
+      res.redirect('/search-trip');
+    }
+  );
+});
+
+/* GET home page. */
+router.get('/add-image', function(req, res, next) {
+  res.render('add-image');
+});
+
+router.post('/upload', function(req, res, next) {
+
+  upload(req, res, (err) => {
+    if(err){
+      console.log("Il n'y a pas d'erreur");
+      res.redirect('/partner');
+
+      console.log("Il y a une erreur");
+    } else {
+      // les infos du req.file sont à mettre dans la data base
+      if(req.file == undefined){
+        console.log("le fichier n'est pas défini!!");
+        res.redirect('/partner');
+      } else {
+        console.log(req.file.id);
+        console.log("ca a marché!!");
+        res.redirect('/validate-image');
+        // pour resrender l'img, bien ajouter le img tag sur le view!!
+      }
+    }
+  });
+});
+
+//ROUTE GET FILES/: filename
+router.get('/files/:filename', function(req, res, next) {
+  gfs.files.findOne({filename: req.params.filename}, (err, file) => {
+    // Check if file
+    if(!file || file.length === 0){
+      console.log("cest ici mon erreur 1");
+      return res.status(404).json({
+        err: 'No file exist'
+      });
+    }
+    // File Exists
+    return res.json(file);
+  });
+});
+
+// ROUTE GET IMG FILE NAME
+router.get('/image/:filename', function(req, res, next) {
+  gfs.files.findOne({filename: req.params.filename}, (err, file) => {
+    // Check if file
+    if(!file || file.length === 0){
+      console.log("cest ici mon erreur 2");
+      return res.status(404).json({
+        err: 'No file exist'
+      });
+    }
+    // check if image
+    if(file.contentType == 'image/jpeg' || file.contentType == 'image/png' || file.contentType == 'image/jpg'){
+      // read output to browser
+      var readstream = gfs.createReadStream(file.filename);
+      readstream.pipe(res);
+    } else {
+      res.status(404).json({
+        err: 'Not an image'
+      });
+    }
+  });
+});
+
+// ROUTE DESC DISPLAY ALL FILES
+router.get('/files', function(req, res, next) {
+  gfs.files.find().toArray((err, files) => {
+    // Check if files
+    if(!files || files.length === 0){
+      console.log("cest ici mon erreur 3");
+      return res.status(404).json({
+        err: 'No files exist'
+      });
+    }
+
+    // Files exist
+    return res.json(files);
+  });
+});
+
+
+// ROUTE DELECT
+router.delete('/files/:id', (req, res) => {
+  gfs.remove({_id: req.params.id, root: 'uploads'}, (err, gridStore) => {
+    if(err){
+      return res.status(404).json({err: err});
+    }
+    else {
+      console.log("il n'y a pas d'erreur!!!!")
+      res.redirect('/partner');
+    }
+  });
+});
 
 
 // ****************************************************************
@@ -88,18 +302,11 @@ var userSchema = mongoose.Schema({
 var userModel = mongoose.model('users', userSchema);
 
 
-
-
 // ****************************************************************
 // ****************************************************************
 // ****************************************************************
 // ****************************************************************
 // ****************************************************************
-
-
-
-
-
 
 
 
@@ -136,11 +343,6 @@ var tripModel = mongoose.model('trips', tripSchema);
 
 
 
-
-
-
-
-
 // GOOGLE MAP API
 
 
@@ -156,17 +358,16 @@ var map;
 
 // HERE ARE THE NAVBAR LINKS
 /* GET squeleton page. */
-router.get('/', function(req, res, next) {
-  res.render('squeleton');
-});
-
+// router.get('/', function(req, res, next) {
+//   res.render('squeleton');
+// });
 
 
 // HERE ARE THE SIGN-IN & SIGN-UP ROUTES
 router.post('/add-trip', function(req, res, next) {
 
 
-  var newTrip = new partnerModel({
+  var newTrip = new tripModel({
     salutation: "dynamicEmail@gmail.com",
     lastName: "dynamicNom",
     firstName: "dynamicPrenom",
@@ -178,33 +379,18 @@ router.post('/add-trip', function(req, res, next) {
     difficulty: req.body.difficulty,
     budget: req.body.budget,
     duration: req.body.duration,
-    startdate: String,
-    enddate: String,
-    team: Number,
-    file: String,
-    file2: String
-
-
-    name: req.body.city,
-    desc: body.weather[0].description,
-    icon: "http://openweathermap.org/img/w/"+body.weather[0].icon+".png",
-    temp_min: body.main.temp_min,
-    temp_max: body.main.temp_max,
-    lon: body.coord.lon,
-    lat: body.coord.lat,
-    user_id: req.session.user._id
+    startdate: req.body.startdate,
+    enddate: req.body.enddate,
+    team: req.body.team,
   });
+  newTrip.save(
+    function (error, trip) {
+       console.log(trip);
+    }
+);
 
-  var email =
-
-
-  res.render('search-trip');
+  res.redirect('/add-trip');
 });
-
-
-
-
-
 
 
 
@@ -215,11 +401,14 @@ router.get('/home', function(req, res, next) {
 
 
 
-
-
 /* GET search page with ALL CARDS */
 router.get('/search-trip', function(req, res, next) {
-  res.render('search-trip');
+  tripModel.find(
+    function (err, tripList ){
+      console.log(tripList);
+      res.render('search-trip', {tripList});
+    }
+  )
 });
 
 /* GET trip page with ONE CARD (selected trip) */
@@ -229,23 +418,36 @@ router.get('/trip', function(req, res, next) {
 
 
 
-
 /* GET experience page. */
 router.get('/experience', function(req, res, next) {
   res.render('experience');
 });
 
-/* GET partner form. */
-router.get('/partner', function(req, res, next) {
-  res.render('partner');
-});
 // HERE ARE THE NAVBAR LINKS
 
 
 
-// HERE ARE THE SIGN-IN & SIGN-UP ROUTES
+// // HERE ARE THE SIGN-IN & SIGN-UP ROUTES
+// router.post('/signin', function(req, res, next) {
+//   res.render('search-trip');
+// });
+
 router.post('/signin', function(req, res, next) {
-  res.render('search-trip');
+  userModel.find({
+      email: req.body.email,
+      password: req.body.password
+    },
+    function(err, users) {
+      if (users.length > 0) {
+        req.session.user = users[0];
+        res.render('search-trip', {
+          user: req.session.user
+        });
+      } else {
+        res.render('signin');
+      }
+    }
+  )
 });
 
 router.post('/signup', function(req, res, next) {
@@ -254,40 +456,39 @@ router.post('/signup', function(req, res, next) {
 
 
 // HERE ARE THE SIGN-IN & SIGN-UP ROUTES
-
+//
 router.post('/signup', function(req, res, next) {
 
-  userModel.find(
-      { email: req.body.email} ,
-      function (err, users) {
-        if(users.length == 0) {
-
-        var newUser = new userModel ({
-         name: req.body.name,
-         email: req.body.email,
-         password: req.body.password
-         salutation: req.body.salutation,
-         lastname: req.body.lastname,
-         firstname: req.body.firstname,
-         company: req.body.company
+  userModel.find({
+      email: req.body.email
+    },
+    function(err, users) {
+      if (users.length == 0) {
+        console.log(users)
+        var newUser = new userModel({
+          email: req.body.email,
+          password: req.body.password,
+          salutation: req.body.salutation,
+          lastname: req.body.lastname,
+          firstname: req.body.firstname,
+          company: req.body.company
 
         });
         newUser.save(
-          function (error, user) {
+          function(error, user) {
+            console.log(users)
             req.session.user = user;
-            CityModel.find(
-                 {user_id: req.session.user._id},
-                 function (error, cityList) {
-                   res.render('index', { cityList, user : req.session.user });
-                 }
-             )
+            res.render('search-trip', {
+              user: req.session.user
+            });
           }
-        );
+        )
       } else {
-        res.render('login');
+        res.render('home');
       }
     }
-  );
+  )
+
 });
 
 
@@ -298,9 +499,10 @@ router.get('/confirmation', function(req, res, next) {
 });
 
 
-
-
-
+/* GET partner form. */
+router.get('/', function(req, res, next) {
+  res.render('squeleton');
+});
 
 
 

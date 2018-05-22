@@ -165,45 +165,26 @@
         <div class="row">
 
 
-          <div class="row col-m6">
-            <div class="col-m6">
-              <p>Sélectionner une photo globale d'illustration</p>
-              <form class="col-m6" action="/upload" method="POST" enctype="multipart/form-data">
-                <div class="custom-file mb-3">
-                  <input type="file" name="file" id="file" class="custom-file-input">
-                  <label for="file" class="custom-file-label">Choose File</label>
-                </div>
-                <%if (files.length == 0) {%>
-                  <input type="submit" value="Submit" class="btn btn-primary btn-block">
-                <%}%>
+          <div class="container">
+            <h1>La photo vous convient-elle ?</h1>
 
-              </form>
-              <hr>
-              <div class="col-m6">
-                <% if(files){ %>
-                  <% files.forEach(function(file) { %>
-                    <div class="card card-body mb-3">
-
-                      <img src="image/<%=file.filename%>" alt="">
-
-                      <form method="POST" action="/files/<%= file._id%>?_method=DELETE">
-                        <button class="btn btn-danger btn-block mt-4">Delete</button>
-                      </form>
-                    </div>
-                    <%}) %>
-                      <%} else { %>
-                        <p>No Files to show</p>
-                        <%} %>
-
-                    <%if (files.length > 0) {%>
-                    <div class="card card-body mb-3">
-                      <form method="GET" action="/add-image">
-                        <button class="btn btn-success btn-block mt-4">Valider l'image</button>
-                      </form>
-                    </div>
-                    <%}%>
-              </div>
+            <div>
+               <img src="<%=file%>" class="responsive-img" alt="">
             </div>
+
+            <form action="/add-image" method="GET">
+              <input type="submit" value="Oui, je passe à l'étape suivante !" class="btn btn-primary btn-block">
+            </form>
+
+            <br>
+
+            <form action="/partner" method="GET">
+              <input type="submit" value="Non, je télécharge une autre image !" class="btn btn-primary btn-block">
+            </form>
+
+              <!-- -->
+
+
           </div>
 
         </div>

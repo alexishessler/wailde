@@ -85,6 +85,11 @@ function checkFileType(file, cb){
     cb('Error: Images Only!');
   }
 };
+var pictureSchema = mongoose.Schema({
+    picturename: String
+});
+
+var pictureModel = mongoose.model('pictures', pictureSchema);
 
 
 router.post('/upload', function(req, res, next) {
@@ -99,10 +104,26 @@ router.post('/upload', function(req, res, next) {
         console.log("erreur 2");
         res.redirect('/partner');
       } else {
-        req.session.picture = req.file.filename
+        req.session.picture = req.file.filename;
+
         console.log("ca a marché!!");
         console.log(req.session.picture);
-        res.redirect('/validate-image');
+
+        var newPicture = new pictureModel ({
+          picturename: req.file.filename
+        });
+
+        newPicture.save(
+            function (error, picture) {
+
+               console.log("ICI EST LA PICTURE:" + picture);
+               picturechoice = picture.picturename;
+               console.log("ICI EST LA DEUXIEME PICTURE BDD :" + picturechoice )
+               res.redirect('/validate-image');
+            }
+        );
+
+        // res.redirect('/validate-image');
         // pour resrender l'img, bien ajouter le img tag sur le view!!
       }
     }
@@ -119,13 +140,14 @@ router.get('/partner', function(req, res, next) {
 router.get('/validate-image', function(req, res, next) {
   res.render('validate-image', {
     file: '/images/' + req.session.picture,
-    isLoggedIn: req.session.isLoggedIn
+    file: '/images/' + picturechoice
   });
 });
 
 // router.get('/add-image', function(req, res, next) {
 //   res.render('add-image');
 // });
+// var picturechoice = null;
 
 /* GET home page. */
 router.post('/add-image', function(req, res, next) {
@@ -144,7 +166,8 @@ router.post('/add-image', function(req, res, next) {
     duration: req.body.duration,
     startdate: req.body.startdate,
     enddate: req.body.enddate,
-    team: req.body.team
+    team: req.body.team,
+    file: req.body.file
   });
   newTrip.save(
     function(error, trip) {
@@ -158,7 +181,7 @@ router.post('/add-image', function(req, res, next) {
 router.get('/add-image', function(req, res, next) {
   res.render('add-image', {
     file: '/images/' + req.session.picture,
-    isLoggedIn: req.session.isLoggedIn
+    file: '/images/' + picturechoice
   });
 });
 
@@ -345,7 +368,7 @@ router.get('/search-trip', function(req, res, next) {
       res.render('search-trip', {
         tripList: tripList,
         user: req.session.user,
-        isLoggedIn: req.session.isLoggedIn
+        file: '/images/'+ req.session.picture
       });
     }
   )

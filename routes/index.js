@@ -326,7 +326,7 @@ var tripSchema = mongoose.Schema({
     duration: String,
     startdate: String,
     enddate: String,
-    team: String,
+    team: Number,
     file: String,
     file2: String
 });
@@ -376,12 +376,15 @@ router.post('/add-trip', function(req, res, next) {
     tripdesc: req.body.tripdesc,
     location: req.body.location,
     theme: req.body.theme,
-    difficulty: req.body.difficulty,
-    budget: req.body.budget,
-    duration: req.body.duration,
-    startdate: req.body.startdate,
-    enddate: req.body.enddate,
-    team: req.body.team,
+    difficulty: String,
+    budget: Number,
+    duration: String,
+    startdate: String,
+    enddate: String,
+    team: Number,
+    file: String,
+    file2: String,
+
   });
   newTrip.save(
     function (error, trip) {
@@ -450,9 +453,6 @@ router.post('/signin', function(req, res, next) {
   )
 });
 
-router.post('/signup', function(req, res, next) {
-  res.render('search-trip');
-});
 
 
 // HERE ARE THE SIGN-IN & SIGN-UP ROUTES

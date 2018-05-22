@@ -340,7 +340,10 @@ router.get('/search-trip', function(req, res, next) {
   tripModel.find(
     function (err, tripList ){
       console.log(tripList);
-      res.render('search-trip', {tripList});
+      res.render('search-trip', {
+        tripList: tripList,
+        user: req.session.user
+      });
     }
   )
 });
@@ -374,9 +377,15 @@ router.post('/signin', function(req, res, next) {
     function(err, users) {
       if (users.length > 0) {
         req.session.user = users[0];
-        res.render('search-trip', {
-          user: req.session.user
-        });
+        tripModel.find(
+          function (err, tripList ){
+            console.log(users);
+            res.render('search-trip', {
+              tripList: tripList,
+              user: req.session.user
+            });
+          }
+        )
       } else {
         res.render('signin');
       }
@@ -409,9 +418,15 @@ router.post('/signup', function(req, res, next) {
           function(error, user) {
             console.log(users)
             req.session.user = user;
-            res.render('search-trip', {
-              user: req.session.user
-            });
+            tripModel.find(
+              function (err, tripList ){
+                console.log(user);
+                res.render('search-trip', {
+                  tripList: tripList,
+                  user: req.session.user
+                });
+              }
+            )
           }
         )
       } else {
@@ -421,6 +436,8 @@ router.post('/signup', function(req, res, next) {
   )
 
 });
+
+
 
 
 

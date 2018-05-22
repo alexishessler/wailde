@@ -131,6 +131,8 @@ router.post('/upload', function(req, res, next) {
 });
 
 
+
+
 /* GET partner form. */
 router.get('/partner', function(req, res, next) {
   res.render('partner', { isLoggedIn: req.session.isLoggedIn });
@@ -181,7 +183,8 @@ router.post('/add-image', function(req, res, next) {
 router.get('/add-image', function(req, res, next) {
   res.render('add-image', {
     file: '/images/' + req.session.picture,
-    file: '/images/' + picturechoice
+    file: '/images/' + picturechoice,
+    isLoggedIn: req.session.isLoggedIn
   });
 });
 
@@ -368,7 +371,8 @@ router.get('/search-trip', function(req, res, next) {
       res.render('search-trip', {
         tripList: tripList,
         user: req.session.user,
-        file: '/images/'+ req.session.picture
+        file: '/images/'+ req.session.picture,
+        isLoggedIn: req.session.isLoggedIn
       });
     }
   )
@@ -410,14 +414,14 @@ router.post('/signin', function(req, res, next) {
           console.log(users);
           res.render('search-trip', {
             tripList: tripList,
-            user: req.session.user, 
+            user: req.session.user,
             isLoggedIn: req.session.isLoggedIn
           });
         }
         )
     } else {
       req.session.isLoggedIn = false;
-      res.render('signin', { isLoggedin: req.session.isLoggedIn });
+      res.render('home', { isLoggedin: req.session.isLoggedIn });
     }
   }
   )
@@ -455,7 +459,7 @@ router.post('/signup', function(req, res, next) {
                 console.log(user);
                 res.render('search-trip', {
                   tripList: tripList,
-                  user: req.session.user, 
+                  user: req.session.user,
                   isLoggedIn: req.session.isLoggedIn
                 });
               }

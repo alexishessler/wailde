@@ -37,15 +37,20 @@
     </div>
     <div class="navbar-collapse collapse w-100 order-2 dual-collapse2">
       <ul class="navbar-nav ml-auto">
+        <% if (isLoggedIn == true) { %>
         <li class="nav-item">
           <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalPartenaire" href="#">Partenaires</a>
         </li>
         <li class="nav-item">
-          <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignIn" href="#">SignIn</a>
+          <a href="/logout" class="btn btn-outline-light nav-btn" method="get">Loggout</a>
+          <% } else { %>
+          <a href="/signin" class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignIn" href="#">SignIn</a>
+          
         </li>
         <li class="nav-item">
-          <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignUp" href="#">SignUp</a>
+          <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignUp" href="/trip">SignUp</a>
         </li>
+        <% } %>
       </ul>
     </div>
   </nav>
@@ -103,54 +108,60 @@
   </div>
 
   <!-- Modal SingUp-->
-  <form action="/signup" method="POST">
-    <div class="modal fade" id="modalSignUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"> Registrez vous!</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form method="POST" action="/signup">
-              <div class="form-group">
-                <label>Email</label>
-                <input name="email" type="email" class="form-control" placeholder="Votre email">
-              </div>
-              <div class="form-group">
-                <label>Password</label>
-                <input name="password" type="password" class="form-control" placeholder="Votre mot passe">
-              </div>
-              <div class="form-group">
-                <label>Civil</label>
-                <input name="salutation" type="text" class="form-control" placeholder="salutation">
-              </div>
-              <div class="form-group">
-                <label>Nom famille</label>
-                <input name="lastname" type="text" class="form-control" placeholder="Nom famille">
-              </div>
-              <div class="form-group">
-                <label>Prenom</label>
-                <input name="firstname" type="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Prenom">
-                <small id="emailHelp" class="form-text text-muted">Nous gardons vos données en sécurité !</small>
-              </div>
-              <div class="form-group">
-                <label for="exampleInputPassword1">Nom de l'entreprise</label>
-                <input name="companyname" type="name" class="form-control" id="exampleInputPassword1" placeholder="Nom de l'entreprise">
-              </div>
 
-              <button type="submit" class="btn btn-success">Inscriptions</button>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-          </div>
+<form action="/signup" method="POST">
+  <div class="modal fade" id="modalSignUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"> Registrez vous!</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="/signup">
+            <div class="form-group">
+              <label>Email</label>
+              <input name="email" type="email" class="form-control" placeholder="Votre email">
+            </div>
+            <div class="form-group">
+              <label>Password</label>
+              <input name="password" type="password" class="form-control" placeholder="Votre mot passe">
+            </div>
+            <div class="form-group">
+              <label>Civil</label>
+              <input name="salutation" type="text" class="form-control" placeholder="salutation">
+            </div>
+            <div class="form-group">
+              <label>Nom famille</label>
+              <input name="lastname" type="text" class="form-control" placeholder="Nom famille">
+            </div>
+            <div class="form-group">
+              <label>Prenom</label>
+              <input name="firstname" type="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Prenom">
+              <small id="emailHelp" class="form-text text-muted">Nous gardons vos données en sécurité !</small>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Nom de l'entreprise</label>
+              <input name="companyname" type="name" class="form-control" id="exampleInputPassword1" placeholder="Nom de l'entreprise">
+            </div>
+
+            <button type="submit" class="btn btn-success">Inscriptions</button>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
         </div>
       </div>
     </div>
-    </form>
+  </div>
+  </form>
+
+
+
+
+
   <!-- END NAV BAR -->
 
   <div class="container-fluid">

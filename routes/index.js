@@ -25,7 +25,7 @@ router.post('/trip', function(req, res, next) {
   source: token,
   });
 
-  res.render('confirmation');
+  res.render('confirmation', {isLoggedIn: req.session.isLoggedIn} );
 });
 
 
@@ -112,13 +112,14 @@ router.post('/upload', function(req, res, next) {
 
 /* GET partner form. */
 router.get('/partner', function(req, res, next) {
-  res.render('partner');
+  res.render('partner', { isLoggedIn: req.session.isLoggedIn });
 });
 
 /* GET home page. */
 router.get('/validate-image', function(req, res, next) {
   res.render('validate-image', {
-    file: '/images/' + req.session.picture
+    file: '/images/' + req.session.picture,
+    isLoggedIn: req.session.isLoggedIn
   });
 });
 
@@ -156,7 +157,8 @@ router.post('/add-image', function(req, res, next) {
 /* GET home page. */
 router.get('/add-image', function(req, res, next) {
   res.render('add-image', {
-    file: '/images/' + req.session.picture
+    file: '/images/' + req.session.picture,
+    isLoggedIn: req.session.isLoggedIn
   });
 });
 
@@ -330,7 +332,7 @@ router.post('/add-trip', function(req, res, next) {
 
 /* GET home page. */
 router.get('/home', function(req, res, next) {
-  res.render('home');
+  res.render('home', {isLoggedIn: req.session.isLoggedIn});
 });
 
 
@@ -342,7 +344,8 @@ router.get('/search-trip', function(req, res, next) {
       console.log(tripList);
       res.render('search-trip', {
         tripList: tripList,
-        user: req.session.user
+        user: req.session.user,
+        isLoggedIn: req.session.isLoggedIn
       });
     }
   )
@@ -350,14 +353,14 @@ router.get('/search-trip', function(req, res, next) {
 
 /* GET trip page with ONE CARD (selected trip) */
 router.get('/trip', function(req, res, next) {
-  res.render('trip');
+  res.render('trip', { isLoggedIn: req.session.isLoggedIn });
 });
 
 
 
 /* GET experience page. */
 router.get('/experience', function(req, res, next) {
-  res.render('experience');
+  res.render('experience', { isLoggedIn: req.session.isLoggedIn });
 });
 
 // HERE ARE THE NAVBAR LINKS
@@ -370,35 +373,40 @@ router.get('/experience', function(req, res, next) {
 // });
 
 router.post('/signin', function(req, res, next) {
+  req.session.isLoggedIn = false;
   userModel.find({
-      email: req.body.email,
-      password: req.body.password
-    },
-    function(err, users) {
-      if (users.length > 0) {
-        req.session.user = users[0];
-        tripModel.find(
-          function (err, tripList ){
-            console.log(users);
-            res.render('search-trip', {
-              tripList: tripList,
-              user: req.session.user
-            });
-          }
+    email: req.body.email,
+    password: req.body.password
+  },
+  function(err, users) {
+    if (users.length > 0) {
+      req.session.user = users[0];
+      req.session.isLoggedIn = true;
+      tripModel.find(
+        function (err, tripList ){
+          console.log(users);
+          res.render('search-trip', {
+            tripList: tripList,
+            user: req.session.user, 
+            isLoggedIn: req.session.isLoggedIn
+          });
+        }
         )
-      } else {
-        res.render('signin');
-      }
+    } else {
+      req.session.isLoggedIn = false;
+      res.render('signin', { isLoggedin: req.session.isLoggedIn });
     }
+  }
   )
-});
+}
+);
 
 
 
 // HERE ARE THE SIGN-IN & SIGN-UP ROUTES
 //
 router.post('/signup', function(req, res, next) {
-
+  req.session.isLoggedIn = false;
   userModel.find({
       email: req.body.email
     },
@@ -418,42 +426,46 @@ router.post('/signup', function(req, res, next) {
           function(error, user) {
             console.log(users)
             req.session.user = user;
+            req.session.isLoggedIn = true;
             tripModel.find(
               function (err, tripList ){
                 console.log(user);
                 res.render('search-trip', {
                   tripList: tripList,
-                  user: req.session.user
+                  user: req.session.user, 
+                  isLoggedIn: req.session.isLoggedIn
                 });
               }
             )
           }
         )
       } else {
-        res.render('home');
+        req.session.isLoggedIn = false;
+        res.render('home', { isLoggedIn: req.session.isLoggedIn });
       }
     }
   )
 
 });
 
-
+// HERE IS THE LOGOUT ROUTE//
+router.get('/logout', function(req, res, next){
+ req.session.isLoggedIn = false;
+  res.render('home', { isLoggedIn: req.session.isLoggedIn });
+});
 
 
 
 /* GET partner form. */
 router.get('/confirmation', function(req, res, next) {
-  res.render('confirmation');
+  res.render('confirmation', { isLoggedIn: req.session.isLoggedIn });
 });
 
 
 /* GET partner form. */
 router.get('/', function(req, res, next) {
-  res.render('squeleton');
+  res.render('squeleton', { isLoggedIn: req.session.isLoggedIn });
 });
-
-
-
 
 
 module.exports = router;

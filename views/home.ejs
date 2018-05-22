@@ -36,15 +36,20 @@
     </div>
     <div class="navbar-collapse collapse w-100 order-2 dual-collapse2">
       <ul class="navbar-nav ml-auto">
+        <% if (isLoggedIn == true) { %>
         <li class="nav-item">
           <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalPartenaire" href="#">Partenaires</a>
         </li>
         <li class="nav-item">
-          <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignIn" href="#">SignIn</a>
+          <a href="/logout" class="btn btn-outline-light nav-btn" method="get">Loggout</a>
+          <% } else { %>
+          <a href="/signin" class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignIn" href="#">SignIn</a>
+          
         </li>
         <li class="nav-item">
           <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignUp" href="/trip">SignUp</a>
         </li>
+        <% } %>
       </ul>
     </div>
   </nav>

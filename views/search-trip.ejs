@@ -161,14 +161,14 @@
         <option selected>Nombre de participants</option>
         <option value="1">De 1 à 10 participants</option>
         <option value="2">De 11 à 30 participants</option>
-        <option value="4">Plus de 30 participants</option>
+        <option value="3">Plus de 30 participants</option>
       </select>
 
       <select class="col-lg-3 custom-select m-2">
         <option selected>Votre Budget</option>
         <option value="1">De 1 à 500€/participant</option>
         <option value="2">De 500 à 1000€/participant</option>
-        <option value="4">Plus de 1000€/participant</option>
+        <option value="3">Plus de 1000€/participant</option>
       </select>
 
       <select class="col-lg-3 custom-select m-2">
@@ -189,14 +189,22 @@
       for(var i=0; i<tripList.length; i++) {
       %>
       <div class="col-12 col-md-6 col-lg-4 d-none d-sm-block card" style="width: 18rem;">
-        <img class="card-img-top" src="/images/chevreuse1.jpg" alt="Card image cap">
+        <img class="card-img-top" src="<%=tripList[i].file%>" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title"><%=tripList[i].triptitle%></h5>
-          <h6><%=tripList[i].theme%></h6>
+          <h6><% if (tripList[i].theme == 1) {%>
+            Aventure
+            <%} else if (tripList[i].theme == 2) {%>
+            Découverte
+            <%} else {%>
+              Bien-être
+            <%
+            }%>
+          </h6>
           <p class="card-text"><%=tripList[i].tripdesc%></p>
           <div class="row justify-content-between">
             <div class="europrice">
-              <h6 class="pl-3">Budget : <% if (tripList[i].budget == null || tripList[i]<= 500) {%>
+              <h6 class="pl-3">Budget : <% if (tripList[i].budget == null || tripList[i].budget<= 500) {%>
                 <i class="fas fa-coins"></i>
               <%} else if (tripList[i].budget <= 1000) {%>
               <i class="fas fa-coins"></i><i class="fas fa-coins"></i>
@@ -213,6 +221,18 @@
                   <i class="fas fa-fire"></i><i class="fas fa-fire"></i><i class="fas fa-fire"></i>
                   <%}%></h6>
             </div>
+            <div class="form-group row">
+              <input name="file"  type="hidden" value="<%=tripList[i].file%>">
+              <input name="salutation"  type="hidden" value="<%=tripList[i].salutation%>">
+              <input name="lastName"  type="hidden" value="<%=tripList[i].lastName%>">
+              <input name="firstName"  type="hidden" value="<%=tripList[i].firstName%>">
+              <input name="company"  type="hidden" value="<%=tripList[i].company%>">
+              <input name="location"  type="hidden" value="<%=tripList[i].location%>">
+              <input name="duration"  type="hidden" value="<%=tripList[i].duration%>">
+              <input name="startdate"  type="hidden" value="<%=tripList[i].startdate%>">
+              <input name="enddate"  type="hidden" value="<%=tripList[i].enddate%>">
+              <input name="team"  type="hidden" value="<%=tripList[i].team%>">
+            </div>
           </div>
           <div class="d-flex justify-content-center">
             <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
@@ -222,7 +242,12 @@
       <%
     }
     %>
+
+
     </div>
+
+
+
 
 
       <!-- <div class="col-12 col-md-6 col-lg-4 d-none d-sm-block card" style="width: 18rem;">

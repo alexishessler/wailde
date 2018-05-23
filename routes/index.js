@@ -482,6 +482,10 @@ router.get('/logout', function(req, res, next){
   res.render('home', { isLoggedIn: req.session.isLoggedIn });
 });
 
+router.get('/map', function(req, res, next){
+  res.render('map', { isLoggedIn: req.session.isLoggedIn });
+});
+
 
 
 /* GET partner form. */

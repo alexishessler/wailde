@@ -495,5 +495,10 @@ router.get('/', function(req, res, next) {
   res.render('squeleton', { isLoggedIn: req.session.isLoggedIn });
 });
 
+/* GET partner form. */
+router.get('/maptest', function(req, res, next) {
+  res.render('maptest', { isLoggedIn: req.session.isLoggedIn });
+});
+
 
 module.exports = router;

@@ -164,7 +164,8 @@ router.get('/validate-image', function(req, res, next) {
 
 /* GET home page. */
 router.post('/add-image', function(req, res, next) {
-
+  var budget
+  var team
   var newTrip = new tripModel({
     salutation: "dynamicEmail@gmail.com",
     lastName: "dynamicNom",
@@ -180,11 +181,27 @@ router.post('/add-image', function(req, res, next) {
     startdate: req.body.startdate,
     enddate: req.body.enddate,
     team: req.body.team,
-    file: req.body.file
+    file: req.body.file,
+    dbbudget:"",
+    dbteam:""
   });
+
+if (req.body.budget <= 500) {
+    budget = 1
+  } else if (req.body.budget <=1000) {
+    budget =2
+  } else {budget = 3};
+  if (req.body.team <11) {
+    team = 1
+  } else if (req.body.team <31) {
+    team =2
+  } else {team = 3};
+  newTrip.dbbudget = budget;
+  newTrip.dbteam = team;
+
+
   newTrip.save(
     function(error, trip) {
-      console.log(trip);
       res.redirect('/search-trip');
     }
   );
@@ -282,6 +299,7 @@ var userModel = mongoose.model('users', userSchema);
 
 // 3) Schéma Collection trips
 var tripSchema = mongoose.Schema({
+<<<<<<< HEAD
   email: String,
   salutation: String,
   lastName: String,
@@ -299,6 +317,28 @@ var tripSchema = mongoose.Schema({
   team: Number,
   file: String,
   file2: String
+=======
+    email: String,
+    salutation: String,
+    lastName: String,
+    firstName: String,
+    company: String,
+    triptitle: String,
+    tripdesc: String,
+    location: String,
+    theme: String,
+    difficulty: String,
+    budget: Number,
+    duration: String,
+    startdate: String,
+    enddate: String,
+    team: Number,
+    file: String,
+    file2: String,
+    dbbudget: Number,
+    dbteam: Number
+
+>>>>>>> ed6893839aba78ec0d553bad5e1c8560174c1e06
 });
 
 var tripModel = mongoose.model('trips', tripSchema);
@@ -392,6 +432,47 @@ router.get('/search-trip', function(req, res, next) {
     }
   )
 });
+
+/*POST Search barre to filter the CARDS*/
+router.post('/search-filter', function(req, res, next) {
+  tripModel.find(
+    function (err, tripList ){
+      console.log(tripList);
+      console.log("PRE FILTER");
+      var query = {};
+      console.log('difficulty ==>', req.body.difficulty)
+      if (req.body.difficulty !== "null") {
+        query.difficulty = req.body.difficulty;
+      }
+      if (req.body.budget !== "null") {
+        query.dbbudget = req.body.budget;
+      }
+      if (req.body.team !== "null") {
+        query.dbteam = req.body.team;
+      }
+      console.log('query ==>', query)
+      tripModel.find(query,
+          function (err, trips) {
+            console.log("FILTER");
+            console.log(trips);
+                    console.log("FILTER budget");
+                    res.render('search-trip', {
+                      tripList: trips,
+                      user: req.session.user,
+                      file: '/images/'+ req.session.picture,
+                      isLoggedIn: req.session.isLoggedIn
+                    });
+          }
+        )
+    }
+  )
+});
+// res.render('search-trip', {
+//   tripList: trips,
+//   user: req.session.user,
+//   file: '/images/'+ req.session.picture,
+//   isLoggedIn: req.session.isLoggedIn
+// });
 
 /* GET trip page with ONE CARD (selected trip) */
 router.get('/trip', function(req, res, next) {

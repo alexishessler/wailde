@@ -85,3 +85,18 @@ height: 50px;
 overflow: hidden;
 text-overflow: ellipsis;
 }
+
+/* MAP 
+Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+
+#map {
+      height: 60%;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+      

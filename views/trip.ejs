@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 <head>
   <title>Waïlde</title>
   <!-- bootscrap stylesheet -->
@@ -11,28 +10,9 @@
  <meta name="viewport" content="initial-scale=1.0">
  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-
- <style>
-    /* Always set the map height explicitly to define the size of the div
-     * element that contains the map. */
-    #map {
-      height: 50%;
-    }
-    /* Optional: Makes the sample page fill the window. */
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-  </style>
-
-
-
-
 </head>
 
 <body>
-
  <!-- START NAV BAR -->
   <nav class="navbar navbar-expand-md navbar-light bg-light">
     <a class="navbar-brand" href="/">
@@ -65,7 +45,6 @@
           <a href="/logout" class="btn btn-outline-light nav-btn" method="get">Loggout</a>
           <% } else { %>
           <a href="/signin" class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignIn" href="#">SignIn</a>
-
         </li>
         <li class="nav-item">
           <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignUp" href="/trip">SignUp</a>
@@ -74,7 +53,6 @@
       </ul>
     </div>
   </nav>
-
   <!-- Modal Partenaire-->
   <div class="modal fade" id="modalPartenaire" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -95,7 +73,6 @@
       </div>
     </div>
   </div>
-
   <!-- Modal SignIn-->
   <div class="modal fade" id="modalSignIn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -126,9 +103,7 @@
       </div>
     </div>
   </div>
-
   <!-- Modal SingUp-->
-
 <form action="/signup" method="POST">
   <div class="modal fade" id="modalSignUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -166,7 +141,6 @@
               <label for="exampleInputPassword1">Nom de l'entreprise</label>
               <input name="companyname" type="name" class="form-control" id="exampleInputPassword1" placeholder="Nom de l'entreprise">
             </div>
-
             <button type="submit" class="btn btn-success">Inscriptions</button>
           </form>
         </div>
@@ -177,17 +151,8 @@
     </div>
   </div>
   </form>
-
-
-
-
-
   <!-- END NAV BAR -->
-
-
-
   <!--CAROUSSEL -->
-
   <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
@@ -208,7 +173,6 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="sr-only">Next</span>
     </a>
-
     <div class="carousel-caption">
          <div class="col-12 col-lg-6 jumbotron">
              <h1 class="display-4">triptitle: Les sentiers de la Vallée de Chevreuse</h1>
@@ -221,22 +185,13 @@
              <div class="niveau">
              <p>No. des Personnes : <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> </p>
 <!-- Book button -->
-
              <a href="/book" class="btn btn-primary mt-3">Reserve votre voyage</a>
-
            </div>
            </div>
-
        </div>
-
   </div>
-
-
   <!-- map-->
-
-
   <div id="map"></div>
-
   <script>
       var map;
       function initMap() {
@@ -246,24 +201,23 @@
         });
       }
     </script>
-
-
-
-
-
-
-
-
-
   <!-- scripts bootstrap javascript -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+   <!-- lien vers stripe -->
   <script src="https://js.stripe.com/v3/"></script>
+  <!-- lien vers script.js -->
+  <script src="/javascripts/script.js" charset="utf-8"></script>
+  <!-- lien vers maps API -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBW7p69Yn6IFfN8IfyEM3DOXpFJoQaEsw&callback=initMap"
   async defer></script>
   <script>$('.carousel').carousel(); </script>
-
 </body>
-
 </html>
+
+
+
+  </body>
+
+  </html>

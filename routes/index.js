@@ -299,25 +299,6 @@ var userModel = mongoose.model('users', userSchema);
 
 // 3) Schéma Collection trips
 var tripSchema = mongoose.Schema({
-<<<<<<< HEAD
-  email: String,
-  salutation: String,
-  lastName: String,
-  firstName: String,
-  company: String,
-  triptitle: String,
-  tripdesc: String,
-  location: String,
-  theme: String,
-  difficulty: String,
-  budget: Number,
-  duration: String,
-  startdate: String,
-  enddate: String,
-  team: Number,
-  file: String,
-  file2: String
-=======
     email: String,
     salutation: String,
     lastName: String,
@@ -338,7 +319,6 @@ var tripSchema = mongoose.Schema({
     dbbudget: Number,
     dbteam: Number
 
->>>>>>> ed6893839aba78ec0d553bad5e1c8560174c1e06
 });
 
 var tripModel = mongoose.model('trips', tripSchema);

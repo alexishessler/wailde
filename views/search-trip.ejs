@@ -45,7 +45,7 @@
           <a href="/logout" class="btn btn-outline-light nav-btn" method="get">Loggout</a>
           <% } else { %>
           <a href="/signin" class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignIn" href="#">SignIn</a>
-          
+
         </li>
         <li class="nav-item">
           <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignUp" href="/trip">SignUp</a>
@@ -167,31 +167,35 @@
   <div class="container-fluid">
     <h3 class="text-left mt-3 mb-3">Trouvez votre futur voyage Team Building</h3>
 
+  <form class="search-barre" action="/search-filter" method="post">
+
     <div class="row d-flex align-items-center">
-      <select class="col-lg-3 custom-select m-2">
-        <option selected>Nombre de participants</option>
+      <select name="team" class="col-lg-3 custom-select m-2">
+        <option value="null" selected>Nombre de participants</option>
         <option value="1">De 1 à 10 participants</option>
         <option value="2">De 11 à 30 participants</option>
         <option value="3">Plus de 30 participants</option>
       </select>
 
-      <select class="col-lg-3 custom-select m-2">
-        <option selected>Votre Budget</option>
+      <select name ="budget" class="col-lg-3 custom-select m-2">
+        <option value="null" selected>Votre Budget</option>
         <option value="1">De 1 à 500€/participant</option>
         <option value="2">De 500 à 1000€/participant</option>
         <option value="3">Plus de 1000€/participant</option>
       </select>
 
-      <select class="col-lg-3 custom-select m-2">
-        <option selected>Niveau du voyage</option>
-        <option value="1">Facile</option>
-        <option value="2">Moyen</option>
-        <option value="3">Difficile</option>
+      <select name="difficulty"class="col-lg-3 custom-select m-2">
+        <option value="null" selected>Niveau du voyage</option>
+        <option value="difficulte1">Facile</option>
+        <option value="difficulte2">Moyen</option>
+        <option value="difficulte3">Difficile</option>
       </select>
 
-      <button type="button" class="col-lg-1 btn btn-lg btn-primary m-2 p-1" disabled>Recherche</button>
-      <button type="button" class="col-lg-1 btn btn-secondary btn-lg m-2 p-1" disabled>Reset</button>
+      <button type="submit" class="col-lg-1 btn btn-lg btn-primary m-2 p-1">Recherche</button>
+      <button type="button" class="col-lg-1 btn btn-secondary btn-lg m-2 p-1">Reset</button>
     </div>
+
+  </form>
 
     <hr class="my-5" style="border: 2px solid #9dcb77;"></hr>
 
@@ -246,7 +250,13 @@
             </div>
           </div>
           <div class="d-flex justify-content-center">
-            <a href="#" class="btn btn-primary mt-3">Plus d'infos</a>
+            <% if (isLoggedIn) {%>
+              <form class="" action="/trip" method="post">
+                <button type="submit" class="btn btn-primary mt-3">Plus d'infos</button>
+              </form>
+            <%} else {%>
+              <a href="/signin" class="btn btn-success nav-btn" data-toggle="modal" data-target="#modalSignIn" href="#">SignIn</a>
+            <%}%>
           </div>
         </div>
       </div>

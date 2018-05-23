@@ -27,7 +27,7 @@ router.post('/trip', function(req, res, next) {
     source: token,
   });
 
-  res.render('confirmation');
+  res.render('confirmation', {isLoggedIn: req.session.isLoggedIn} );
 });
 
 
@@ -95,6 +95,11 @@ function checkFileType(file, cb) {
     cb('Error: Images Only!');
   }
 };
+var pictureSchema = mongoose.Schema({
+    picturename: String
+});
+
+var pictureModel = mongoose.model('pictures', pictureSchema);
 
 
 router.post('/upload', function(req, res, next) {
@@ -109,10 +114,26 @@ router.post('/upload', function(req, res, next) {
         console.log("erreur 2");
         res.redirect('/partner');
       } else {
-        req.session.picture = req.file.filename
+        req.session.picture = req.file.filename;
+
         console.log("ca a marché!!");
         console.log(req.session.picture);
-        res.redirect('/validate-image');
+
+        var newPicture = new pictureModel ({
+          picturename: req.file.filename
+        });
+
+        newPicture.save(
+            function (error, picture) {
+
+               console.log("ICI EST LA PICTURE:" + picture);
+               picturechoice = picture.picturename;
+               console.log("ICI EST LA DEUXIEME PICTURE BDD :" + picturechoice )
+               res.redirect('/validate-image');
+            }
+        );
+
+        // res.redirect('/validate-image');
         // pour resrender l'img, bien ajouter le img tag sur le view!!
       }
     }
@@ -120,21 +141,26 @@ router.post('/upload', function(req, res, next) {
 });
 
 
+
+
 /* GET partner form. */
 router.get('/partner', function(req, res, next) {
-  res.render('partner');
+  res.render('partner', { isLoggedIn: req.session.isLoggedIn });
 });
 
 /* GET home page. */
 router.get('/validate-image', function(req, res, next) {
   res.render('validate-image', {
-    file: '/images/' + req.session.picture
+    file: '/images/' + req.session.picture,
+    file: '/images/' + picturechoice,
+    isLoggedIn: req.session.isLoggedIn
   });
 });
 
 // router.get('/add-image', function(req, res, next) {
 //   res.render('add-image');
 // });
+// var picturechoice = null;
 
 /* GET home page. */
 router.post('/add-image', function(req, res, next) {
@@ -153,7 +179,8 @@ router.post('/add-image', function(req, res, next) {
     duration: req.body.duration,
     startdate: req.body.startdate,
     enddate: req.body.enddate,
-    team: req.body.team
+    team: req.body.team,
+    file: req.body.file
   });
   newTrip.save(
     function(error, trip) {
@@ -166,7 +193,9 @@ router.post('/add-image', function(req, res, next) {
 /* GET home page. */
 router.get('/add-image', function(req, res, next) {
   res.render('add-image', {
-    file: '/images/' + req.session.picture
+    file: '/images/' + req.session.picture,
+    file: '/images/' + picturechoice,
+    isLoggedIn: req.session.isLoggedIn
   });
 });
 
@@ -344,7 +373,7 @@ router.post('/add-trip', function(req, res, next) {
 
 /* GET home page. */
 router.get('/home', function(req, res, next) {
-  res.render('home');
+  res.render('home', {isLoggedIn: req.session.isLoggedIn});
 });
 
 
@@ -356,7 +385,9 @@ router.get('/search-trip', function(req, res, next) {
       console.log(tripList);
       res.render('search-trip', {
         tripList: tripList,
-        user: req.session.user
+        user: req.session.user,
+        file: '/images/'+ req.session.picture,
+        isLoggedIn: req.session.isLoggedIn
       });
     }
   )
@@ -364,14 +395,14 @@ router.get('/search-trip', function(req, res, next) {
 
 /* GET trip page with ONE CARD (selected trip) */
 router.get('/trip', function(req, res, next) {
-  res.render('trip');
+  res.render('trip', { isLoggedIn: req.session.isLoggedIn });
 });
 
 
 
 /* GET experience page. */
 router.get('/experience', function(req, res, next) {
-  res.render('experience');
+  res.render('experience', { isLoggedIn: req.session.isLoggedIn });
 });
 
 // HERE ARE THE NAVBAR LINKS
@@ -384,35 +415,38 @@ router.get('/experience', function(req, res, next) {
 // });
 
 router.post('/signin', function(req, res, next) {
-  userModel.find({
-      email: req.body.email,
-      password: req.body.password
-    },
-    function(err, users) {
-      if (users.length > 0) {
-        req.session.user = users[0];
-        tripModel.find(
-          function(err, tripList) {
-            console.log(users);
-            res.render('search-trip', {
-              tripList: tripList,
-              user: req.session.user
-            });
-          }
-        )
-      } else {
-        res.render('signin');
-      }
-    }
-  )
-});
-
+ req.session.isLoggedIn = false;
+ userModel.find({
+   email: req.body.email,
+   password: req.body.password
+ },
+ function(err, users) {
+   if (users.length > 0) {
+     req.session.user = users[0];
+     req.session.isLoggedIn = true;
+     tripModel.find(
+       function (err, tripList ){
+         console.log(users);
+         res.render('search-trip', {
+           tripList: tripList,
+           user: req.session.user,
+           isLoggedIn: req.session.isLoggedIn
+         });
+       }
+       )
+   } else {
+     req.session.isLoggedIn = false;
+     console.log("NON CONNECTE")
+     res.redirect('home');
+   }
+    });
+    });
 
 
 // HERE ARE THE SIGN-IN & SIGN-UP ROUTES
 //
 router.post('/signup', function(req, res, next) {
-
+  req.session.isLoggedIn = false;
   userModel.find({
       email: req.body.email
     },
@@ -432,39 +466,47 @@ router.post('/signup', function(req, res, next) {
           function(error, user) {
             console.log(users)
             req.session.user = user;
+            req.session.isLoggedIn = true;
             tripModel.find(
               function(err, tripList) {
                 console.log(user);
                 res.render('search-trip', {
                   tripList: tripList,
-                  user: req.session.user
+                  user: req.session.user,
+                  isLoggedIn: req.session.isLoggedIn
                 });
               }
             )
           }
         )
       } else {
-        res.render('home');
+        req.session.isLoggedIn = false;
+        res.render('home', { isLoggedIn: req.session.isLoggedIn });
       }
     }
   )
 
 });
 
-
+// HERE IS THE LOGOUT ROUTE//
+router.get('/logout', function(req, res, next){
+ req.session.isLoggedIn = false;
+  res.render('home', { isLoggedIn: req.session.isLoggedIn });
+});
 
 
 
 /* GET partner form. */
 router.get('/confirmation', function(req, res, next) {
-  res.render('confirmation');
+  res.render('confirmation', { isLoggedIn: req.session.isLoggedIn });
 });
 
 
 /* GET partner form. */
 router.get('/', function(req, res, next) {
-  res.render('squeleton');
+  res.render('squeleton', { isLoggedIn: req.session.isLoggedIn });
 });
+
 
 
 
@@ -480,11 +522,19 @@ router.get('/book', function(req, res, next) {
 
 
 
+router.get('/confirmationemail', function(req, res, next) {
+
+  res.render('confirmationemail');
+});
 
 
 // EMAIL SENDING
 
-var emailContent = ''
+
+var emailContent = '<body class="" style="background-color: #f6f6f6; font-family: sans-serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;"><table border="0" cellpadding="0" cellspacing="0" class="body" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background-color: #f6f6f6;"><tr><td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">&nbsp;</td><td class="container" style="font-family: sans-serif; font-size: 14px; vertical-align: top; display: block; Margin: 0 auto; max-width: 580px; padding: 10px; width: 580px;"><div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px; padding: 10px;"><span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">Plus information sur votre voyage avec Wailde.</span><table class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background: #ffffff; border-radius: 3px;"><tr><td class="wrapper" style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;"><table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;"><tr><td style="font-family: sans-serif; font-size: 14px; vertical-align: top;"><h1 style="font-family: sans-serif; font-size: 20; font-weight: normal; margin: 0; Margin-bottom: 15px;">Merci beaucoup pour votre reservation.</h1><img src="https://i.imgur.com/nWffoJ7g.jpg" style="width: 100%;"><p style="font-family: sans-serif; font-size: 18px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Les sentiers de la Vallée de Chevreuse,</p><p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Venez découvrir les sentiers secrets de la vallée de Chevreuse à travers un parcours Trail à effectuer en équipe avec vos collaborateurs. Une expérience enrichissante dans un environnement unique à proximité direct de Paris.</p><table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;"><tbody><tr><td align="left" style="font-family: sans-serif;font-size: 14px;vertical-align: top; padding-bottom: 15px;"><table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: auto;"><tbody><tr><td style="font-family: sans-serif; font-size: 14px; vertical-align: top; background-color: #3498db; border-radius: 5px; text-align: center;"> <a href="http://http://localhost:3000/" target="_blank" style="display: inline-block; color: #ffffff; background-color:  #99cccc; border: solid 1px #99cccc; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none; font-size: 14px; font-weight: bold; margin: 0; padding: 12px 25px; text-transform: capitalize; border-color: #99cccc;">Check out Wailde</a> </td></tr></tbody> </table></td></tr></tbody></table><p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Location: Dynamic / DIfficulty: Dynamic / Theme: Dynamic.</p><p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Profitez-vous!.</p></td></tr></table></td></tr></table></body>'
+
+
+/*var emailContentThree = '<body><style></style><div class="col-12 col-lg-6 jumbotron"><h1 class="display-4" style="font-style:'Poppins'">triptitle: Les sentiers de la Vallée de Chevreuse</h1><p class="lead">tripdescription: Venez découvrir les sentiers secrets de la vallée de Chevreuse à travers un parcours Trail à effectuer en équipe avec vos collaborateurs. Une expérience enrichissante dans un environnement unique à proximité direct de Paris.</p><hr class="my-4"><p>location</p><p>theme</p><p>budget : €</p><p>difficulty : <i class="fas fa-fire"></i></p><div class="niveau"><p>No. des Personnes : <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i></p></div></div></body>' */
 
 router.post('/emailsend', function(req, res, next) {
 
@@ -506,14 +556,19 @@ router.post('/emailsend', function(req, res, next) {
     transporter.sendMail(mailOptions, function(error, info) {
       if (error) {
         console.log(error);
-        res.render('home')
+        res.render('home',{
+          tripList: tripList,
+          user: req.session.user,
+          isLoggedIn: req.session.isLoggedIn
+        });
       } else {
         console.log('Email sent: ' + info.response);
-        res.render('confirmation')
+        res.render('confirmation', { isLoggedIn: req.session.isLoggedIn });
 
       }
     });
   });
+
 
 
 

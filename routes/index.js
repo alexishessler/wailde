@@ -18,16 +18,9 @@ var nodemailer = require('nodemailer');
 // HERE ARE THE MODULES WE USE
 
 router.post('/trip', function(req, res, next) {
-  var stripe = require("stripe")("sk_test_95zmCFtr3vHOffkw0DEfXiiI");
-  const token = req.body.stripeToken;
-  const charge = stripe.charges.create({
-    amount: 999,
-    currency: 'eur',
-    description: 'Example charge',
-    source: token,
-  });
 
-  res.render('confirmation', {isLoggedIn: req.session.isLoggedIn} );
+
+  res.render('home', {isLoggedIn: req.session.isLoggedIn} );
 });
 
 
@@ -562,7 +555,7 @@ router.get('/map', function(req, res, next){
 
 
 /* GET partner form. */
-router.get('/confirmation', function(req, res, next) {
+router.post('/confirmation', function(req, res, next) {
   res.render('confirmation', { isLoggedIn: req.session.isLoggedIn });
 });
 
@@ -570,6 +563,11 @@ router.get('/confirmation', function(req, res, next) {
 /* GET partner form. */
 router.get('/', function(req, res, next) {
   res.render('squeleton', { isLoggedIn: req.session.isLoggedIn });
+});
+
+/* GET partner form. */
+router.get('/maptest', function(req, res, next) {
+  res.render('maptest', { isLoggedIn: req.session.isLoggedIn });
 });
 
 
@@ -581,15 +579,22 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/book', function(req, res, next) {
-
-  res.render('pay');
+  var stripe = require("stripe")("sk_test_95zmCFtr3vHOffkw0DEfXiiI");
+  const token = req.body.stripeToken;
+  const charge = stripe.charges.create({
+    amount: 999,
+    currency: 'eur',
+    description: 'Example charge',
+    source: token,
+  });
+  res.render('pay', { isLoggedIn: req.session.isLoggedIn });
 });
 
 
 
 router.get('/confirmationemail', function(req, res, next) {
 
-  res.render('confirmationemail');
+  res.render('confirmationemail', { isLoggedIn: req.session.isLoggedIn });
 });
 
 

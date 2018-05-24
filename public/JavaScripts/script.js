@@ -1,5 +1,3 @@
-//alert();
-// HERE IS THE CODE FOR THE MAP//
 function initMap() {
   var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 4,
@@ -7,8 +5,10 @@ function initMap() {
   });
   var geocoder = new google.maps.Geocoder();
 
-  geocodeAddress(geocoder, map);
-
+  // document.getElementById('submit').addEventListener('click', function() {
+  //   geocodeAddress(geocoder, map);
+  // });
+    geocodeAddress(geocoder, map);
 }
 
 function geocodeAddress(geocoder, resultsMap) {
@@ -25,4 +25,3 @@ function geocodeAddress(geocoder, resultsMap) {
     }
   });
 }
-// END OF THE CODE FOR THE MAP//

@@ -1,19 +1,47 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title>Waïlde</title>
   <!-- bootscrap stylesheet -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
   <!-- personnal stylesheet -->
   <link href="https://fonts.googleapis.com/css?family=Poppins|Quicksand|Raleway" rel="stylesheet">
+
+  <meta name="viewport" content="initial-scale=1.0">
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
   <link rel='stylesheet' href='/stylesheets/style.css' />
- <meta name="viewport" content="initial-scale=1.0">
- <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <style>
+    /* Always set the map height explicitly to define the size of the div
+     * element that contains the map. */
+    #map {
+      height: 60vh;
+    }
+    /* Optional: Makes the sample page fill the window. */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    #floating-panel {
+      position: absolute;
+      top: 10px;
+      left: 25%;
+      z-index: 5;
+      background-color: #fff;
+      padding: 5px;
+      border: 1px solid #999;
+      text-align: center;
+      font-family: 'Roboto','sans-serif';
+      line-height: 30px;
+      padding-left: 10px;
+    }
+  </style>
 </head>
 
 <body>
- <!-- START NAV BAR -->
+  <!-- START NAV BAR -->
   <nav class="navbar navbar-expand-md navbar-light bg-light">
     <a class="navbar-brand" href="/">
       <img src="/images/assets/nav/eagle.png" width="30" height="30" alt="">
@@ -38,18 +66,18 @@
     <div class="navbar-collapse collapse w-100 order-2 dual-collapse2">
       <ul class="navbar-nav ml-auto">
         <% if (isLoggedIn == true) { %>
-        <li class="nav-item">
-          <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalPartenaire" href="#">Partenaires</a>
-        </li>
-        <li class="nav-item">
-          <a href="/logout" class="btn btn-outline-light nav-btn" method="get">Loggout</a>
-          <% } else { %>
-          <a href="/signin" class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignIn" href="#">SignIn</a>
-        </li>
-        <li class="nav-item">
-          <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignUp" href="/trip">SignUp</a>
-        </li>
-        <% } %>
+          <li class="nav-item">
+            <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalPartenaire" href="#">Partenaires</a>
+          </li>
+          <li class="nav-item">
+            <a href="/logout" class="btn btn-outline-light nav-btn" method="get">Loggout</a>
+            <% } else { %>
+              <a href="/signin" class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignIn" href="#">SignIn</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignUp" href="/trip">SignUp</a>
+          </li>
+          <% } %>
       </ul>
     </div>
   </nav>
@@ -104,121 +132,181 @@
     </div>
   </div>
   <!-- Modal SingUp-->
-<form action="/signup" method="POST">
-  <div class="modal fade" id="modalSignUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"> Registrez vous!</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <form action="/signup" method="POST">
+    <div class="modal fade" id="modalSignUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"> Registrez vous!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-        </div>
-        <div class="modal-body">
-          <form method="POST" action="/signup">
-            <div class="form-group">
-              <label>Email</label>
-              <input name="email" type="email" class="form-control" placeholder="Votre email">
-            </div>
-            <div class="form-group">
-              <label>Password</label>
-              <input name="password" type="password" class="form-control" placeholder="Votre mot passe">
-            </div>
-            <div class="form-group">
-              <label>Civil</label>
-              <input name="salutation" type="text" class="form-control" placeholder="salutation">
-            </div>
-            <div class="form-group">
-              <label>Nom famille</label>
-              <input name="lastname" type="text" class="form-control" placeholder="Nom famille">
-            </div>
-            <div class="form-group">
-              <label>Prenom</label>
-              <input name="firstname" type="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Prenom">
-              <small id="emailHelp" class="form-text text-muted">Nous gardons vos données en sécurité !</small>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Nom de l'entreprise</label>
-              <input name="companyname" type="name" class="form-control" id="exampleInputPassword1" placeholder="Nom de l'entreprise">
-            </div>
-            <button type="submit" class="btn btn-success">Inscriptions</button>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" action="/signup">
+              <div class="form-group">
+                <label>Email</label>
+                <input name="email" type="email" class="form-control" placeholder="Votre email">
+              </div>
+              <div class="form-group">
+                <label>Password</label>
+                <input name="password" type="password" class="form-control" placeholder="Votre mot passe">
+              </div>
+              <div class="form-group">
+                <label>Civil</label>
+                <input name="salutation" type="text" class="form-control" placeholder="salutation">
+              </div>
+              <div class="form-group">
+                <label>Nom famille</label>
+                <input name="lastname" type="text" class="form-control" placeholder="Nom famille">
+              </div>
+              <div class="form-group">
+                <label>Prenom</label>
+                <input name="firstname" type="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Prenom">
+                <small id="emailHelp" class="form-text text-muted">Nous gardons vos données en sécurité !</small>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Nom de l'entreprise</label>
+                <input name="company" type="name" class="form-control" id="exampleInputPassword1" placeholder="Nom de l'entreprise">
+              </div>
+              <button type="submit" class="btn btn-success">Inscriptions</button>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
   </form>
   <!-- END NAV BAR -->
   <!--CAROUSSEL -->
-  <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img class="d-block w-100" src="/images/waildetrip1/voyage1.jpg" alt="First slide">
-      </div>
-      <div class="carousel-item">
-        <img class="d-block w-100" src="/images/waildetrip1/voyage11.jpg" alt="Second slide">
-      </div>
-      <div class="carousel-item">
-        <img class="d-block w-100" src="/images/waildetrip1/voyage12.jpg" alt="Third slide">
-      </div>
-    </div>
-    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Next</span>
-    </a>
-    <div class="carousel-caption">
-         <div class="col-12 col-lg-6 jumbotron">
-             <h1 class="display-4">triptitle: Les sentiers de la Vallée de Chevreuse</h1>
-             <p class="lead">tripdescription: Venez découvrir les sentiers secrets de la vallée de Chevreuse à travers un parcours Trail à effectuer en équipe avec vos collaborateurs. Une expérience enrichissante dans un environnement unique à proximité direct de Paris.</p>
-             <hr class="my-4">
-             <p>location</p>
-             <p>theme</p>
-             <p>budget : € </p>
-             <p>difficulty : <i class="fas fa-fire"></i> </p>
-             <div class="niveau">
-             <p>No. des Personnes : <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> </p>
-<!-- Book button -->
-             <a href="/book" class="btn btn-primary mt-3">Reserve votre voyage</a>
-           </div>
-           </div>
-       </div>
-  </div>
-  <!-- map-->
-  <div id="map"></div>
-  <script>
-      var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -34.397, lng: 150.644},
-          zoom: 8
-        });
-      }
-    </script>
 
-  <!-- scripts bootstrap javascript -->
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-   <!-- lien vers stripe -->
-  <script src="https://js.stripe.com/v3/"></script>
-  <!-- lien vers script.js -->
-  <script src="/javascripts/script.js" charset="utf-8"></script>
-  <!-- lien vers maps API -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDBW7p69Yn6IFfN8IfyEM3DOXpFJoQaEsw&callback=initMap"
-  async defer></script>
-  <script>$('.carousel').carousel(); </script>
+  <%
+  for(var i=0; i<tripList.length; i++) {
+  %>
+
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img class="d-block w-100" src="<%=tripList[i].file%>" alt="First slide">
+        </div>
+
+
+        <div class="carousel-caption">
+
+
+
+          <!--JUMBOTRON & TRIP -->
+
+
+
+          <div class="col-12 col-lg-8 jumbotron">
+            <h1 class="display-4"><%=tripList[i].triptitle%></h1>
+            <p class="lead">
+              <%=tripList[i].tripdesc%>
+            </p>
+            <hr class="my-4">
+            <p>
+              <%=tripList[i].location%>
+            </p>
+            <p>
+              <% if (tripList[i].theme == 1) {%>
+                Aventure
+                <%} else if (tripList[i].theme == 2) {%>
+                  Découverte
+                  <%} else {%>
+                    Bien-être
+                    <%
+               }%>
+            </p>
+            <p>Budget par personne:
+              <%=tripList[i].budget%> € </p>
+            <p>Difficulté :
+              <% if (tripList[i].difficulty == "difficulte1") {%>
+                <i class="fas fa-fire"></i>
+                <%} else if (tripList[i].difficulty == "difficulte2") {%>
+                  <i class="fas fa-fire"></i><i class="fas fa-fire"></i>
+                  <%} else {%>
+                    <i class="fas fa-fire"></i><i class="fas fa-fire"></i><i class="fas fa-fire"></i>
+                    <%}%>
+            </p>
+            <div class="niveau">
+              <p>No. des Personnes : <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i>                <i class="fas fa-male"></i> <i class="fas fa-female"></i> </p>
+              <p>Start Date :
+                <%=tripList[i].startdate%>
+              </p>
+              <p>End Date :
+                <%=tripList[i].enddate%>
+              </p>
+
+              <!-- Book button -->
+              <!-- AS ON THE PAGE /PAY ALL INFORMATION ARE LOST AS THE VARIABLE TRIPLIST IS NOT REPEATED IN THE ROUTE, YOU NEED TO PASS THE INFORMATION THROUGH A DIFFERENT WAY: BY ADDING THE INFORMATION IN THE URL.-->
+
+              <% if (isLoggedIn == true) { %>
+                <a href="/book?triptitle=<%=tripList[i].triptitle%>&tripdesc=<%=tripList[i].tripdesc%>&triplocation=<%=tripList[i].location%>&tripdifficulty=<%=tripList[i].difficulty%>&triptheme=<%=tripList[i].theme%>" class="btn btn-primary mt-3">Reserve votre voyage</a>
+            </div>
+          </div>
+
+          <%
+                    } else {
+                      %>
+            <p>Veuillez vous conntecter pour</p>
+            <%
+
+                    }
+                    %>
+
+
+
+
+
+
+        </div>
+
+      </div>
+
+
+      <div id="">
+        <input id="address" type="hidden" value=" <%=tripList[i].location%>">
+        <!-- <input id="submit" type="hidden" value="Geocode"> -->
+      </div>
+
+      <%
+ }
+ %>
+
+
+      <div id="map">
+
+      </div>
+
+
+
+
+
+      <!-- scripts bootstrap javascript -->
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+      <!-- lien vers stripe -->
+      <script src="https://js.stripe.com/v3/"></script>
+      <!-- lien vers script.js -->
+
+      <!-- lien vers maps API -->
+      <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5ELPjs8_9TF73fkpkBoFUQ1lbrxtU2GU&callback=initMap">
+      </script>
+      <script src="/JavaScripts/script.js"></script>
+      <script>
+        $('.carousel').carousel();
+      </script>
 </body>
+
 </html>
 
 
 
-  </body>
+</body>
 
-  </html>
+</html>

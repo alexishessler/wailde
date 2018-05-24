@@ -28,7 +28,10 @@ router.post('/trip', function(req, res, next) {
       res.render('trip', {
         tripList: tripList,
         user: req.session.user,
+<<<<<<< HEAD
         file: '/images/'+ req.session.picture,
+=======
+>>>>>>> 9fb2df5f1038e2cab339ccfa6694604b7164a635
         isLoggedIn: req.session.isLoggedIn
       });
     }

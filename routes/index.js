@@ -12,6 +12,8 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var stripe = require("stripe")("sk_test_95zmCFtr3vHOffkw0DEfXiiI");
 var nodemailer = require('nodemailer');
+var passwordHash = require('password-hash');
+
 
 
 // il faut ajouter stripe (voir credentials sur Slack)
@@ -28,10 +30,6 @@ router.post('/trip', function(req, res, next) {
       res.render('trip', {
         tripList: tripList,
         user: req.session.user,
-<<<<<<< HEAD
-        file: '/images/'+ req.session.picture,
-=======
->>>>>>> 9fb2df5f1038e2cab339ccfa6694604b7164a635
         isLoggedIn: req.session.isLoggedIn
       });
     }
@@ -165,6 +163,30 @@ router.get('/validate-image', function(req, res, next) {
     isLoggedIn: req.session.isLoggedIn
   });
 });
+
+
+router.get('/delete-image', function(req, res, next) {
+  console.log("TEST");
+  console.log(req.query.id);
+
+  tripModel.remove({
+      _id: req.query.id
+    },
+    function(error) {
+      res.redirect('/partner');
+    }
+  );
+
+});
+
+
+
+
+// /* GET partner form. */
+// router.post('/remove-image', function(req, res, next) {
+//
+//   res.render('partner', { isLoggedIn: req.session.isLoggedIn });
+// });
 
 // router.get('/add-image', function(req, res, next) {
 //   res.render('add-image');
@@ -487,25 +509,34 @@ router.get('/experience', function(req, res, next) {
 
 router.post('/signin', function(req, res, next) {
  req.session.isLoggedIn = false;
+
  userModel.find({
-   email: req.body.email,
-   password: req.body.password
+   email: req.body.email
  },
+
  function(err, users) {
    if (users.length > 0) {
-     req.session.user = users[0];
-     req.session.isLoggedIn = true;
-     tripModel.find(
-       function (err, tripList ){
-         console.log(req.session.user)
-         console.log(users);
-         res.render('search-trip', {
-           tripList: tripList,
-           user: req.session.user,
-           isLoggedIn: req.session.isLoggedIn
-         });
-       }
-       )
+
+     var hashedPassword = users[0].password;
+     if (passwordHash.verify(req.body.password, hashedPassword)){
+       req.session.user = users[0];
+       req.session.isLoggedIn = true;
+       tripModel.find(
+         function (err, tripList ){
+           console.log(req.session.user)
+           console.log(users);
+           res.render('search-trip', {
+             tripList: tripList,
+             user: req.session.user,
+             isLoggedIn: req.session.isLoggedIn
+           });
+         }
+         )
+     } else {
+       req.session.isLoggedIn = false;
+       console.log("NON CONNECTE")
+       res.redirect('home');
+     }
    } else {
      req.session.isLoggedIn = false;
      console.log("NON CONNECTE")
@@ -524,10 +555,13 @@ router.post('/signup', function(req, res, next) {
     },
     function(err, users) {
       if (users.length == 0) {
+
+        var hashedPassword = passwordHash.generate(req.body.password);
+
         console.log(users)
         var newUser = new userModel({
           email: req.body.email,
-          password: req.body.password,
+          password: hashedPassword,
           salutation: req.body.salutation,
           lastname: req.body.lastname,
           firstname: req.body.firstname,

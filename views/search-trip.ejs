@@ -247,11 +247,13 @@
               <input name="startdate"  type="hidden" value="<%=tripList[i].startdate%>">
               <input name="enddate"  type="hidden" value="<%=tripList[i].enddate%>">
               <input name="team"  type="hidden" value="<%=tripList[i].team%>">
+
             </div>
           </div>
           <div class="d-flex justify-content-center">
             <% if (isLoggedIn) {%>
               <form class="" action="/trip" method="post">
+                <input name="id"  type="hidden" value="<%=tripList[i]._id%>">
                 <button type="submit" class="btn btn-primary mt-3">Plus d'infos</button>
               </form>
             <%} else {%>

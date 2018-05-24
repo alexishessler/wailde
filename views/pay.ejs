@@ -8,31 +8,12 @@
   <!-- personnal stylesheet -->
   <link href="https://fonts.googleapis.com/css?family=Poppins|Quicksand|Raleway" rel="stylesheet">
   <link rel='stylesheet' href='/stylesheets/style.css' />
- <meta name="viewport" content="initial-scale=1.0">
- <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-
- <style>
-    /* Always set the map height explicitly to define the size of the div
-     * element that contains the map. */
-    #map {
-      height: 50%;
-    }
-    /* Optional: Makes the sample page fill the window. */
-    html, body {
-      height: 100%;
-      margin: 0;
-      padding: 0;
-    }
-  </style>
-
-
-
-
+  <meta name="viewport" content="initial-scale=1.0">
+  <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 </head>
 
 <body>
-
   <!-- START NAV BAR -->
   <nav class="navbar navbar-expand-md navbar-light bg-light">
     <a class="navbar-brand" href="/">
@@ -57,19 +38,22 @@
     </div>
     <div class="navbar-collapse collapse w-100 order-2 dual-collapse2">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalPartenaire" href="#">Partenaires</a>
-        </li>
-        <li class="nav-item">
-          <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignIn" href="#">SignIn</a>
-        </li>
-        <li class="nav-item">
-          <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignUp" href="#">SignUp</a>
-        </li>
+        <% if (isLoggedIn == true) { %>
+          <li class="nav-item">
+            <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalPartenaire" href="#">Partenaires</a>
+          </li>
+          <li class="nav-item">
+            <a href="/logout" class="btn btn-outline-light nav-btn" method="get">Loggout</a>
+            <% } else { %>
+              <a href="/signin" class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignIn" href="#">SignIn</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignUp" href="/trip">SignUp</a>
+          </li>
+          <% } %>
       </ul>
     </div>
   </nav>
-
   <!-- Modal Partenaire-->
   <div class="modal fade" id="modalPartenaire" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -90,7 +74,6 @@
       </div>
     </div>
   </div>
-
   <!-- Modal SignIn-->
   <div class="modal fade" id="modalSignIn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -121,7 +104,6 @@
       </div>
     </div>
   </div>
-
   <!-- Modal SingUp-->
   <form action="/signup" method="POST">
     <div class="modal fade" id="modalSignUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -130,8 +112,8 @@
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel"> Registrez vous!</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
+            <span aria-hidden="true">&times;</span>
+          </button>
           </div>
           <div class="modal-body">
             <form method="POST" action="/signup">
@@ -158,9 +140,8 @@
               </div>
               <div class="form-group">
                 <label for="exampleInputPassword1">Nom de l'entreprise</label>
-                <input name="companyname" type="name" class="form-control" id="exampleInputPassword1" placeholder="Nom de l'entreprise">
+                <input name="company" type="name" class="form-control" id="exampleInputPassword1" placeholder="Nom de l'entreprise">
               </div>
-
               <button type="submit" class="btn btn-success">Inscriptions</button>
             </form>
           </div>
@@ -170,22 +151,49 @@
         </div>
       </div>
     </div>
-    </form>
+  </form>
   <!-- END NAV BAR -->
 
-<h1>Merci "dnyamic name" pour votre reservation.</h1>
+<h1>Merci <span class="bold"> <%=user.firstname%> </span> pour votre reservation.</h1>
 <h2>Vous avez recu un email de confirmation. Pour finaliser votre commande passer a la caisse</h2>
+
+
+  <% if (isLoggedIn == true) { %>
+
 
 <form action="/emailsend" method="POST">
     <script
     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
     data-key="pk_test_1ANCe1biF6Lq6FWEuAVptelw"
+    data-email="<%=user.email%>"
     data-amount="999"
     data-name="Wailde"
     data-description="Paiement"
     data-image="/images/pictures/waildelogo.png"
     data-currency="eur">
     </script>
+
+    <!-- DEFINE TRIPTITLE IN ORDER TO SEND THE RIGHT INFORMATION IN THE EMAIL -->
+    <input name="triptitle"  type="hidden" value="<%=triptitle%>">
+      <input name="tripdesc"  type="hidden" value="<%=tripdesc%>">
+        <input name="triplocation"  type="hidden" value="<%=triplocation%>">
+        <input name="tripdifficulty"  type="hidden" value="<%=tripdifficulty%>">
+        <input name="triptheme"  type="hidden" value="<%=triptheme%>">
+
+
+        <%
+                  } else {
+                    %>
+          <p>Veuillez vous conntecter pour</p>
+          <%
+
+                  }
+                  %>
+
+
+
+
+
 </form>
 
 <div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>

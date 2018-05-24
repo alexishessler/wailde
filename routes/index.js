@@ -16,11 +16,25 @@ var nodemailer = require('nodemailer');
 
 // il faut ajouter stripe (voir credentials sur Slack)
 // HERE ARE THE MODULES WE USE
-
 router.post('/trip', function(req, res, next) {
+  tripModel.find({
+      _id: req.body.id
+    },
 
+    function(err, tripList) {
+      console.log("ici commence le test");
+      console.log(req.body.id);
+      console.log(tripList);
+      res.render('trip', {
+        tripList: tripList,
+        user: req.session.user,
+        file: '/images/' + req.session.picture,
+        file: '/images/' + picturechoice,
+        isLoggedIn: req.session.isLoggedIn
+      });
+    }
+  )
 
-  res.render('home', {isLoggedIn: req.session.isLoggedIn} );
 });
 
 

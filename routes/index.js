@@ -28,8 +28,6 @@ router.post('/trip', function(req, res, next) {
       res.render('trip', {
         tripList: tripList,
         user: req.session.user,
-        file: '/images/' + req.session.picture,
-        file: '/images/' + picturechoice,
         isLoggedIn: req.session.isLoggedIn
       });
     }

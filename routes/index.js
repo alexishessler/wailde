@@ -1,3 +1,12 @@
+///////////////////////////////
+//                           //
+//                           //
+//           PART 1          //
+//                           //
+//                           //
+///////////////////////////////
+
+
 // HERE ARE THE MODULES WE USE DO NOT TOUCH
 var express = require('express');
 var router = express.Router();
@@ -14,32 +23,19 @@ var stripe = require("stripe")("sk_test_95zmCFtr3vHOffkw0DEfXiiI");
 var nodemailer = require('nodemailer');
 var passwordHash = require('password-hash');
 
-var error = [];
-
-// il faut ajouter stripe (voir credentials sur Slack)
-// HERE ARE THE MODULES WE USE
-router.post('/trip', function(req, res, next) {
-  tripModel.find({
-      _id: req.body.id
-    },
-
-    function(err, tripList) {
-      console.log("ici commence le test");
-      console.log(req.body.id);
-      console.log(tripList);
-      res.render('trip', {
-        tripList: tripList,
-        user: req.session.user,
-        isLoggedIn: req.session.isLoggedIn
-      });
-    }
-  )
-
-});
 
 
 
-// HERE IS THE CONNECTION TO OUR MLAB DATABASE
+
+///////////////////////////////
+//                           //
+//                           //
+//           PART 2          //
+//                           //
+//                           //
+///////////////////////////////
+
+// DATABASE CONNECTION & SCHEMA
 var options = {
   server: {
     socketOptions: {
@@ -53,20 +49,210 @@ mongoose.connect('mongodb://capsule:azerty@ds139459.mlab.com:39459/waildeproject
     console.log(err);
   }
 );
-// HERE IS THE CONNECTION TO OUR MLAB DATABASE
 
-// var path = require('path');
-// var crypto = require('crypto');
-// var mongoose = require('mongoose');
-// var multer = require('multer');
-// var GridFsStorage = require('multer-gridfs-storage');
-// var Grid = require('gridfs-stream');
-// var bodyParser = require('body-parser');
-// var methodOverride = require('method-override');
+  // 1) Schéma Collection partner
+
+  var partnerSchema = mongoose.Schema({
+    email: String,
+    password: String,
+    salutation: String,
+    lastname: String,
+    firstname: String,
+    company: String
+  });
+
+  var patnerModel = mongoose.model('partners', partnerSchema);
+
+
+  // 2) Schéma Collection user
+
+  var userSchema = mongoose.Schema({
+    email: String,
+    password: String,
+    salutation: String,
+    lastname: String,
+    firstname: String,
+    company: String
+  });
+
+  var userModel = mongoose.model('users', userSchema);
+
+
+  // 3) Schéma Collection trips
+
+  var tripSchema = mongoose.Schema({
+      email: String,
+      salutation: String,
+      lastName: String,
+      firstName: String,
+      company: String,
+      triptitle: String,
+      tripdesc: String,
+      location: String,
+      theme: String,
+      difficulty: String,
+      budget: Number,
+      duration: String,
+      startdate: String,
+      enddate: String,
+      team: Number,
+      file: String,
+      file2: String,
+      dbbudget: Number,
+      dbteam: Number
+
+  });
+
+  var tripModel = mongoose.model('trips', tripSchema);
 
 
 
-//
+
+  ///////////////////////////////
+  //                           //
+  //                           //
+  //           PART 3          //
+  //                           //
+  //                           //
+  ///////////////////////////////
+
+
+// VAR ERROR
+  var error = [];
+
+
+
+
+
+
+
+  ///////////////////////////////
+  //                           //
+  //                           //
+  //           PART 4          //
+  //                           //
+  //                           //
+  ///////////////////////////////
+
+// SIGN IN & SIGN UP
+
+  // SIGN IN
+router.post('/signin', function(req, res, next) {
+ req.session.isLoggedIn = false;
+
+ userModel.find({
+   email: req.body.email
+ },
+
+ function(err, users) {
+   if (users.length > 0) {
+
+     var hashedPassword = users[0].password;
+     if (passwordHash.verify(req.body.password, hashedPassword)){
+       req.session.user = users[0];
+       req.session.isLoggedIn = true;
+       tripModel.find(
+         function (err, tripList ){
+           console.log(req.session.user)
+           console.log(users);
+           res.render('search-trip', {
+             tripList: tripList,
+             user: req.session.user,
+             isLoggedIn: req.session.isLoggedIn
+           });
+         }
+         )
+     } else {
+       // faux password
+       error = [...error, 'Votre mot de passe est incorrect !'];
+       req.session.isLoggedIn = false;
+       console.log("NON CONNECTE")
+       res.render('home', {
+         isLoggedIn: req.session.isLoggedIn,
+         error: error
+       });
+       error = [];
+     }
+   } else {
+     // faux email
+     req.session.isLoggedIn = false;
+     console.log("NON CONNECTE")
+     res.redirect('home');
+   }
+    });
+    });
+
+
+    // SIGN UP
+router.post('/signup', function(req, res, next) {
+  req.session.isLoggedIn = false;
+  userModel.find({
+      email: req.body.email
+    },
+    function(err, users) {
+      if (users.length == 0) {
+
+        var hashedPassword = passwordHash.generate(req.body.password);
+
+        console.log(users)
+        var newUser = new userModel({
+          email: req.body.email,
+          password: hashedPassword,
+          salutation: req.body.salutation,
+          lastname: req.body.lastname,
+          firstname: req.body.firstname,
+          company: req.body.company
+
+        });
+        newUser.save(
+          function(error, user) {
+            console.log(users)
+            req.session.user = user;
+            req.session.isLoggedIn = true;
+            tripModel.find(
+              function(err, tripList) {
+                console.log(user);
+                res.render('search-trip', {
+                  tripList: tripList,
+                  user: req.session.user,
+                  isLoggedIn: req.session.isLoggedIn
+                });
+              }
+            )
+          }
+        )
+      } else {
+        req.session.isLoggedIn = false;
+        res.render('home', { isLoggedIn: req.session.isLoggedIn });
+      }
+    }
+  )
+
+});
+
+  // HERE IS THE LOGOUT ROUTE
+router.get('/logout', function(req, res, next){
+ req.session.isLoggedIn = false;
+  res.render('home', { isLoggedIn: req.session.isLoggedIn });
+});
+
+
+
+
+
+
+
+
+
+///////////////////////////////
+//                           //
+//                           //
+//           PART 5          //
+//                           //
+//                           //
+///////////////////////////////
+
+// UPLOAD IMAGE
 // / SET STORAGE engine
 var storage = multer.diskStorage({
   destination: './public/images/',
@@ -150,48 +336,23 @@ router.post('/upload', function(req, res, next) {
 
 
 
+
+
+
+///////////////////////////////
+//                           //
+//                           //
+//           PART 6          //
+//                           //
+//                           //
+///////////////////////////////
+
+// TRIPS
+
 /* GET partner form. */
 router.get('/partner', function(req, res, next) {
   res.render('partner', { isLoggedIn: req.session.isLoggedIn });
 });
-
-/* GET home page. */
-router.get('/validate-image', function(req, res, next) {
-  res.render('validate-image', {
-    file: '/images/' + req.session.picture,
-    file: '/images/' + picturechoice,
-    isLoggedIn: req.session.isLoggedIn
-  });
-});
-
-
-router.get('/delete-image', function(req, res, next) {
-  console.log("TEST");
-  console.log(req.query.id);
-
-  tripModel.remove({
-      _id: req.query.id
-    },
-    function(error) {
-      res.redirect('/partner');
-    }
-  );
-
-});
-
-
-
-
-// /* GET partner form. */
-// router.post('/remove-image', function(req, res, next) {
-//
-//   res.render('partner', { isLoggedIn: req.session.isLoggedIn });
-// });
-
-// router.get('/add-image', function(req, res, next) {
-//   res.render('add-image');
-// });
-// var picturechoice = null;
 
 /* GET home page. */
 router.post('/add-image', function(req, res, next) {
@@ -248,189 +409,28 @@ router.get('/add-image', function(req, res, next) {
   });
 });
 
-// router.post('/upload', function(req, res, next) {
-//
-//   upload(req, res, (err) => {
-//     if(err){
-//       console.log("Il n'y a pas d'erreur");
-//       res.redirect('/partner');
-//
-//       console.log("Il y a une erreur");
-//     } else {
-//       // les infos du req.file sont à mettre dans la data base
-//       if(req.file == undefined){
-//         console.log("le fichier n'est pas défini!!");
-//         res.redirect('/partner');
-//       } else {
-//         console.log(req.file.id);
-//         req.session.picture = req.file.id
-//         console.log(req.session.picture);
-//         console.log("ca a marché!!");
-//         res.redirect('/validate-image');
-//         // pour resrender l'img, bien ajouter le img tag sur le view!!
-//       }
-//     }
-//   });
-// });
-
-
-
-
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
-
-
-// 1) Schéma Collection partner
-
-var partnerSchema = mongoose.Schema({
-  email: String,
-  password: String,
-  salutation: String,
-  lastname: String,
-  firstname: String,
-  company: String
+/* GET home page. */
+router.get('/validate-image', function(req, res, next) {
+  res.render('validate-image', {
+    file: '/images/' + req.session.picture,
+    file: '/images/' + picturechoice,
+    isLoggedIn: req.session.isLoggedIn
+  });
 });
 
-var patnerModel = mongoose.model('partners', partnerSchema);
+router.get('/delete-image', function(req, res, next) {
+  console.log("TEST");
+  console.log(req.query.id);
 
-
-
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
-
-
-
-// 2) Schéma Collection user
-
-
-var userSchema = mongoose.Schema({
-  email: String,
-  password: String,
-  salutation: String,
-  lastname: String,
-  firstname: String,
-  company: String
-});
-
-var userModel = mongoose.model('users', userSchema);
-
-
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
-
-
-
-// 3) Schéma Collection trips
-var tripSchema = mongoose.Schema({
-    email: String,
-    salutation: String,
-    lastName: String,
-    firstName: String,
-    company: String,
-    triptitle: String,
-    tripdesc: String,
-    location: String,
-    theme: String,
-    difficulty: String,
-    budget: Number,
-    duration: String,
-    startdate: String,
-    enddate: String,
-    team: Number,
-    file: String,
-    file2: String,
-    dbbudget: Number,
-    dbteam: Number
-
-});
-
-var tripModel = mongoose.model('trips', tripSchema);
-
-
-
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
-// ****************************************************************
-
-
-
-// GOOGLE MAP API
-
-
-
-var map;
-
-function initMap() {
-  map = new google.maps.Map(document.getElementById('map'), {
-    center: {
-      lat: -34.397,
-      lng: 150.644
+  tripModel.remove({
+      _id: req.query.id
     },
-    zoom: 8
-  });
-}
-
-
-// HERE ARE THE NAVBAR LINKS
-/* GET squeleton page. */
-// router.get('/', function(req, res, next) {
-//   res.render('squeleton');
-// });
-
-
-// HERE ARE THE SIGN-IN & SIGN-UP ROUTES
-router.post('/add-trip', function(req, res, next) {
-
-
-  var newTrip = new tripModel({
-    salutation: "dynamicEmail@gmail.com",
-    lastName: "dynamicNom",
-    firstName: "dynamicPrenom",
-    company: "dynamicNomEntreprise",
-    triptitle: req.body.triptitle,
-    tripdesc: req.body.tripdesc,
-    location: req.body.location,
-    theme: req.body.theme,
-    difficulty: String,
-    budget: Number,
-    duration: String,
-    startdate: String,
-    enddate: String,
-    team: Number,
-    file: String,
-    file2: String,
-
-  });
-  newTrip.save(
-    function(error, trip) {
-      console.log(trip);
+    function(error) {
+      res.redirect('/partner');
     }
   );
 
-  res.redirect('/add-trip');
 });
-
-
-
-/* GET home page. */
-router.get('/home', function(req, res, next) {
-  res.render('home', {
-    isLoggedIn: req.session.isLoggedIn,
-    error: error
-  });
-});
-
 
 
 /* GET search page with ALL CARDS */
@@ -482,164 +482,36 @@ router.post('/search-filter', function(req, res, next) {
     }
   )
 });
-// res.render('search-trip', {
-//   tripList: trips,
-//   user: req.session.user,
-//   file: '/images/'+ req.session.picture,
-//   isLoggedIn: req.session.isLoggedIn
-// });
+
+
+// il faut ajouter stripe (voir credentials sur Slack)
+// HERE ARE THE MODULES WE USE
+router.post('/trip', function(req, res, next) {
+  tripModel.find({
+      _id: req.body.id
+    },
+
+    function(err, tripList) {
+      console.log("ici commence le test");
+      console.log(req.body.id);
+      console.log(tripList);
+      res.render('trip', {
+        tripList: tripList,
+        user: req.session.user,
+        isLoggedIn: req.session.isLoggedIn
+      });
+    }
+  )
+
+});
 
 /* GET trip page with ONE CARD (selected trip) */
 router.get('/trip', function(req, res, next) {
   res.render('trip', { isLoggedIn: req.session.isLoggedIn });
 });
 
-
-
-/* GET experience page. */
-router.get('/experience', function(req, res, next) {
-  res.render('experience', { isLoggedIn: req.session.isLoggedIn });
-});
-
-// HERE ARE THE NAVBAR LINKS
-
-
-
-// // HERE ARE THE SIGN-IN & SIGN-UP ROUTES
-// router.post('/signin', function(req, res, next) {
-//   res.render('search-trip');
-// });
-
-router.post('/signin', function(req, res, next) {
- req.session.isLoggedIn = false;
-
- userModel.find({
-   email: req.body.email
- },
-
- function(err, users) {
-   if (users.length > 0) {
-
-     var hashedPassword = users[0].password;
-     if (passwordHash.verify(req.body.password, hashedPassword)){
-       req.session.user = users[0];
-       req.session.isLoggedIn = true;
-       tripModel.find(
-         function (err, tripList ){
-           console.log(req.session.user)
-           console.log(users);
-           res.render('search-trip', {
-             tripList: tripList,
-             user: req.session.user,
-             isLoggedIn: req.session.isLoggedIn
-           });
-         }
-         )
-     } else {
-       // faux password
-       error = [...error, 'Votre mot de passe est incorrect !'];
-       req.session.isLoggedIn = false;
-       console.log("NON CONNECTE")
-       res.render('home', {
-         isLoggedIn: req.session.isLoggedIn,
-         error: error
-       });
-       error = [];
-     }
-   } else {
-     // faux email
-     req.session.isLoggedIn = false;
-     console.log("NON CONNECTE")
-     res.redirect('home');
-   }
-    });
-    });
-
-
-// HERE ARE THE SIGN-IN & SIGN-UP ROUTES
-//
-router.post('/signup', function(req, res, next) {
-  req.session.isLoggedIn = false;
-  userModel.find({
-      email: req.body.email
-    },
-    function(err, users) {
-      if (users.length == 0) {
-
-        var hashedPassword = passwordHash.generate(req.body.password);
-
-        console.log(users)
-        var newUser = new userModel({
-          email: req.body.email,
-          password: hashedPassword,
-          salutation: req.body.salutation,
-          lastname: req.body.lastname,
-          firstname: req.body.firstname,
-          company: req.body.company
-
-        });
-        newUser.save(
-          function(error, user) {
-            console.log(users)
-            req.session.user = user;
-            req.session.isLoggedIn = true;
-            tripModel.find(
-              function(err, tripList) {
-                console.log(user);
-                res.render('search-trip', {
-                  tripList: tripList,
-                  user: req.session.user,
-                  isLoggedIn: req.session.isLoggedIn
-                });
-              }
-            )
-          }
-        )
-      } else {
-        req.session.isLoggedIn = false;
-        res.render('home', { isLoggedIn: req.session.isLoggedIn });
-      }
-    }
-  )
-
-});
-
-// HERE IS THE LOGOUT ROUTE//
-router.get('/logout', function(req, res, next){
- req.session.isLoggedIn = false;
-  res.render('home', { isLoggedIn: req.session.isLoggedIn });
-});
-
-router.get('/map', function(req, res, next){
-  res.render('map', { isLoggedIn: req.session.isLoggedIn });
-});
-
-
-
-/* GET partner form. */
-router.post('/confirmation', function(req, res, next) {
-  res.render('confirmation', { isLoggedIn: req.session.isLoggedIn });
-});
-
-
-/* GET partner form. */
-router.get('/', function(req, res, next) {
-  res.render('squeleton', { isLoggedIn: req.session.isLoggedIn });
-});
-
-/* GET partner form. */
-router.get('/maptest', function(req, res, next) {
-  res.render('maptest', { isLoggedIn: req.session.isLoggedIn });
-});
-
-
-
-
-
 // BOOK ROUTE
 // DEFINE TRIPTITLE: REQ.QUERY.TIRIPTITLE. TRIPTITLE IS REFERENCED TO THE HIDDEN INPUT ON TRIP.EJS IN THE ROUTE GET
-
-
 router.get('/book', function(req, res, next) {
   console.log("user-->" + req.session);
   var stripe = require("stripe")("sk_test_95zmCFtr3vHOffkw0DEfXiiI");
@@ -658,8 +530,6 @@ router.get('/book', function(req, res, next) {
     triptheme:req.query.triptheme});
 });
 
-
-
 router.get('/confirmationemail', function(req, res, next) {
 
   res.render('confirmationemail', { isLoggedIn: req.session.isLoggedIn });
@@ -667,8 +537,6 @@ router.get('/confirmationemail', function(req, res, next) {
 
 
 // EMAIL SENDING
-
-
 var emailContent = '<body class="" style="background-color: #f6f6f6; font-family: sans-serif; -webkit-font-smoothing: antialiased; font-size: 14px; line-height: 1.4; margin: 0; padding: 0; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;"><table border="0" cellpadding="0" cellspacing="0" class="body" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background-color: #f6f6f6;"><tr><td style="font-family: sans-serif; font-size: 14px; vertical-align: top;">&nbsp;</td><td class="container" style="font-family: sans-serif; font-size: 14px; vertical-align: top; display: block; Margin: 0 auto; max-width: 580px; padding: 10px; width: 580px;"><div class="content" style="box-sizing: border-box; display: block; Margin: 0 auto; max-width: 580px; padding: 10px;"><span class="preheader" style="color: transparent; display: none; height: 0; max-height: 0; max-width: 0; opacity: 0; overflow: hidden; mso-hide: all; visibility: hidden; width: 0;">Plus information sur votre voyage avec Wailde.</span><table class="main" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; background: #ffffff; border-radius: 3px;"><tr><td class="wrapper" style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;"><table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;"><tr><td style="font-family: sans-serif; font-size: 14px; vertical-align: top;"><h1 style="font-family: sans-serif; font-size: 20; font-weight: normal; margin: 0; Margin-bottom: 15px;">Merci beaucoup pour votre reservation.</h1><img src="https://i.imgur.com/nWffoJ7g.jpg" style="width: 100%;"></body>'
 
 var emailContentParagraph = '<body><p></p></body>'
@@ -688,7 +556,6 @@ var emailContentFive = '<body></p><p style="font-family: sans-serif; font-size: 
 
 
 // ROUTE EMAILSEND ON THE PAY.EJS. HIDDEN INPUTS HAVE TO BE ADDED IN ORDER FOR THE PAGE TO ACCESS ALL THE INFORMATION FROM THE PREVIOUS PAGE. THE HTML IS BEING SEPERATEDINTO SEVERAL BLOCKS AND ADDED TOGETHER IN ORDER TO MAKE EACH PART DYNAMIC.
-
 
 router.post('/emailsend', function(req, res, next) {
 console.log("req.body : " + JSON.stringify(req.body));
@@ -730,6 +597,92 @@ console.log("req.body : " + JSON.stringify(req.body));
     });
   });
   });
+
+/* GET partner form. */
+router.post('/confirmation', function(req, res, next) {
+  res.render('confirmation', { isLoggedIn: req.session.isLoggedIn });
+});
+
+
+
+
+
+
+
+
+
+
+///////////////////////////////
+//                           //
+//                           //
+//           PART 7          //
+//                           //
+//                           //
+///////////////////////////////
+
+
+// OTHER ROUTES
+/* GET partner form. */
+router.get('/', function(req, res, next) {
+  res.render('home', { isLoggedIn: req.session.isLoggedIn });
+});
+
+router.get('/home', function(req, res, next) {
+  res.render('home', {
+    isLoggedIn: req.session.isLoggedIn,
+    error: error
+  });
+});
+
+/* GET experience page. */
+router.get('/experience', function(req, res, next) {
+  res.render('home', { isLoggedIn: req.session.isLoggedIn });
+});
+
+
+
+
+
+// router.get('/map', function(req, res, next){
+//   res.render('map', { isLoggedIn: req.session.isLoggedIn });
+// });
+//
+// /* GET partner form. */
+// router.get('/maptest', function(req, res, next) {
+//   res.render('maptest', { isLoggedIn: req.session.isLoggedIn });
+// });
+
+  // // HERE ARE THE SIGN-IN & SIGN-UP ROUTES
+  // router.post('/add-trip', function(req, res, next) {
+  //
+  //
+  //   var newTrip = new tripModel({
+  //     salutation: "dynamicEmail@gmail.com",
+  //     lastName: "dynamicNom",
+  //     firstName: "dynamicPrenom",
+  //     company: "dynamicNomEntreprise",
+  //     triptitle: req.body.triptitle,
+  //     tripdesc: req.body.tripdesc,
+  //     location: req.body.location,
+  //     theme: req.body.theme,
+  //     difficulty: String,
+  //     budget: Number,
+  //     duration: String,
+  //     startdate: String,
+  //     enddate: String,
+  //     team: Number,
+  //     file: String,
+  //     file2: String,
+  //
+  //   });
+  //   newTrip.save(
+  //     function(error, trip) {
+  //       console.log(trip);
+  //     }
+  //   );
+  //
+  //   res.redirect('/add-trip');
+  // });
 
 
 module.exports = router;

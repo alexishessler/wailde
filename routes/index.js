@@ -62,7 +62,7 @@ mongoose.connect('mongodb://capsule:azerty@ds139459.mlab.com:39459/waildeproject
   });
 
   var patnerModel = mongoose.model('partners', partnerSchema);
-
+ //
 
   // 2) Schéma Collection user
 

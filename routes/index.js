@@ -14,7 +14,7 @@ var stripe = require("stripe")("sk_test_95zmCFtr3vHOffkw0DEfXiiI");
 var nodemailer = require('nodemailer');
 var passwordHash = require('password-hash');
 
-
+var error = [];
 
 // il faut ajouter stripe (voir credentials sur Slack)
 // HERE ARE THE MODULES WE USE
@@ -425,7 +425,10 @@ router.post('/add-trip', function(req, res, next) {
 
 /* GET home page. */
 router.get('/home', function(req, res, next) {
-  res.render('home', {isLoggedIn: req.session.isLoggedIn});
+  res.render('home', {
+    isLoggedIn: req.session.isLoggedIn,
+    error: error
+  });
 });
 
 
@@ -533,11 +536,18 @@ router.post('/signin', function(req, res, next) {
          }
          )
      } else {
+       // faux password
+       error = [...error, 'Votre mot de passe est incorrect !'];
        req.session.isLoggedIn = false;
        console.log("NON CONNECTE")
-       res.redirect('home');
+       res.render('home', {
+         isLoggedIn: req.session.isLoggedIn,
+         error: error
+       });
+       error = [];
      }
    } else {
+     // faux email
      req.session.isLoggedIn = false;
      console.log("NON CONNECTE")
      res.redirect('home');

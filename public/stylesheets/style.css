@@ -86,6 +86,10 @@ overflow: hidden;
 text-overflow: ellipsis;
 }
 
+.go{
+  margin-bottom: 10px;
+}
+
 /* MAP
 Always set the map height explicitly to define the size of the div
        * element that contains the map. */

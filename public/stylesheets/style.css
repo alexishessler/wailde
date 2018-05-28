@@ -20,7 +20,9 @@ h2 {
 
 /* NAVBAR */
 .bg-light {
-    background-color: #9DCB77!important;
+  background: linear-gradient(#9933cc, #99cccc);
+
+
 }
 .navbar-light .navbar-nav .nav-link {
     color: black;
@@ -37,6 +39,9 @@ h2 {
   margin-bottom: 5px;
 }
 /* NAVBAR */
+
+
+
 
 
 /* CONFIRMATION */

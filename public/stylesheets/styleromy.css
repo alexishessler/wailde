@@ -27,7 +27,9 @@ p {
 
 /* NAVBAR */
 .bg-light {
-    background-color: #9DCB77!important;
+  background: linear-gradient(#9933cc, 	#99cccc);
+
+
 }
 .navbar-light .navbar-nav .nav-link {
     color: black;
@@ -44,6 +46,7 @@ p {
   margin-bottom: 5px;
 }
 /* NAVBAR */
+
 
 
 /* CONFIRMATION */
@@ -88,7 +91,6 @@ p {
 
 
 .container-fluid {
-background-color: rgba(153,204,204, 0.4);
 padding-left: 0px;
 padding-right: 0px;
 padding-bottom: 40px;
@@ -103,7 +105,7 @@ background-color: rgba(153,153,204, 0.5);
 
 .fileimage{
 background-color: rgba(153,153,204, 0.5);
-
+margin-top: 0px;
 }
 
 
@@ -139,7 +141,7 @@ background-color: rgba(153,153,204, 0.5);
 }
 
 .orange:after {
-  background-color: rgba(153,204,204, 0.8);
+  background-color: #F6F6F6;
 }
 
 #map {

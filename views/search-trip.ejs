@@ -17,7 +17,7 @@
   <!-- START NAV BAR -->
   <nav class="navbar navbar-expand-md navbar-light bg-light">
     <a class="navbar-brand" href="/">
-      <img src="/images/assets/nav/eagle.png" width="30" height="30" alt="">
+      <img src="/images/pictures/waildelogo2.png" width="40" height="40" alt="">
     </a>
     <a class="navbar-brand" href="/"><span class="bold">Waïlde</span></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
@@ -184,7 +184,7 @@
 
 
   <div class="container-fluid">
-    <h3 class="text-left mt-3 mb-3">Trouvez votre futur voyage Team Building</h3>
+    <h2 class="text-left mt-3 mb-3 text-center">Trouvez votre futur voyage Team Building</h2>
 
   <form class="search-barre" action="/search-filter" method="post">
 
@@ -210,13 +210,13 @@
         <option value="difficulte3">Difficile</option>
       </select>
 
-      <button type="submit" class="col-lg-1 btn btn-lg btn-primary m-2 p-1">Recherche</button>
-      <button type="button" class="col-lg-1 btn btn-secondary btn-lg m-2 p-1">Reset</button>
+      <button type="submit" class="btn btn-outline-secondary btn-lg col-lg-1 m-2 p-1">Recherche</button>
+      <button type="button" class="col-lg-1 btn btn-secondary  m-2 p-1">Reset</button>
     </div>
 
   </form>
 
-    <hr class="my-5" style="border: 2px solid #9dcb77;"></hr>
+    <hr class="my-5" style="border: 2px solid		#99cccc;"></hr>
 
     <div class="row">
       <%
@@ -273,7 +273,7 @@
             <% if (isLoggedIn) {%>
               <form class="" action="/trip" method="post">
                 <input name="id"  type="hidden" value="<%=tripList[i]._id%>">
-                <button type="submit" class="btn btn-primary mt-3">Plus d'infos</button>
+                <button type="submit" class="btn btn-outline-secondary mt-3">Plus d'infos</button>
               </form>
             <%} else {%>
               <a href="/signin" class="btn btn-success nav-btn" data-toggle="modal" data-target="#modalSignIn" href="#">SignIn</a>

@@ -25,7 +25,9 @@ p{
 
 /* NAVBAR */
 .bg-light {
-    background-color: #9DCB77!important;
+  background: linear-gradient(#9933cc, 	#99cccc);
+
+
 }
 .navbar-light .navbar-nav .nav-link {
     color: black;
@@ -53,7 +55,8 @@ p{
 /* HOME PAGE */
 #go{
   margin-bottom: 10px;
-  color: #9933CC;
+  color: #9933cc;
+  font-size: 20px;
   border: 1px solid #CCE6E6;
 }
 
@@ -75,7 +78,7 @@ p{
 }
 
 .text-center{
-  color: #9933CC;
+  color: #F6F6F6;
   margin: 5px;
   border-radius: 3px
 }
@@ -91,14 +94,47 @@ width: 320px
 }
 
 h3{
-text-shadow: 1px 1px 12px #000
+text-shadow: 1px 1px 12px #000;
 }
 
 .hr{
-  color: #99CCCC
+  color: #99CCCC;
 }
 
 .border-top{
 
+}
+
+.waildetitle {
+  padding-top: 40px;
+
+}
+
+
+
+.waildeteamcard{
+
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-bottom: 30px;
+  margin-top: 20px;
+
+}
+
+.card-deck{
+margin-bottom: 30px;
+}
+
+.text-muted{
+color:#99cccc;
+}
+
+
+.rounded-circle{
+margin-left: 30px;
+margin-top: 10px;
+width: 80%;
 }
 /* HOME PAGE */

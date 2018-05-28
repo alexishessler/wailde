@@ -11,7 +11,7 @@
   <meta name="viewport" content="initial-scale=1.0">
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/styleromy.css' />
   <style>
     /* Always set the map height explicitly to define the size of the div
      * element that contains the map. */
@@ -184,14 +184,86 @@
 
 
 
-    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-      <div class="carousel-inner">
-        <div class="carousel-item active">
-          <img class="d-block w-100" src="<%=trip.file%>" alt="First slide">
-        </div>
+  <div class="container-fluid" >
+    <div class="box overlay blue"><img class="fileimage d-block w-100" src="<%=trip.file%>" alt="First slide"></div>
+
+    <div class="col-12 col-lg-8 jumbotron" style="left: 237px;">
+      <h1 class="display-4"><%=trip.triptitle%></h1>
+      <p class="lead">
+        <%=trip.tripdesc%>
+      </p>
+      <hr class="my-4">
+      <p>
+        <%=trip.location%>
+      </p>
+      <p>
+        <% if (trip.theme == 1) {%>
+          Aventure
+          <%} else if (trip.theme == 2) {%>
+            Découverte
+            <%} else {%>
+              Bien-être
+              <%
+         }%>
+      </p>
+      <p>Budget par personne:
+        <%=trip.budget%> € </p>
+      <p>Difficulté :
+        <% if (trip.difficulty == "difficulte1") {%>
+          <i class="fas fa-fire"></i>
+          <%} else if (trip.difficulty == "difficulte2") {%>
+            <i class="fas fa-fire"></i><i class="fas fa-fire"></i>
+            <%} else {%>
+              <i class="fas fa-fire"></i><i class="fas fa-fire"></i><i class="fas fa-fire"></i>
+              <%}%>
+      </p>
+      <div class="niveau">
+        <p>No. des Personnes : <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i>                <i class="fas fa-male"></i> <i class="fas fa-female"></i> </p>
+        <p>Start Date :
+          <%=trip.startdate%>
+        </p>
+        <p>End Date :
+          <%=trip.enddate%>
+        </p>
+
+        <!-- Book button -->
+        <!-- AS ON THE PAGE /PAY ALL INFORMATION ARE LOST AS THE VARIABLE TRIPLIST IS NOT REPEATED IN THE ROUTE, YOU NEED TO PASS THE INFORMATION THROUGH A DIFFERENT WAY: BY ADDING THE INFORMATION IN THE URL.-->
+
+        <% if (isLoggedIn == true) { %>
 
 
-        <div class="carousel-caption">
+        <form action="/book" method="POST">
+          <input name="id" type="hidden" value="<%=trip.id%>">
+          <button class="btn btn-outline-light nav-btn" type="submit">PAYER</button>
+        </form>
+
+
+      </div>
+
+
+    <%
+              } else {
+                %>
+      <p>Veuillez vous conntecter pour</p>
+
+
+
+
+
+
+
+
+
+
+
+<%
+}
+%>
+
+
+
+
+
 
 
 
@@ -199,84 +271,14 @@
 
 
 
-          <div class="col-12 col-lg-8 jumbotron">
-            <h1 class="display-4"><%=trip.triptitle%></h1>
-            <p class="lead">
-              <%=trip.tripdesc%>
-            </p>
-            <hr class="my-4">
-            <p>
-              <%=trip.location%>
-            </p>
-            <p>
-              <% if (trip.theme == 1) {%>
-                Aventure
-                <%} else if (trip.theme == 2) {%>
-                  Découverte
-                  <%} else {%>
-                    Bien-être
-                    <%
-               }%>
-            </p>
-            <p>Budget par personne:
-              <%=trip.budget%> € </p>
-            <p>Difficulté :
-              <% if (trip.difficulty == "difficulte1") {%>
-                <i class="fas fa-fire"></i>
-                <%} else if (trip.difficulty == "difficulte2") {%>
-                  <i class="fas fa-fire"></i><i class="fas fa-fire"></i>
-                  <%} else {%>
-                    <i class="fas fa-fire"></i><i class="fas fa-fire"></i><i class="fas fa-fire"></i>
-                    <%}%>
-            </p>
-            <div class="niveau">
-              <p>No. des Personnes : <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i>                <i class="fas fa-male"></i> <i class="fas fa-female"></i> </p>
-              <p>Start Date :
-                <%=trip.startdate%>
-              </p>
-              <p>End Date :
-                <%=trip.enddate%>
-              </p>
-
-              <!-- Book button -->
-              <!-- AS ON THE PAGE /PAY ALL INFORMATION ARE LOST AS THE VARIABLE TRIPLIST IS NOT REPEATED IN THE ROUTE, YOU NEED TO PASS THE INFORMATION THROUGH A DIFFERENT WAY: BY ADDING THE INFORMATION IN THE URL.-->
-
-              <% if (isLoggedIn == true) { %>
-
-
-              <form action="/book" method="POST">
-                <input name="id" type="hidden" value="<%=trip.id%>">
-                <button type="submit">PAYER</button>
-              </form>
-
-
-            </div>
-          </div>
-
-          <%
-                    } else {
-                      %>
-            <p>Veuillez vous conntecter pour</p>
 
 
 
+ <div id="">
+   <input id="address" type="hidden" value=" <%=trip.location%>">
+   <!-- <input id="submit" type="hidden" value="Geocode"> -->
+ </div>
 
-
-
-
-        </div>
-
-      </div>
-
-
-      <div id="">
-        <input id="address" type="hidden" value=" <%=trip.location%>">
-        <!-- <input id="submit" type="hidden" value="Geocode"> -->
-      </div>
-
-      <%
- }
- %>
 
 
       <div id="map">
@@ -284,7 +286,8 @@
       </div>
 
 
-
+    </div>
+  </div>
 
 
       <!-- scripts bootstrap javascript -->

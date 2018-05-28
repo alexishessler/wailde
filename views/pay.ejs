@@ -7,10 +7,11 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
   <!-- personnal stylesheet -->
   <link href="https://fonts.googleapis.com/css?family=Poppins|Quicksand|Raleway" rel="stylesheet">
-  <link rel='stylesheet' href='/stylesheets/style.css' />
   <meta name="viewport" content="initial-scale=1.0">
   <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/alex.css' />
 </head>
 
 <body>
@@ -182,66 +183,91 @@
 
   <!-- END NAV BAR -->
 
-<h1>Merci <span class="bold"> <%=user.firstname%> </span> pour votre reservation.</h1>
-<h2>Vous avez recu un email de confirmation. Pour finaliser votre commande passer a la caisse</h2>
+<div class="header-pay">
+
+  <h1 class="color-pay">Très bon choix <span class="bold"> <%=user.firstname%></span> !</h1>
+  <h2 class="color-pay">Derniers détails : combien de collaborateurs de l'entreprise <span class="bold"> <%=user.company%></span> vont participer ?</h2>
+
+  <div class="align-middle4">
+
+    <% if (isLoggedIn == true) { %>
 
 
-  <% if (isLoggedIn == true) { %>
+      <p>Coût total par employé-e : <span class="bold white"><%=trip.budget%> € TTC</span></p>
+
+      <p>Nombre total d'employé-e-s prévu-e-s :
+        <% for (var i = 0 ; i < totalEmployees.length ; i++) {
+          if (i%2 == 0) { %>
+            <i class="fas fa-male white"></i>
+          <% } else { %>
+            <i class="fas fa-female white"></i>
+          <% } %>
+
+          <% } %>
+          <span class="bold white">(<%=totalEmployees.length%>)</span></p>
+
+      <p>Coût total prévu pour <%=user.company%> : <span class="bold white"><%=totalCmd%> € TTC</span></p>
 
 
-<form action="/emailsend" method="POST">
-    <script
-    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-    data-key="pk_test_1ANCe1biF6Lq6FWEuAVptelw"
-    data-email="<%=user.email%>"
-    data-amount="<%=totalCmd*100%>"
-    data-name="Wailde"
-    data-description="Paiement"
-    data-image="/images/pictures/waildelogo.png"
-    data-currency="eur">
-    </script>
-
-    <!-- DEFINE TRIPTITLE IN ORDER TO SEND THE RIGHT INFORMATION IN THE EMAIL -->
-    <input name="triptitle"  type="hidden" value="<%=trip.triptitle%>">
-      <input name="tripdesc"  type="hidden" value="<%=trip.tripdesc%>">
-        <input name="triplocation"  type="hidden" value="<%=trip.location%>">
-        <input name="tripdifficulty"  type="hidden" value="<%=trip.difficulty%>">
-        <input name="triptheme"  type="hidden" value="<%=trip.theme%>">
-        <input name="id" type="hidden" value="<%=trip.id%>">
+      <form class="inline" action="addOne" method="GET">
+        <!-- <input name="price" type="number" value="<%=totalCmd%>"> -->
+        <button type="submit" class="inline btn-more btn btn-outline-light bold">+</button>
+      </form>
 
 
-        <%
-                  } else {
-                    %>
-          <p>Veuillez vous conntecter pour</p>
-          <%
+      <form class="inline" action="deleteOne" method="GET">
+        <!-- <input name="price2" type="number" value="<%=totalCmd%>"> -->
+        <button type="submit" class="inline btn-more btn btn-outline-light bold">-</button>
+      </form>
 
-                  }
-                  %>
 
-</form>
 
-<p>TOTAL CMD = <%=totalCmd%></p>
+      <form action="/emailsend" method="POST" class="form-pay">
+          <script
+          src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="pk_test_1ANCe1biF6Lq6FWEuAVptelw"
+          data-email="<%=user.email%>"
+          data-amount="<%=totalCmd*100%>"
+          data-name="Wailde"
+          data-description="Paiement"
+          data-image="/images/pictures/waildelogo.png"
+          data-currency="eur">
+          </script>
 
-<br>
+          <!-- DEFINE TRIPTITLE IN ORDER TO SEND THE RIGHT INFORMATION IN THE EMAIL -->
+          <input name="triptitle"  type="hidden" value="<%=trip.triptitle%>">
+            <input name="tripdesc"  type="hidden" value="<%=trip.tripdesc%>">
+              <input name="triplocation"  type="hidden" value="<%=trip.location%>">
+              <input name="tripdifficulty"  type="hidden" value="<%=trip.difficulty%>">
+              <input name="triptheme"  type="hidden" value="<%=trip.theme%>">
+              <input name="id" type="hidden" value="<%=trip.id%>">
 
-<form action="addOne" method="GET">
-  <input name="price" type="number" value="<%=totalCmd%>">
-  <button type="submit">ADD</button>
-</form>
+      </form>
 
-<br>
 
-<form action="deleteOne" method="GET">
-  <input name="price2" type="number" value="<%=totalCmd%>">
-  <button type="submit">DELETE</button>
-</form>
 
-<div>Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+      <% } else { %>
+      <p>Veuillez vous conntecter pour payer</p>
+      <% } %>
+
+
+
+
+  </div>
+
+
+
+
+
+  </div>
+
+  </div>
+
 
 </div>
 
-</div>
+
 
 
 

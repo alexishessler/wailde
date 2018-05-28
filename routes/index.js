@@ -565,12 +565,14 @@ router.post('/book', function(req, res, next) {
           console.log(req.session.trip.budget);
 
           req.session.totalCmd = req.session.trip.budget;
+          req.session.totalEmployees = [1];
 
           console.log(req.session.totalCmd);
 
 
           res.render('pay', { isLoggedIn: req.session.isLoggedIn,
             totalCmd: req.session.totalCmd,
+            totalEmployees: req.session.totalEmployees,
             trip: req.session.trip,
             user: req.session.user,
             isLoggedIn: req.session.isLoggedIn
@@ -616,10 +618,12 @@ var client = require('twilio')(accountSid, authToken);
 router.get('/addOne', function(req, res, next) {
 
   req.session.totalCmd = req.session.totalCmd + req.session.trip.budget;
+  req.session.totalEmployees.push(1);
 
   res.render('pay',
   {
     totalCmd: req.session.totalCmd,
+    totalEmployees: req.session.totalEmployees,
     trip: req.session.trip,
     user: req.session.user,
     isLoggedIn: req.session.isLoggedIn
@@ -629,10 +633,12 @@ router.get('/addOne', function(req, res, next) {
 router.get('/deleteOne', function(req, res, next) {
 
   req.session.totalCmd = req.session.totalCmd - req.session.trip.budget;
+  req.session.totalEmployees.pop(1);
 
   res.render('pay',
   {
     totalCmd: req.session.totalCmd,
+    totalEmployees: req.session.totalEmployees,
     trip: req.session.trip,
     user: req.session.user,
     isLoggedIn: req.session.isLoggedIn

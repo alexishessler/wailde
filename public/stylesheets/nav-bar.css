@@ -33,4 +33,16 @@
 .navbar-light .navbar-brand:hover {
     color: #9999cc;
 }
+
+.btn-primary {
+    color: #fff;
+    background-color: #904FC6;
+    border: none;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #A3CBCB;
+    border: none;
+}
 /* NAVBAR */

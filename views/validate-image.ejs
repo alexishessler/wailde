@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css?family=Poppins|Quicksand|Raleway" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/alex.css' />
 </head>
 
 <body>
@@ -20,8 +21,8 @@
     </a>
     <a class="navbar-brand" href="/"><span class="bold">Waïlde</span></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
-              <span class="navbar-toggler-icon"></span>
-          </button>
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
@@ -29,9 +30,6 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="search-trip">Trips</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="experience">Experience</a>
         </li>
       </ul>
     </div>
@@ -109,88 +107,107 @@
 
   <!-- Modal SingUp-->
 
-<form action="/signup" method="POST">
-  <div class="modal fade" id="modalSignUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"> Registrez vous!</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form method="POST" action="/signup">
-            <div class="form-group">
-              <label>Email</label>
-              <input name="email" type="email" class="form-control" placeholder="Votre email">
-            </div>
-            <div class="form-group">
-              <label>Password</label>
-              <input name="password" type="password" class="form-control" placeholder="Votre mot passe">
-            </div>
-            <div class="form-group">
-              <label>Civil</label>
-              <input name="salutation" type="text" class="form-control" placeholder="salutation">
-            </div>
-            <div class="form-group">
-              <label>Nom famille</label>
-              <input name="lastname" type="text" class="form-control" placeholder="Nom famille">
-            </div>
-            <div class="form-group">
-              <label>Prenom</label>
-              <input name="firstname" type="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Prenom">
-              <small id="emailHelp" class="form-text text-muted">Nous gardons vos données en sécurité !</small>
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Nom de l'entreprise</label>
-              <input name="company" type="name" class="form-control" id="exampleInputPassword1" placeholder="Nom de l'entreprise">
-            </div>
+  <form action="/signup" method="POST">
+    <div class="modal fade" id="modalSignUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"> Registrez vous!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form method="POST" action="/signup">
+              <div class="form-group">
+                <label>Email</label>
+                <input name="email" type="email" class="form-control" placeholder="Votre email">
+              </div>
+              <div class="form-group">
+                <label>Password</label>
+                <input name="password" type="password" class="form-control" placeholder="Votre mot passe">
+              </div>
+              <fieldset class="form-group">
+                <div class="row">
+                  <legend class="col-form-label col-sm-2 pt-0">Civilité</legend>
+                  <div class="col-sm-10">
+                    <div class="form-check">
+                      <input name="salutation" class="form-check-input" type="radio" id="gridRadios1" value="Madame" checked>
+                      <label class="form-check-label" for="gridRadios1">
+                   Madame
+                 </label>
+                    </div>
+                    <div class="form-check">
+                      <input name="salutation" class="form-check-input" type="radio" id="gridRadios2" value="Monsieur">
+                      <label class="form-check-label" for="gridRadios2">
+                   Monsieur
+                 </label>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
+              <div class="form-group">
+                <label>Nom famille</label>
+                <input name="lastname" type="text" class="form-control" placeholder="Nom famille">
+              </div>
+              <div class="form-group">
+                <label>Prenom</label>
+                <input name="firstname" type="name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Prenom">
+                <small id="emailHelp" class="form-text text-muted">Nous gardons vos données en sécurité !</small>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Nom de l'entreprise</label>
+                <input name="company" type="name" class="form-control" id="exampleInputPassword1" placeholder="Nom de l'entreprise">
+              </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Numéro de portable</label>
+                <input name="phone" type="text" class="form-control" id="exampleInputPassword1" placeholder="Format exemple : 0689878685">
+              </div>
 
-            <button type="submit" class="btn btn-success">Inscriptions</button>
-          </form>
+              <button type="submit" class="btn btn-success">Inscriptions</button>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+          </div>
+
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-        </div>
+        </form>
       </div>
+
     </div>
-  </div>
   </form>
-
-
-
 
 
   <!-- END NAV BAR -->
 
 
 
-    <div class="form-partner">
+    <div class="form-partner2">
       <div class="container">
         <div class="partner-header">
-          <h1>1/2 : Ajouter une photo d'illustration globale</h1>
-          <h2>Choisissez une photo sexy !</h2>
+          <h1 class="add-image">1/2 : Ajouter une photo d'illustration globale</h1>
+          <h2 class="add-image">Choisissez une photo sexy !</h2>
         </div>
         <div class="row">
 
 
-          <div class="container">
+          <div class="align-middle2">
             <h1>La photo vous convient-elle ?</h1>
 
             <div>
-               <img src="<%=file%>" class="responsive-img" alt="">
+               <img src="<%=file%>" class="img-add" alt="">
             </div>
 
             <form action="/add-image" method="GET">
-              <input type="submit" value="Oui, je passe à l'étape suivante !" class="btn btn-primary btn-block">
+              <input type="submit" value="Oui, je passe à l'étape suivante !" class="btn-send btn btn-outline-light">
             </form>
 
             <br>
 
 
             <form action="/delete-image?id=<%=file.id%>" method="GET">
-              <input type="submit" value="Non, je télécharge une autre image !" class="btn btn-primary btn-block">
+              <input type="submit" value="Non, je télécharge une autre image !" class="btn-send btn btn-outline-light">
             </form>
 
               <!-- -->

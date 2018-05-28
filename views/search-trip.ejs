@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css?family=Poppins|Quicksand|Raleway" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel='stylesheet' href='/stylesheets/style.css' />
   <link rel='stylesheet' href='/stylesheets/francois.css' />
 </head>
 
@@ -241,20 +242,20 @@
           <div class="row justify-content-between">
             <div class="europrice">
               <h6 class="pl-3">Budget : <% if (tripList[i].budget == null || tripList[i].budget<= 500) {%>
-                <i class="fas fa-coins"></i>
+                <i class="fas fa-coins styled"></i>
               <%} else if (tripList[i].budget <= 1000) {%>
-              <i class="fas fa-coins"></i><i class="fas fa-coins"></i>
+              <i class="fas fa-coins styled"></i><i class="fas fa-coins styled"></i>
                 <%} else {%>
-              <i class="fas fa-coins"></i><i class="fas fa-coins"></i><i class="fas fa-coins"></i>
+              <i class="fas fa-coins styled"></i><i class="fas fa-coins styled"></i><i class="fas fa-coins styled"></i>
                 <%}%></h6>
             </div>
             <div class="difficulty">
               <h6 class="pr-3">Difficulté : <% if (tripList[i].difficulty == "difficulte1") {%>
-                <i class="fas fa-fire"></i>
+                <i class="fas fa-fire styled"></i>
               <%} else if (tripList[i].difficulty == "difficulte2") {%>
-                <i class="fas fa-fire"></i><i class="fas fa-fire"></i>
+                <i class="fas fa-fire styled"></i><i class="fas fa-fire styled"></i>
                 <%} else {%>
-                  <i class="fas fa-fire"></i><i class="fas fa-fire"></i><i class="fas fa-fire"></i>
+                  <i class="fas fa-fire styled"></i><i class="fas fa-fire styled"></i><i class="fas fa-fire styled"></i>
                   <%}%></h6>
             </div>
             <div class="form-group row">
@@ -275,10 +276,10 @@
             <% if (isLoggedIn) {%>
               <form class="" action="/trip" method="post">
                 <input name="id"  type="hidden" value="<%=tripList[i]._id%>">
-                <button type="submit" class="btn btn-outline-secondary mt-3">Plus d'infos</button>
+                <button type="submit" class="btn btn-primary mt-3">Plus d'infos</button>
               </form>
             <%} else {%>
-              <a href="/signin" class="btn btn-success nav-btn" data-toggle="modal" data-target="#modalSignIn" href="#">SignIn</a>
+              <a href="/signin" class="btn btn-success btn-outline-info" data-toggle="modal" data-target="#modalSignIn" href="#">SignIn</a>
             <%}%>
           </div>
         </div>

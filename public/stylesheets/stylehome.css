@@ -143,4 +143,13 @@ margin-left: 30px;
 margin-top: 10px;
 width: 80%;
 }
+
+.jumbotron {
+  margin: 0px;
+  padding: 0px;
+}
+
+.text-center {
+  margin: 0px;
+}
 /* HOME PAGE */

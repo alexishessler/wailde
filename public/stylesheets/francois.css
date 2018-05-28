@@ -1,0 +1,29 @@
+
+.bg-light {
+  background: linear-gradient(#9933cc, 	#99cccc);
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: black;
+}
+.navbar-light .navbar-nav .nav-link:hover {
+    color: #FFFFFF;
+}
+
+.nav-btn {
+  margin-right: 5px;
+  margin-bottom: 2px;
+  margin-top: 2px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #904FC6;
+    border: none;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #A3CBCB;
+    border: none;
+}

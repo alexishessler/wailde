@@ -19,6 +19,7 @@ p {
   font-style: "Raleway";
 }
 
+
 .bold {
   font-weight: bold;
 }
@@ -28,7 +29,6 @@ p {
 /* NAVBAR */
 .bg-light {
   background: linear-gradient(#9933cc, 	#99cccc);
-
 
 }
 .navbar-light .navbar-nav .nav-link {

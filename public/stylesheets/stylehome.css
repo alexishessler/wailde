@@ -121,6 +121,12 @@ text-shadow: 1px 1px 12px #000;
   margin-bottom: 30px;
   margin-top: 20px;
 
+
+}
+
+.h5blue {
+  color: #8D3FC5;
+  padding-top: 5px;
 }
 
 .card-deck{

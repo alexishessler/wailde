@@ -41,6 +41,7 @@
 </head>
 
 <body>
+
   <!-- START NAV BAR -->
   <nav class="navbar navbar-expand-md navbar-light bg-light">
     <a class="navbar-brand" href="/">
@@ -48,8 +49,8 @@
     </a>
     <a class="navbar-brand" href="/"><span class="bold">Waïlde</span></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
-              <span class="navbar-toggler-icon"></span>
-          </button>
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
@@ -58,29 +59,28 @@
         <li class="nav-item">
           <a class="nav-link" href="search-trip">Trips</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="experience">Experience</a>
-        </li>
       </ul>
     </div>
     <div class="navbar-collapse collapse w-100 order-2 dual-collapse2">
       <ul class="navbar-nav ml-auto">
         <% if (isLoggedIn == true) { %>
-          <li class="nav-item">
-            <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalPartenaire" href="#">Partenaires</a>
-          </li>
-          <li class="nav-item">
-            <a href="/logout" class="btn btn-outline-light nav-btn" method="get">Loggout</a>
-            <% } else { %>
-              <a href="/signin" class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignIn" href="#">SignIn</a>
-          </li>
-          <li class="nav-item">
-            <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignUp" href="/trip">SignUp</a>
-          </li>
-          <% } %>
+        <li class="nav-item">
+          <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalPartenaire" href="#">Partenaires</a>
+        </li>
+        <li class="nav-item">
+          <a href="/logout" class="btn btn-outline-light nav-btn" method="get">Loggout</a>
+          <% } else { %>
+          <a href="/signin" class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignIn" href="#">SignIn</a>
+
+        </li>
+        <li class="nav-item">
+          <a class="btn btn-outline-light nav-btn" data-toggle="modal" data-target="#modalSignUp" href="/trip">SignUp</a>
+        </li>
+        <% } %>
       </ul>
     </div>
   </nav>
+
   <!-- Modal Partenaire-->
   <div class="modal fade" id="modalPartenaire" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -101,6 +101,7 @@
       </div>
     </div>
   </div>
+
   <!-- Modal SignIn-->
   <div class="modal fade" id="modalSignIn" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -131,7 +132,9 @@
       </div>
     </div>
   </div>
+
   <!-- Modal SingUp-->
+
   <form action="/signup" method="POST">
     <div class="modal fade" id="modalSignUp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -139,8 +142,8 @@
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel"> Registrez vous!</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
           <div class="modal-body">
             <form method="POST" action="/signup">
@@ -152,10 +155,25 @@
                 <label>Password</label>
                 <input name="password" type="password" class="form-control" placeholder="Votre mot passe">
               </div>
-              <div class="form-group">
-                <label>Civil</label>
-                <input name="salutation" type="text" class="form-control" placeholder="salutation">
-              </div>
+              <fieldset class="form-group">
+                <div class="row">
+                  <legend class="col-form-label col-sm-2 pt-0">Civilité</legend>
+                  <div class="col-sm-10">
+                    <div class="form-check">
+                      <input name="salutation" class="form-check-input" type="radio" id="gridRadios1" value="Madame" checked>
+                      <label class="form-check-label" for="gridRadios1">
+                   Madame
+                 </label>
+                    </div>
+                    <div class="form-check">
+                      <input name="salutation" class="form-check-input" type="radio" id="gridRadios2" value="Monsieur">
+                      <label class="form-check-label" for="gridRadios2">
+                   Monsieur
+                 </label>
+                    </div>
+                  </div>
+                </div>
+              </fieldset>
               <div class="form-group">
                 <label>Nom famille</label>
                 <input name="lastname" type="text" class="form-control" placeholder="Nom famille">
@@ -169,17 +187,29 @@
                 <label for="exampleInputPassword1">Nom de l'entreprise</label>
                 <input name="company" type="name" class="form-control" id="exampleInputPassword1" placeholder="Nom de l'entreprise">
               </div>
+              <div class="form-group">
+                <label for="exampleInputPassword1">Numéro de portable</label>
+                <input name="phone" type="text" class="form-control" id="exampleInputPassword1" placeholder="Format exemple : 0689878685">
+              </div>
+
               <button type="submit" class="btn btn-success">Inscriptions</button>
-            </form>
+
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
           </div>
+
         </div>
+        </form>
       </div>
+
     </div>
   </form>
+
+
   <!-- END NAV BAR -->
+
+
   <!--CAROUSSEL -->
 
 

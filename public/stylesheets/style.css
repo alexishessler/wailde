@@ -94,11 +94,7 @@ text-overflow: ellipsis;
   margin-bottom: 10px;
 }
 
-/* NAVBAR */
-.bg-light {
-  background: linear-gradient(#9933cc, 	#99cccc);
 
-}
 .navbar-light .navbar-nav .nav-link {
     color: black;
 }

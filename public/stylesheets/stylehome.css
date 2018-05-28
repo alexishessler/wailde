@@ -23,12 +23,7 @@ p{
 /* GENERAL */
 
 
-/* NAVBAR */
-.bg-light {
-  background: linear-gradient(#9933cc, 	#99cccc);
 
-
-}
 .navbar-light .navbar-nav .nav-link {
     color: black;
 }
@@ -53,11 +48,16 @@ p{
 
 
 /* HOME PAGE */
-#go{
+/* #go{
   margin-bottom: 10px;
   color: #9933cc;
   font-size: 20px;
   border: 1px solid #CCE6E6;
+} */
+
+#go{
+  margin-bottom: 10px;
+  font-size: 20px;
 }
 
 .jumbotron{
@@ -151,5 +151,17 @@ width: 80%;
 
 .text-center {
   margin: 0px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #904FC6;
+    border: none;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #A3CBCB;
+    border: none;
 }
 /* HOME PAGE */

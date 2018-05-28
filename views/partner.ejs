@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css?family=Poppins|Quicksand|Raleway" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
   <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel='stylesheet' href='/stylesheets/alex.css' />
 </head>
 
 <body>
@@ -171,21 +172,20 @@
       <div class="container">
         <div class="partner-header">
           <h1>1/2 : Ajouter une photo d'illustration globale</h1>
-          <h2>Choisissez une photo sexy !</h2>
         </div>
         <div class="row">
 
 
-          <div class="row col-m6">
-            <div class="col-m6">
-              <p>Sélectionner une photo globale d'illustration</p>
+          <div class="row">
+            <div class="align-middle">
+              <p class="bold">Sélectionner une photo globale d'illustration</p>
               <form class="col-m6" action="/upload" method="POST" enctype="multipart/form-data">
                 <div class="custom-file mb-3">
                   <input type="file" name="file" id="file" class="custom-file-input">
                   <label for="file" class="custom-file-label">Choose File</label>
                 </div>
 
-                  <input type="submit" value="Submit" class="btn btn-primary btn-block">
+                  <input type="submit" value="Submit" class="btn btn-outline-light btn-block">
 
 
               </form>

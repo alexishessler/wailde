@@ -27,6 +27,7 @@
     "request": "^2.86.0",
     "sendgrid": "^5.2.3",
     "session": "^0.1.0",
-    "stripe": "^6.0.0"
+    "stripe": "^6.0.0",
+    "twilio": "^3.17.1"
   }
 }

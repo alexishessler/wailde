@@ -24,9 +24,36 @@ var nodemailer = require('nodemailer');
 var passwordHash = require('password-hash');
 
 
+router.get('/testtwilio', function(req, res, next) {
+  // client.sendMessage({
+  //   to: '+33787792295',
+  //   from: '+33756796332',
+  //   body: "Well done !"
+  //
+  // }, function(err, data){
+  //   if(err){
+  //     console.log(err);
+  //   } else {
+  //     console.log(data);
+  //   }
+  // })
+
+  client.messages.create({
+      to: '+33787792295',
+      from: '+33756796332',
+      body: "Well done !"
+  }).then((message) => console.log(message.sid));
+
+res.render('home', { isLoggedIn: req.session.isLoggedIn });
+
+
+  });
 
 
 
+
+
+  // res.render('home', { isLoggedIn: req.session.isLoggedIn });
 ///////////////////////////////
 //                           //
 //                           //
@@ -58,7 +85,8 @@ mongoose.connect('mongodb://capsule:azerty@ds139459.mlab.com:39459/waildeproject
     salutation: String,
     lastname: String,
     firstname: String,
-    company: String
+    company: String,
+    phone: String
   });
 
   var partnerModel = mongoose.model('partners', partnerSchema);
@@ -72,7 +100,8 @@ mongoose.connect('mongodb://capsule:azerty@ds139459.mlab.com:39459/waildeproject
     salutation: String,
     lastname: String,
     firstname: String,
-    company: String
+    company: String,
+    phone: String
   });
 
   var userModel = mongoose.model('users', userSchema);
@@ -99,7 +128,8 @@ mongoose.connect('mongodb://capsule:azerty@ds139459.mlab.com:39459/waildeproject
       file: String,
       file2: String,
       dbbudget: Number,
-      dbteam: Number
+      dbteam: Number,
+      phone: String
 
   });
 
@@ -201,7 +231,8 @@ router.post('/signup', function(req, res, next) {
           salutation: req.body.salutation,
           lastname: req.body.lastname,
           firstname: req.body.firstname,
-          company: req.body.company
+          company: req.body.company,
+          phone: "+33" + req.body.phone
 
         });
         newUser.save(
@@ -359,10 +390,11 @@ router.post('/add-image', function(req, res, next) {
   var budget
   var team
   var newTrip = new tripModel({
-    salutation: "dynamicEmail@gmail.com",
-    lastName: "dynamicNom",
-    firstName: "dynamicPrenom",
-    company: "dynamicNomEntreprise",
+    salutation: req.session.user.salutation,
+    lastName: req.session.user.lastname,
+    firstName: req.session.user.firstname,
+    company: req.session.user.company,
+    phone: req.session.user.phone,
     triptitle: req.body.triptitle,
     tripdesc: req.body.tripdesc,
     location: req.body.location,
@@ -495,7 +527,10 @@ router.post('/trip', function(req, res, next) {
       console.log("ici commence le test");
       console.log(req.body.id);
       console.log(tripList);
+      req.session.trip = tripList[0];
+      console.log(req.session.trip);
       res.render('trip', {
+        trip: req.session.trip,
         tripList: tripList,
         user: req.session.user,
         isLoggedIn: req.session.isLoggedIn
@@ -512,22 +547,43 @@ router.get('/trip', function(req, res, next) {
 
 // BOOK ROUTE
 // DEFINE TRIPTITLE: REQ.QUERY.TIRIPTITLE. TRIPTITLE IS REFERENCED TO THE HIDDEN INPUT ON TRIP.EJS IN THE ROUTE GET
-router.get('/book', function(req, res, next) {
-  console.log("user-->" + req.session);
-  var stripe = require("stripe")("sk_test_95zmCFtr3vHOffkw0DEfXiiI");
-  const token = req.body.stripeToken;
-  const charge = stripe.charges.create({
-    amount: 999,
-    currency: 'eur',
-    description: 'Example charge',
-    source: token,
-  });
-  res.render('pay', { isLoggedIn: req.session.isLoggedIn,
-    user: req.session.user,
-    triptitle:req.query.triptitle, tripdesc:req.query.tripdesc,
-    triplocation:req.query.triplocation,
-    tripdifficulty:req.query.tripdifficulty,
-    triptheme:req.query.triptheme});
+router.post('/book', function(req, res, next) {
+
+  tripModel.find(
+      {
+        _id: req.body.id
+      } ,
+
+      function (err, trip) {
+          console.log("DEUXIEME TEST")
+          console.log(req.session.trip);
+          req.session.trip = trip[0];
+
+          console.log("TROISIEME TEEEEEEST");
+
+          console.log(req.session.trip);
+          console.log(req.session.trip.budget);
+
+          req.session.totalCmd = req.session.trip.budget;
+
+          console.log(req.session.totalCmd);
+
+
+          res.render('pay', { isLoggedIn: req.session.isLoggedIn,
+            totalCmd: req.session.totalCmd,
+            trip: req.session.trip,
+            user: req.session.user,
+            isLoggedIn: req.session.isLoggedIn
+
+          });
+      }
+  )
+
+
+
+
+
+
 });
 
 router.get('/confirmationemail', function(req, res, next) {
@@ -553,45 +609,109 @@ var emailContentFive = '<body></p><p style="font-family: sans-serif; font-size: 
 
 /*var emailContentThree = '<body><style></style><div class="col-12 col-lg-6 jumbotron"><h1 class="display-4" style="font-style:'Poppins'">triptitle: Les sentiers de la Vallée de Chevreuse</h1><p class="lead">tripdescription: Venez découvrir les sentiers secrets de la vallée de Chevreuse à travers un parcours Trail à effectuer en équipe avec vos collaborateurs. Une expérience enrichissante dans un environnement unique à proximité direct de Paris.</p><hr class="my-4"><p>location</p><p>theme</p><p>budget : €</p><p>difficulty : <i class="fas fa-fire"></i></p><div class="niveau"><p>No. des Personnes : <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i></p></div></div></body>' */
 
+var accountSid = 'AC8501d1bbe8f311176ec2d40bb5af3f2b';
+var authToken = '988880b71acb90832e591992edbbe2cd';
+var client = require('twilio')(accountSid, authToken);
+
+router.get('/addOne', function(req, res, next) {
+
+  req.session.totalCmd = req.session.totalCmd + req.session.trip.budget;
+
+  res.render('pay',
+  {
+    totalCmd: req.session.totalCmd,
+    trip: req.session.trip,
+    user: req.session.user,
+    isLoggedIn: req.session.isLoggedIn
+  });
+});
+
+router.get('/deleteOne', function(req, res, next) {
+
+  req.session.totalCmd = req.session.totalCmd - req.session.trip.budget;
+
+  res.render('pay',
+  {
+    totalCmd: req.session.totalCmd,
+    trip: req.session.trip,
+    user: req.session.user,
+    isLoggedIn: req.session.isLoggedIn
+  });
+});
+
+
+
 
 
 // ROUTE EMAILSEND ON THE PAY.EJS. HIDDEN INPUTS HAVE TO BE ADDED IN ORDER FOR THE PAGE TO ACCESS ALL THE INFORMATION FROM THE PREVIOUS PAGE. THE HTML IS BEING SEPERATEDINTO SEVERAL BLOCKS AND ADDED TOGETHER IN ORDER TO MAKE EACH PART DYNAMIC.
 
 router.post('/emailsend', function(req, res, next) {
-console.log("req.body : " + JSON.stringify(req.body));
-  tripModel.find({
+
+  tripModel.find(
+    {
       _id: req.body.id
     },
 
     function(err, tripList) {
-      console.log("tripList : " +JSON.stringify(tripList));
-    var transporter = nodemailer.createTransport({
-      service: 'gmail',
-      auth: {
-        user: 'waildeproject@gmail.com',
-        pass: 'capsule2018'
-      }
-    });
+
+      var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: 'waildeproject@gmail.com',
+          pass: 'capsule2018'
+        }
+      });
 
     var mailOptions = {
       from: 'waildeproject@gmail.com',
-      to: 'req.session.user.email',
+      to: req.session.user.email,
       subject: 'Confirmation email',
       html: emailContent + req.body.triptitle + emailContentParagraph + req.body.tripdesc + emailContentTwo + req.body.triplocation + emailContentThree + req.body.tripdifficulty + emailContentFour + req.body.triptheme + emailContentFive
     };
+
+
 
     transporter.sendMail(mailOptions, function(error, info) {
       if (error) {
 
         console.log(error);
         res.render('home',{
+          totalCmd: req.session.totalCmd,
           tripList: tripList,
           user: req.session.user,
           isLoggedIn: req.session.isLoggedIn
         });
       } else {
+
+        // ENVOI DU SMS
+        client.messages.create({
+            to: req.session.trip.phone,
+            from: '+33756796332',
+            body: req.session.trip.firstName + " " + req.session.trip.lastName + ", un voyage vient d'être réservé par l'entreprise " + req.session.user.company + " !"
+
+        }).then((message) => console.log(message.sid));
+
+        const token = req.body.stripeToken;
+        const charge = stripe.charges.create({
+          amount: req.session.totalCmd * 100,
+          currency: 'eur',
+          description: 'Example charge',
+          source: token,
+        });
+
         console.log('Email sent: ' + info.response);
-        res.render('confirmation', { isLoggedIn: req.session.isLoggedIn });
+
+
+
+        console.log(req.session.trip.phone);
+
+        res.render('confirmation', {
+          totalCmd: req.session.totalCmd,
+          tripList: tripList,
+          user: req.session.user,
+          isLoggedIn: req.session.isLoggedIn
+        }
+      );
 
       }
     });

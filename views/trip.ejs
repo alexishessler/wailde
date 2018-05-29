@@ -226,7 +226,7 @@
               <%
          }%>
       </p>
-      <p>Budget par personne:
+      <p>Budget par personne :
         <%=trip.budget%> € </p>
       <p>Difficulté :
         <% if (trip.difficulty == "difficulte1") {%>
@@ -238,11 +238,11 @@
               <%}%>
       </p>
       <div class="niveau">
-        <p>No. des Personnes : <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i> <i class="fas fa-male"></i> <i class="fas fa-female"></i>                <i class="fas fa-male"></i> <i class="fas fa-female"></i> </p>
-        <p>Start Date :
+        <p>Nb. de Personnes : <%=trip.team%> </p>
+        <p>Date de début :
           <%=trip.startdate%>
         </p>
-        <p>End Date :
+        <p>Date de fin :
           <%=trip.enddate%>
         </p>
 
